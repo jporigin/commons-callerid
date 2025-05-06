@@ -1,7 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OG Caller ID</string>
+    <string name="ci_duration">Duration</string>
 
+
+    <string name="add_email_to_contact">Add Email to\nContact</string>
+    <string name="send_number_to_email">Send number to\nemail</string>
+    <string name="write_personal_message">Write Personal message</string>
+    <string name="create_a_new_reminder">Create a new reminder</string>
     <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="add_caller_to_your_contacts">Add caller to your contacts</string>
+    <string name="message">Messages</string>
+    <string name="send_mail">Send Mail</string>
+    <string name="calendar">Calendar</string>
+    <string name="web">Web</string>
+    <string name="good_morning">Good Morning!</string>
     <string name="today_the_sun_rises_at_6_04_am_and_sets_at_6_25_pm">Today, the sun rises at 6:04 Am and sets at 6:25 PM</string>
     <string name="after_call_setting">After call Setting</string>
     <string name="call_features">Call Features Setting</string>
@@ -19,11 +32,21 @@
     <string name="good_afternoon">Good Afternoon!</string>
     <string name="good_evening">Good Evening!</string>
     <string name="good_night">good Night!</string>
-    <string name="open_setting">Open Setting</string>
-    <string name="open_setting_desc">Please provide required permission to use application with hassle free.</string>
-    <string name="required_permission">Required Permission</string>
+<!--    <string name="open_setting">Open Setting</string>-->
+<!--    <string name="open_setting_desc">Please provide required permission to use application with hastle free.</string>-->
+<!--    <string name="required_permission">Required Permission</string>-->
     <string name="required_permission_desc">Permission is required please allow all permission.</string>
-    <string name="allow_permission">Allow Permission</string>
+<!--    <string name="allow_permission">Allow Permission</string>-->
     <string name="reminder_title">Reminder Title</string>
+    <string name="i_m_on_my_way">I\'m on my way</string>
+    <string name="sorry_i_can_t_talk_right_now">Sorry, I can\'t talk right now</string>
+    <string name="can_i_call_you_later">Can I call you later?</string>
+    <string name="private_number">Private Number</string>
+
+    <string name="ad_content_description" translatable="false">none</string>
+    <string name="ad_attribution_text" translatable="false">Ad</string>
+
+    <string name="space_for_ads">Space For Ads</string>
+
 
 </resources>
