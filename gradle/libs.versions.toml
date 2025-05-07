@@ -21,9 +21,6 @@ hilt = "2.55"
 shimmer = "0.5.0"
 playServicesAds = "24.2.0"
 
-
-
-
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -63,8 +60,6 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
 play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
 
-
-
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -73,8 +68,3 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 google-service = { id = "com.google.gms.google-services", version.ref = "googleService" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics" }
 daggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-
-
-
-
-

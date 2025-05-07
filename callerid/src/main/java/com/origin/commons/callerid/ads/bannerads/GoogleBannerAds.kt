@@ -115,6 +115,7 @@ class GoogleBannerAds {
                     override fun onAdImpression() {
                         super.onAdImpression()
                         logE("glBannerAds::load:adShowed")
+                        activity.logEventE("Showed_OGCallerAds_B")
                     }
                 }
             }
