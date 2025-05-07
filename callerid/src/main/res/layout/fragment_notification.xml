@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.NotificationFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clReminderView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btnCreateReminder"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_ripple_btn_app_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/create_a_new_reminder"
+                android:textColor="@color/ci_txt_app_color"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvReminder"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnCreateReminder"
+            tools:listitem="@layout/cell_reminder_items" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clAddReminderView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="15dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/llCustomMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="10dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivEdit"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:contentDescription="@null"
+                android:foreground="@drawable/bg_ripple_round"
+                android:padding="2dp"
+                android:src="@drawable/ic_edit_unselected" />
+
+            <EditText
+                android:id="@+id/etMsg"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:autofillHints="all"
+                android:background="@null"
+                android:hint="@string/reminder_title"
+                android:imeOptions="actionDone"
+                android:includeFontPadding="false"
+                android:inputType="text"
+                android:paddingHorizontal="10dp"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/datePickersLinearL"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/llCustomMessage">
+
+            <NumberPicker
+                android:id="@+id/dateNumberPicker"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:descendantFocusability="blocksDescendants"
+                android:theme="@style/NumberPicker"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <NumberPicker
+                android:id="@+id/hourNumberPicker"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:descendantFocusability="blocksDescendants"
+                android:theme="@style/NumberPicker"
+                app:layout_constraintStart_toEndOf="@+id/dateNumberPicker"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <NumberPicker
+                android:id="@+id/minuteNumberPicker"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:descendantFocusability="blocksDescendants"
+                android:theme="@style/NumberPicker"
+                app:layout_constraintStart_toEndOf="@+id/hourNumberPicker"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/datePickersLinearL">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_cancel_btn">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/cancel"
+                    android:textColor="@color/ci_app_color"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btnSave"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_ripple_btn_app_color">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/save"
+                    android:textColor="@color/ci_txt_app_color"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

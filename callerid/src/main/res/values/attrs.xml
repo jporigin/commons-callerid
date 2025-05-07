@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--  bnr  -->
+    <attr name="bAdsShimmerColor" format="color" />
+    <attr name="bAdsBackground" format="reference|color" />
+    <attr name="bAdsTextColor" format="reference|color" />
+
+    <attr name="bAdsAttributionBg" format="reference|color" />
+    <attr name="bAdsAttributionTvColor" format="color" />
+
+    <attr name="bAdsCallActionBg" format="reference|color" />
+    <attr name="bAdsCallActionFg" format="reference|color" />
+    <attr name="bAdsCallActionTvColor" format="color" />
+
+    <!--  ntv  -->
+    <attr name="nAdsShimmerColor" format="color" />
+    <attr name="nAdsBackground" format="reference|color" />
+    <attr name="nAdsTextColor" format="reference|color" />
+
+    <attr name="nAdsAttributionBg" format="reference|color" />
+    <attr name="nAdsAttributionTvColor" format="color" />
+
+    <attr name="nAdsCallActionBg" format="reference|color" />
+    <attr name="nAdsCallActionFg" format="reference|color" />
+    <attr name="nAdsCallActionTvColor" format="color" />
+
+</resources>

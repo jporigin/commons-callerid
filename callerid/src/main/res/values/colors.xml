@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="ci_app_color">#0056FF</color>
+    <color name="ci_txt_app_color">#FFFFFF</color>
+
+    <color name="ci_screen_bg">#FFFFFF</color>
+    <color name="ci_txt_color">#161616</color>
+
+    <color name="ci_ripple_color">#404040</color>
+    <color name="ci_grey">#8e8d8d</color>
+    <color name="ci_light_grey">#e8eaed</color>
+
+    <!--  bnr -->
+    <color name="b_shimmer_color">#B7B7B7</color>
+
+    <color name="b_bg_color">#EFEFEF</color>
+    <color name="b_text_color">#232127</color>
+
+    <color name="b_attribution_color">#999999</color>
+    <color name="b_attribution_text_color">#232127</color>
+
+    <color name="b_call_action_tv_color">#EFEFEF</color>
+
+    <!--  ntv -->
+    <color name="n_shimmer_color">#B7B7B7</color>
+
+    <color name="n_bg_color">#EFEFEF</color>
+    <color name="n_text_color">#232127</color>
+
+    <color name="n_attribution_color">#999999</color>
+    <color name="n_attribution_text_color">#232127</color>
+
+    <color name="n_call_action_tv_color">#EFEFEF</color>
+
+
+</resources>

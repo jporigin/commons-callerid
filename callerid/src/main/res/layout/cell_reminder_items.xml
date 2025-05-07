@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="5dp"
+    android:background="@drawable/bg_reminder"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="5dp"
+    android:paddingVertical="5dp">
+
+    <ImageView
+        android:id="@+id/ivReminderImage"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="5dp"
+        android:contentDescription="@null"
+        android:src="@drawable/ci_reminder_img" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_weight="1"
+        android:layout_marginEnd="5dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvReminderText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:textColor="@color/ci_txt_color"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            tools:text="Reminder" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ci_time" />
+
+            <TextView
+                android:id="@+id/tvReminderTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:includeFontPadding="false"
+                android:textSize="10sp"
+                tools:text="11:15" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginStart="10dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ci_date" />
+
+            <TextView
+                android:id="@+id/tvReminderDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:includeFontPadding="false"
+                android:textSize="10sp"
+                tools:text="Today" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivDelete"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:padding="4dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@null"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/ci_delete" />
+
+</LinearLayout>

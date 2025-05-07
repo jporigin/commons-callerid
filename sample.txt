@@ -1,0 +1,14 @@
+Data- Tracking Events
+
+event_name: event_description
+
+Initialized_OGCallerIdSDK:   Initialized OG Caller ID SDK
+Showed_OGCallerScreen_m:     Showed OG Caller Screen From Missed Call
+Showed_OGCallerScreen_c:     Showed OG Caller Screen From Complete Call
+Showed_OGCallerScreen_n:     Showed OG Caller Screen From No Answer
+Showed_OGCallerScreen_m_c:   Showed OG Caller Screen From Missed Call and Complete Call
+Showed_OGCallerScreen_m_n:   Showed OG Caller Screen From Missed Call and No Answer
+Showed_OGCallerScreen_c_n:   Showed OG Caller Screen From Complete Call and No Answer
+Showed_OGCallerScreen_m_c_n: Showed OG Caller Screen From Missed Call, Complete Call and No Answer
+Showed_OGCallerAds_B:        Showed OG Caller Ads Banner
+Showed_OGCallerAds_N:        Showed OG Caller Ads Native

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomTabStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="NumberPicker">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColorPrimary">@color/ci_grey</item>
+        <item name="android:textColor">@color/ci_app_color</item>
+        <item name="colorControlNormal">@color/ci_grey</item>
+        <item name="android:dividerHeight">2dp</item>
+    </style>
+</resources>

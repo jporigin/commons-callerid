@@ -1,0 +1,79 @@
+package com.origin.commons.callerid.receiver
+
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.util.Log
+import com.origin.commons.callerid.db.entity.ReminderEntity
+import com.origin.commons.callerid.model.toNotificationInfo
+import com.origin.commons.callerid.repository.ReminderRepository
+import com.origin.commons.callerid.service.NotificationService
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+import javax.inject.Inject
+import kotlin.let
+import kotlin.text.toInt
+
+@AndroidEntryPoint
+class OgCallerIdReminderReceiver: BroadcastReceiver() {
+
+    @Inject
+    lateinit var reminderRepository: ReminderRepository
+
+    override fun onReceive(context: Context?, intent: Intent?) {
+        if (context == null || intent == null) return
+        Log.e(TAG, "OgCallerIdReminderReceiver_called")
+
+        val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+        val service = NotificationService(context)
+        val reminderId = intent.getStringExtra("reminderId")
+
+        coroutineScope.launch {
+            val item = reminderId?.let { reminderRepository.getReminderByIdNormal(it.toInt()) }
+            val timeInMillis = item?.let { provideTimeInMillis(it) }
+            val notificationInfo = timeInMillis?.let { item.toNotificationInfo(it) }
+            notificationInfo?.let { service.showNotification(it) }
+        }
+    }
+
+    private fun provideTimeInMillis(reminder: ReminderEntity): Long {
+        val rightNow = Calendar.getInstance()
+
+        val dateVal = reminder.date
+        val hourVal = reminder.hours
+        val minuteVal = reminder.minutes
+        val datetimeToAlarm = Calendar.getInstance(Locale.getDefault())
+        datetimeToAlarm.timeInMillis = System.currentTimeMillis()
+        if (dateVal == "Today") {
+            datetimeToAlarm.set(Calendar.DAY_OF_MONTH, rightNow.get(Calendar.DAY_OF_MONTH))
+            datetimeToAlarm.set(Calendar.MONTH, rightNow.get(Calendar.MONTH))
+        } else {
+            val df = SimpleDateFormat("EEE, MMM dd")
+            val readDate = dateVal?.let { it1 -> df.parse(it1) }
+            val cal = Calendar.getInstance()
+            if (readDate != null) {
+                cal.timeInMillis = readDate.time
+            }
+            datetimeToAlarm.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH))
+            datetimeToAlarm.set(Calendar.MONTH, cal.get(Calendar.MONTH))
+        }
+        datetimeToAlarm.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hourVal!!))
+        datetimeToAlarm.set(Calendar.MINUTE, Integer.parseInt(minuteVal!!))
+        datetimeToAlarm.set(Calendar.SECOND, 0)
+        datetimeToAlarm.set(Calendar.MILLISECOND, 0)
+
+        val timeInMilliSeconds = datetimeToAlarm.timeInMillis
+        return timeInMilliSeconds
+    }
+
+    companion object {
+        private const val TAG = "OgCallerIdReminderReceiver"
+    }
+
+}
