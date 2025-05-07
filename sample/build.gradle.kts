@@ -64,7 +64,8 @@ dependencies {
     implementation(libs.firebase.config)
     implementation(libs.firebase.messaging)
 
-    implementation(project(":callerid"))
+    // Callerid
+    implementation(libs.commons.callerid)
 
 
 
