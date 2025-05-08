@@ -11,8 +11,9 @@ This smart enhancement delivers real value, resulting in happier users, higher r
 dependencyResolutionManagement {
  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
  repositories {
- 	 mavenCentral() // add
-	 maven { url = uri("https://jitpack.io") } // add
+	// CallerID	
+ 	mavenCentral()
+	maven { url = uri("https://jitpack.io") }
  }
 }
 
@@ -64,9 +65,35 @@ class MainActivity : AppCompatActivity() {
     }
 }
 ```
+
 > [!NOTE]
 >* To change the Caller ID ad format, use the `AdFormat` class with one of the following options: `NONE`, `BANNER`, `NATIVE_SMALL`, or `NATIVE_BIG`.
 >* Please provide the correct `adUnitId` based on the selected `AdFormat`.
 >* If you want users to open the app from the Caller ID screen, add two classes in the `setUpClassToOpenApp` function: `classA` and `classBHigh`.
 >   - If the app is already open, it will launch `classA`.
 >   - If the app is closed, it will launch `classBHigh`.
+
+### 🔧 Caller Screen Feature Toggles
+
+You can customize the caller screen behavior by enabling or disabling specific features through the following flags:
+
+```kotlin
+isMissedCallFeatureEnable = true  // Show caller screen on missed calls
+isCompleteCallFeatureEnable = true  // Show caller screen when a call ends
+isNoAnswerFeatureEnable = true  // Show caller screen if the call is not answered
+```
+| Flag                          | Description                                     | Behavior When `true`                   | Behavior When `false`                         |
+| ----------------------------- | ----------------------------------------------- | -------------------------------------- | --------------------------------------------- |
+| `isMissedCallFeatureEnable`   | Control screen display on missed calls          | Shows caller screen on missed calls    | Caller screen will not appear on missed calls |
+| `isCompleteCallFeatureEnable` | Control screen display when a call is completed | Shows caller screen when a call ends   | No screen shown after call ends               |
+| `isNoAnswerFeatureEnable`     | Control screen display on unanswered calls      | Shows caller screen on no-answer calls | No screen shown if the call isn’t answered    |
+```kotlin
+(application as? CallerIdSDKApplication)?.let { callerIdSDKApplication ->
+
+    _binding.switchMissCall.isChecked = callerIdSDKApplication.getMissedCallFeatureEnable() == true
+
+    _binding.switchMissCall.setOnCheckedChangeListener { _, isChecked ->
+        callerIdSDKApplication.setMissedCallFeatureEnable(isChecked)
+    }
+}
+```
