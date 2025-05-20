@@ -67,14 +67,10 @@ class PermissionActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         setUpObservers()
         setUpClickEvents()
-
         viewModel.checkPermissions(this)
-
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
-
     }
 
     private fun setUpObservers() {
@@ -110,109 +106,98 @@ class PermissionActivity : AppCompatActivity() {
         }
     }
 
-    private val requestOpenSetting =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (Utils.isPermissionAlreadyGranted(this)) {
+    private val requestOpenSetting = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (isPermissionAlreadyGranted(this)) {
+            setPermissionGranted(true)
+            viewModel.updatePermissionStatus(this)
+
+        }
+    }
+
+    private val requestPhonePermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        val granted = permissions.entries.all { it.value }
+        if (granted) {
+            if (isPermissionAlreadyGranted(this)) {
                 setPermissionGranted(true)
                 viewModel.updatePermissionStatus(this)
 
-            }
-        }
-
-    private val requestPhonePermission =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            val granted = permissions.entries.all { it.value }
-            if (granted) {
-                if (isPermissionAlreadyGranted(this)) {
-                    setPermissionGranted(true)
-                    viewModel.updatePermissionStatus(this)
-
+            } else {
+                if (!isPhonePermissionAlreadyGranted(this)) {
+                    requestPhonePermission()
                 } else {
+                    if (!isNotiPermissionAlreadyGranted(this)) {
+                        requestNotificationPermission()
+                    }
+                }
+            }
+        } else {
+            if (!isNotiPermissionReqAsked()) {
+                setNotiPermissionReqAsked(true)
+                requiredPermissionDialog(this, R.string.required_permission, R.string.required_permission_desc, onNegativeClick = {}, onPositiveClick = {
                     if (!isPhonePermissionAlreadyGranted(this)) {
                         requestPhonePermission()
                     } else {
-                        if (!isNotiPermissionAlreadyGranted(this)) {
-                            requestNotificationPermission()
-                        }
+                        requestNotificationPermission()
+                    }
+                })
+            } else {
+                openSettingDialog(
+                    this, R.string.open_setting, R.string.open_setting_desc, onNegativeClick = {},
+                    onPositiveClick = {
+                        requestOpenSetting.launch(
+                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                data = Uri.fromParts("package", packageName, null)
+                            }
+                        )
+                    }
+                )
+            }
+
+        }
+    }
+
+    private val requestNotificationPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        val granted = permissions.entries.all { it.value }
+        if (granted) {
+            if (isPermissionAlreadyGranted(this)) {
+                setPermissionGranted(true)
+                viewModel.updatePermissionStatus(this)
+            } else {
+                if (!isPhonePermissionAlreadyGranted(this)) {
+                    requestPhonePermission()
+                } else {
+                    if (!isNotiPermissionAlreadyGranted(this)) {
+                        requestNotificationPermission()
                     }
                 }
-            } else {
-                if (!isNotiPermissionReqAsked()) {
-                    setNotiPermissionReqAsked(true)
-                    requiredPermissionDialog(this, R.string.required_permission, R.string.required_permission_desc, onNegativeClick = {}, onPositiveClick = {
+            }
+        } else {
+            if (!isPermissionRequestAsked()) {
+                setPermissionRequestAsked(true)
+                requiredPermissionDialog(
+                    this, R.string.required_permission, R.string.required_permission_desc,
+                    onNegativeClick = {}, onPositiveClick = {
                         if (!isPhonePermissionAlreadyGranted(this)) {
                             requestPhonePermission()
                         } else {
                             requestNotificationPermission()
                         }
-                    })
-                } else {
-                    openSettingDialog(
-                        this, R.string.open_setting, R.string.open_setting_desc, onNegativeClick = {},
-                        onPositiveClick = {
-                            requestOpenSetting.launch(
-                                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                                    data = Uri.fromParts("package", packageName, null)
-                                }
-                            )
-                        }
-                    )
-                }
-
-            }
-        }
-
-    private val requestNotificationPermission =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            val granted = permissions.entries.all { it.value }
-            if (granted) {
-                if (isPermissionAlreadyGranted(this)) {
-                    setPermissionGranted(true)
-                    viewModel.updatePermissionStatus(this)
-
-                } else {
-                    if (!isPhonePermissionAlreadyGranted(this)) {
-                        requestPhonePermission()
-                    } else {
-                        if (!isNotiPermissionAlreadyGranted(this)) {
-                            requestNotificationPermission()
-                        }
                     }
-                }
+                )
             } else {
-                if (!isPermissionRequestAsked()) {
-                    setPermissionRequestAsked(true)
-                    requiredPermissionDialog(
-                        this,
-                        R.string.required_permission,
-                        R.string.required_permission_desc,
-                        onNegativeClick = {},
-                        onPositiveClick = {
-                            if (!isPhonePermissionAlreadyGranted(this)) {
-                                requestPhonePermission()
-                            } else {
-                                requestNotificationPermission()
+                openSettingDialog(
+                    this, R.string.open_setting, R.string.open_setting_desc,
+                    onNegativeClick = {}, onPositiveClick = {
+                        requestOpenSetting.launch(
+                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                data = Uri.fromParts("package", packageName, null)
                             }
-                        }
-                    )
-                } else {
-                    openSettingDialog(
-                        this,
-                        R.string.open_setting,
-                        R.string.open_setting_desc,
-                        onNegativeClick = {
-                        },
-                        onPositiveClick = {
-                            requestOpenSetting.launch(
-                                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                                    data = Uri.fromParts("package", packageName, null)
-                                }
-                            )
-                        }
-                    )
-                }
+                        )
+                    }
+                )
             }
         }
+    }
 
     private fun requestPhonePermission() {
         requestPhonePermission.launch(arrayOf(Manifest.permission.READ_PHONE_STATE))
@@ -222,27 +207,14 @@ class PermissionActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestNotificationPermission.launch(arrayOf(Manifest.permission.POST_NOTIFICATIONS))
         }
-//        requestRegularPermission.launch(
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//                arrayOf(
-//                    Manifest.permission.READ_PHONE_STATE,
-//                    Manifest.permission.POST_NOTIFICATIONS
-//                )
-//            } else {
-//                arrayOf(
-//                    Manifest.permission.READ_PHONE_STATE
-//                )
-//            }
-//        )
     }
 
-    private val requestScreenOverlayPermission =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (Utils.isScreenOverlayEnabled(this)) {
-                setScreenOverlayEnabled(true)
-                viewModel.updatePermissionStatus(this)
-            }
+    private val requestScreenOverlayPermission = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (Utils.isScreenOverlayEnabled(this)) {
+            setScreenOverlayEnabled(true)
+            viewModel.updatePermissionStatus(this)
         }
+    }
 
     private val checkOverlayPermissionRunnable = object : Runnable {
         override fun run() {
@@ -376,32 +348,6 @@ class PermissionActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         overlayPermissionHandler.removeCallbacks(checkOverlayPermissionRunnable)
-    }
-
-    private fun isAndroidGoEdition(): Boolean {
-        // Get the value of the system property "ro.build.characteristics"
-        val buildCharacteristics = getSystemProperty("ro.build.characteristics")
-
-        Log.e("TAG", "isAndroidGoEdition: $buildCharacteristics")
-        // Check if the value contains "go"
-        return buildCharacteristics?.contains("go", ignoreCase = true) ?: false
-    }
-
-    private fun getSystemProperty(key: String): String? {
-        try {
-            // Use reflection to get the system property value
-            val systemPropertiesClass = Class.forName("android.os.SystemProperties")
-            val getMethod = systemPropertiesClass.getMethod("get", String::class.java)
-            return getMethod.invoke(null, key) as? String
-        } catch (e: Exception) {
-            // Handle exceptions
-            e.printStackTrace()
-        }
-        return null
-    }
-
-    companion object {
-        private const val TAG = "PermissionAct"
     }
 
 }

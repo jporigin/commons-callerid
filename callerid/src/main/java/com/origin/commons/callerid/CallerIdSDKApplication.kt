@@ -3,6 +3,7 @@ package com.origin.commons.callerid
 import android.app.Activity
 import android.app.Application
 import android.content.IntentFilter
+import android.view.View
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.Firebase
 import com.origin.commons.callerid.extensions.prefsHelper
@@ -103,6 +104,14 @@ open class CallerIdSDKApplication : Application() {
     fun setNoAnswerFeatureEnable(value: Boolean) {
         mSharedPreferencesHelper?.isNoAnswerFeatureEnable = value
     }
+    /*
+    *
+    * */
+
+    /*
+    *
+    * */
+    var mCustomView: View? = null
     /*
     *
     * */

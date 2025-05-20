@@ -7,11 +7,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.databinding.FragmentHomeBinding
 import java.util.Calendar
-
 
 class HomeFragment : Fragment() {
 
@@ -19,29 +20,48 @@ class HomeFragment : Fragment() {
         FragmentHomeBinding.inflate(layoutInflater)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        initDefaultView()
         init()
         return _binding.root
     }
 
+    private fun initDefaultView() {
+        _binding.tvGreetingText.text = getGreetingMessage()
+        _binding.llDefault.setOnClickListener {
+            this@HomeFragment.activity?.apply {
+                Toast.makeText(this, getGreetingMessage(), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun init() {
-        clickEvents()
+        val callerIdSDKApplication = try {
+            this@HomeFragment.activity?.application as? CallerIdSDKApplication
+        } catch (_: Exception) {
+            null
+        }
+        callerIdSDKApplication?.mCustomView?.let { customView ->
+            _binding.llCiDefault.visibility = View.GONE
+            _binding.flCiCustom.apply {
+                visibility = View.VISIBLE
+                removeAllViews()
+                addView(customView)
+            }
+        } ?: run {
+            _binding.flCiCustom.visibility = View.GONE
+            _binding.llCiDefault.visibility = View.VISIBLE
+            clickEvents()
+        }
     }
 
     private fun clickEvents() {
         _binding.btnAddEmail.setOnClickListener {
             openContact(requireContext())
         }
-
         _binding.btnSendNumber.setOnClickListener {
             emailIntent(requireContext(), "")
         }
-
-        _binding.tvGreetingText.text = getGreetingMessage()
-
     }
 
     private fun getGreetingMessage(): String {

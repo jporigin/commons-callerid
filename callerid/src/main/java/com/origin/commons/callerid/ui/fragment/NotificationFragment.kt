@@ -69,17 +69,15 @@ class NotificationFragment : Fragment() {
                 _binding.clReminderView.visibility = View.INVISIBLE
                 _binding.clAddReminderView.visibility = View.VISIBLE
             } else {
-                _binding.clReminderView.visibility = View.VISIBLE
                 _binding.clAddReminderView.visibility = View.INVISIBLE
+                _binding.clReminderView.visibility = View.VISIBLE
             }
-
             _binding.etMsg.postDelayed({
                 _binding.etMsg.showKeyboard()
             }, 200)
         }
 
         dates = getDatesFromCalender()
-
         val rightNow = Calendar.getInstance()
 
         _binding.hourNumberPicker.minValue = 0
@@ -88,13 +86,11 @@ class NotificationFragment : Fragment() {
         _binding.hourNumberPicker.value = rightNow.get(Calendar.HOUR_OF_DAY)
         _binding.hourNumberPicker.setOnValueChangedListener { numberPicker, oldVal, newVal ->
             hourVal = prepareFormatTime(newVal)
-
             if (minuteVal.isNullOrEmpty()) {
                 val minuteRightNow = rightNow.get(Calendar.MINUTE)
                 minuteVal = prepareFormatTime(minuteRightNow)
             }
         }
-
 
         val displayedValues = Array(60 / TIME_PICKER_INTERVAL) { i ->
             String.format("%02d", i * TIME_PICKER_INTERVAL)
@@ -118,7 +114,6 @@ class NotificationFragment : Fragment() {
                 hourVal = prepareFormatTime(hourRightNow)
             }
         }
-
 
         _binding.dateNumberPicker.minValue = 0
         _binding.dateNumberPicker.wrapSelectorWheel = false
@@ -179,28 +174,15 @@ class NotificationFragment : Fragment() {
             datetimeToAlarm.set(Calendar.YEAR, rightNow.get(Calendar.YEAR))
 
             val title = _binding.etMsg.value.ifEmpty { "No Title" }
-
             if (updateReminder) {
-                val reminderEntity = ReminderEntity(
-                    id = updateModel?.id,
-                    title = title,
-                    date = dateVal,
-                    hours = hourVal,
-                    minutes = minuteVal
-                )
+                val reminderEntity = ReminderEntity(id = updateModel?.id, title = title, date = dateVal, hours = hourVal, minutes = minuteVal)
                 CoroutineScope(Dispatchers.IO).launch {
                     viewModel.updateReminder(reminderEntity)
                 }
                 updateReminder = false
                 updateModel = null
             } else {
-                val reminderEntity = ReminderEntity(
-                    id = generateUnique4DigitId().toLong(),
-                    title = title,
-                    date = dateVal,
-                    hours = hourVal,
-                    minutes = minuteVal
-                )
+                val reminderEntity = ReminderEntity(id = generateUnique4DigitId().toLong(), title = title, date = dateVal, hours = hourVal, minutes = minuteVal)
                 CoroutineScope(Dispatchers.IO).launch {
                     viewModel.saveReminder(reminderEntity)
                 }

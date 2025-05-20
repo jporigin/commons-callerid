@@ -13,11 +13,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:ssb_activeThumbColor="@color/black"
+        app:ssb_activeThumbColor="@color/ci_app_color"
         app:ssb_animationDuration="500"
-        app:ssb_filledTrackColor="@color/black"
+        app:ssb_filledThumbColor="@color/ci_app_color"
+        app:ssb_filledTrackColor="@color/ci_app_color"
         app:ssb_orientation="horizontal"
-        app:ssb_stageStepConfig="1,1" />
+        app:ssb_stageStepConfig="1,1"
+        app:ssb_unfilledThumbColor="@color/ci_light_grey"
+        app:ssb_unfilledTrackColor="@color/ci_light_grey" />
 
     <TextView
         android:id="@+id/tvTitle"

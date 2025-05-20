@@ -52,7 +52,6 @@ dependencies {
     // optional
     implementation("com.github.loukwn.StageStepBar:stagestepbar:1.2.0")
 
-
     // Hilt
     implementation(libs.dagger.hilt)
     ksp(libs.dagger.hilt.compiler)
@@ -64,9 +63,9 @@ dependencies {
     implementation(libs.firebase.config)
     implementation(libs.firebase.messaging)
 
-    // Callerid
-    implementation(libs.commons.callerid)
-
+    // CallerID
+//    implementation(libs.commons.callerid)
+    implementation(project(":callerid"))
 
 
 }

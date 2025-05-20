@@ -7,10 +7,10 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.media.RingtoneManager
 import android.os.Build
 import android.os.Bundle
+import com.origin.commons.callerid.R
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.model.NotificationInfo
 
@@ -23,7 +23,6 @@ class NotificationService(private val context: Context) {
 
     fun showNotification(notificationInfo: NotificationInfo) {
         createChannel()
-
         val bundle = Bundle().apply {
             putString("title", notificationInfo.title)
             putString("message", notificationInfo.description)
@@ -59,10 +58,7 @@ class NotificationService(private val context: Context) {
                 if (pendingIntent != null) {
                     notBuilder.setContentIntent(pendingIntent)
                 }
-                val drawable = context.applicationInfo.loadIcon(context.packageManager)
-                val bitmap = (drawable as BitmapDrawable).bitmap
-                notBuilder.setSmallIcon(context.applicationInfo.icon)
-                notBuilder.setLargeIcon(bitmap)
+                notBuilder.setSmallIcon(R.drawable.ci_notification_logo)
             } catch (_: Exception) {
             }
             mNotification = notBuilder.build()
@@ -79,10 +75,7 @@ class NotificationService(private val context: Context) {
                 if (pendingIntent != null) {
                     notBuilder1.setContentIntent(pendingIntent)
                 }
-                val drawable = context.applicationInfo.loadIcon(context.packageManager)
-                val bitmap = (drawable as BitmapDrawable).bitmap
-                notBuilder1.setSmallIcon(context.applicationInfo.icon)
-                notBuilder1.setLargeIcon(bitmap)
+                notBuilder1.setSmallIcon(R.drawable.ci_notification_logo)
             } catch (_: Exception) {
             }
             mNotification = notBuilder1.build()

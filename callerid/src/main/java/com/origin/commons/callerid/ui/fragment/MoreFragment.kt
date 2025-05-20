@@ -18,10 +18,7 @@ class MoreFragment : Fragment() {
         FragmentMoreBinding.inflate(layoutInflater)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         init()
         return _binding.root
     }
@@ -139,7 +136,6 @@ class MoreFragment : Fragment() {
             e.printStackTrace()
         }
     }
-
 
 
 }

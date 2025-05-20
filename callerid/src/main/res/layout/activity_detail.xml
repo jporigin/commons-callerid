@@ -230,7 +230,7 @@
                 app:tabIndicatorColor="@color/ci_app_color"
                 app:tabInlineLabel="true"
                 app:tabMode="fixed"
-                app:tabRippleColor="#F1D784"
+                app:tabRippleColor="@color/ci_app_color"
                 app:tabSelectedTextColor="@color/ci_app_color"
                 app:tabTextAppearance="@style/CustomTabStyle"
                 app:tabTextColor="@color/ci_grey" />

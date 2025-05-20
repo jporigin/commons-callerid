@@ -26,7 +26,6 @@ object AppModule {
         application.getSystemService<NotificationManager>()!!
 
     @Provides
-    fun providesAlarmManager(application: Application) =
-        application.getSystemService<AlarmManager>()!!
+    fun providesAlarmManager(application: Application) = application.getSystemService<AlarmManager>()!!
 
 }

@@ -44,6 +44,7 @@
             android:configChanges="uiMode"
             android:exported="false"
             android:launchMode="singleTop"
+            android:theme="@style/CiTheme.Light"
             android:screenOrientation="nosensor"
             android:windowSoftInputMode="adjustNothing|adjustPan" />
 
@@ -77,6 +78,7 @@
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
+
     </application>
 
 </manifest>

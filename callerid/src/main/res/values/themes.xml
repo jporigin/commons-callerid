@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="CiTheme.Light" parent="Theme.Material3.Light.NoActionBar">
+        <!-- bnr -->
+        <item name="bAdsShimmerColor">@color/n_shimmer_color</item>
+
+        <item name="bAdsBackground">@color/n_bg_color</item>
+        <item name="bAdsTextColor">@color/n_text_color</item>
+
+        <item name="bAdsAttributionBg">@drawable/ads_native_attribution_bg</item>
+        <item name="bAdsAttributionTvColor">@color/n_attribution_text_color</item>
+
+        <item name="bAdsCallActionBg">@drawable/banner_call_action_bg</item>
+        <item name="bAdsCallActionFg">@drawable/ads_call_action_ripple</item>
+        <item name="bAdsCallActionTvColor">@color/n_call_action_tv_color</item>
+
+        <!-- ntv -->
+        <item name="nAdsShimmerColor">@color/n_shimmer_color</item>
+
+        <item name="nAdsBackground">@color/n_bg_color</item>
+        <item name="nAdsTextColor">@color/n_text_color</item>
+
+        <item name="nAdsAttributionBg">@drawable/ads_native_attribution_bg</item>
+        <item name="nAdsAttributionTvColor">@color/n_attribution_text_color</item>
+
+        <item name="nAdsCallActionBg">@drawable/native_call_action_bg</item>
+        <item name="nAdsCallActionFg">@drawable/ads_call_action_ripple</item>
+        <item name="nAdsCallActionTvColor">@color/n_call_action_tv_color</item>
+    </style>
+
     <style name="CustomTabStyle" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">10sp</item>
     </style>
@@ -12,4 +40,5 @@
         <item name="colorControlNormal">@color/ci_grey</item>
         <item name="android:dividerHeight">2dp</item>
     </style>
+
 </resources>

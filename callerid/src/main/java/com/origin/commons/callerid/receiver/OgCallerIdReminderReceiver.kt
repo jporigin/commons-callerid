@@ -44,7 +44,6 @@ class OgCallerIdReminderReceiver: BroadcastReceiver() {
 
     private fun provideTimeInMillis(reminder: ReminderEntity): Long {
         val rightNow = Calendar.getInstance()
-
         val dateVal = reminder.date
         val hourVal = reminder.hours
         val minuteVal = reminder.minutes
