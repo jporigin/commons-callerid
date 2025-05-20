@@ -78,6 +78,7 @@ class MainActivity : AppCompatActivity() {
 >* If you want users to open the app from the Caller ID screen, add two classes in the `setUpClassToOpenApp` function: `classA` and `classBHigh`.
 >   - If the app is already open, it will launch `classA`.
 >   - If the app is closed, it will launch `classBHigh`.
+>* To use a custom caller screen, set your view to `mCustomView`.
 
 ### 🔧 Caller Screen Feature Toggles
 
