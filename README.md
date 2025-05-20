@@ -61,7 +61,13 @@ class MainActivity : AppCompatActivity() {
                 callerIdSDKApplication.initSDKAds(adFormat = AdFormat.NATIVE_BIG, adUnitId = nativeAds)
             }
             callerIdSDKApplication.setUpClassToOpenApp(MainActivity::class.java, SplashActivity::class.java)
+	    callerIdSDKApplication.setUpCustomView()
         }
+    }
+
+    private fun CallerIdSDKApplication.setUpCustomView() {
+        val customViewBinding = ItemCustomViewBinding.inflate(layoutInflater)
+        this.mCustomView = customViewBinding.root
     }
 }
 ```
