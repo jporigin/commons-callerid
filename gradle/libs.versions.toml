@@ -22,7 +22,7 @@ shimmer = "0.5.0"
 playServicesAds = "24.2.0"
 
 # Callerid
-callerId = "1.0.0"
+callerId = "1.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

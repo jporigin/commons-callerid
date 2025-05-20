@@ -55,7 +55,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun CallerIdSDKApplication.setUpCustomView() {
         val customViewBinding = ItemCustomViewBinding.inflate(layoutInflater)
-        val viewToastMap = mapOf(customViewBinding.v1 to "View 1", customViewBinding.v2 to "View 2", customViewBinding.v3 to "View 3", customViewBinding.v4 to "View 4", customViewBinding.v5 to "View 5")
+        val viewToastMap =
+            mapOf(customViewBinding.v1 to "View 1", customViewBinding.v2 to "View 2", customViewBinding.v3 to "View 3", customViewBinding.v4 to "View 4", customViewBinding.v5 to "View 5")
         viewToastMap.forEach { (view, message) ->
             view.setOnClickListener {
                 Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()

@@ -64,8 +64,5 @@ dependencies {
     implementation(libs.firebase.messaging)
 
     // CallerID
-//    implementation(libs.commons.callerid)
-    implementation(project(":callerid"))
-
-
+    implementation(libs.commons.callerid)
 }

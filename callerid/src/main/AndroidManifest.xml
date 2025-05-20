@@ -44,8 +44,8 @@
             android:configChanges="uiMode"
             android:exported="false"
             android:launchMode="singleTop"
-            android:theme="@style/CiTheme.Light"
             android:screenOrientation="nosensor"
+            android:theme="@style/CiTheme.Light"
             android:windowSoftInputMode="adjustNothing|adjustPan" />
 
         <receiver
