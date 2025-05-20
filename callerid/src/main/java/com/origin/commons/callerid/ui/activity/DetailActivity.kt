@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
@@ -15,7 +14,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.ads.AdFormat
@@ -25,7 +23,6 @@ import com.origin.commons.callerid.ads.utils.getBannerAdSize
 import com.origin.commons.callerid.databinding.ActivityDetailBinding
 import com.origin.commons.callerid.extensions.beGone
 import com.origin.commons.callerid.extensions.beInvisible
-import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.logEventE
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.ui.fragment.HomeFragment

@@ -12,7 +12,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -30,7 +29,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.loukwn.stagestepbar.StageStepBar
 import com.origin.commons.callerid.sample.databinding.ActivityPermissionBinding
-import com.origin.commons.callerid.sample.extensions.*
+import com.origin.commons.callerid.sample.extensions.isNotiPermissionReqAsked
+import com.origin.commons.callerid.sample.extensions.isPermissionRequestAsked
+import com.origin.commons.callerid.sample.extensions.setNotiPermissionReqAsked
+import com.origin.commons.callerid.sample.extensions.setPermissionGranted
+import com.origin.commons.callerid.sample.extensions.setPermissionRequestAsked
+import com.origin.commons.callerid.sample.extensions.setScreenOverlayEnabled
+import com.origin.commons.callerid.sample.extensions.startIntent
+import com.origin.commons.callerid.sample.extensions.startIntentWithFlags
 import com.origin.commons.callerid.sample.helpers.Utils
 import com.origin.commons.callerid.sample.helpers.Utils.isNotiPermissionAlreadyGranted
 import com.origin.commons.callerid.sample.helpers.Utils.isPermissionAlreadyGranted
@@ -41,10 +47,6 @@ import com.origin.commons.callerid.sample.viewmodel.PermissionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlin.apply
-import kotlin.collections.all
-import kotlin.jvm.java
-import kotlin.text.contains
 
 @AndroidEntryPoint
 class PermissionActivity : AppCompatActivity() {

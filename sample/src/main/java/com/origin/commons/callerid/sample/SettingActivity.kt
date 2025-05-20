@@ -2,7 +2,6 @@ package com.origin.commons.callerid.sample
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -16,11 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.origin.commons.callerid.CallerIdSDKApplication
-import com.origin.commons.callerid.helpers.Utils.calculateDuration
-import com.origin.commons.callerid.helpers.Utils.formatTimeToString
 import com.origin.commons.callerid.sample.databinding.ActivitySettingBinding
-import com.origin.commons.callerid.ui.activity.DetailActivity
-import java.util.Date
 
 class SettingActivity : AppCompatActivity() {
 
