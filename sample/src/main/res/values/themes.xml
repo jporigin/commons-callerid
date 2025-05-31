@@ -8,6 +8,18 @@
 
 
     <style name="CiTheme.Light" parent="Theme.Material3.Light.NoActionBar">
+
+        <item name="ciAppColor">@color/ci_app_color</item>
+        <item name="ciTxtAppColor">@color/ci_txt_app_color</item>
+
+        <item name="ciScreenBg">@color/ci_screen_bg</item>
+        <item name="ciTxtColor">@color/ci_txt_color</item>
+
+        <item name="ciRippleColor">@color/ci_ripple_color</item>
+        <item name="ciGrey">@color/ci_grey</item>
+        <item name="ciLightGrey">@color/ci_light_grey</item>
+
+
         <!-- bnr -->
         <item name="bAdsShimmerColor">@color/n_shimmer_color</item>
 

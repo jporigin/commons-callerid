@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <attr name="ciScreenBg" format="color" />
+    <attr name="ciTxtColor" format="color" />
+
+    <attr name="ciAppColor" format="color" />
+    <attr name="ciTxtAppColor" format="color" />
+
+    <attr name="ciRippleColor" format="color" />
+    <attr name="ciGrey" format="color" />
+    <attr name="ciLightGrey" format="color" />
+
     <!--  bnr  -->
     <attr name="bAdsShimmerColor" format="color" />
     <attr name="bAdsBackground" format="reference|color" />

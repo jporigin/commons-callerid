@@ -8,9 +8,9 @@
         android:pathData="M0,0h512v512h-512z"/>
     <path
         android:pathData="M270.81,320.68C265.97,323.7 260.53,324.91 255.7,324.91C250.86,324.91 245.42,323.7 240.59,320.68L0,173.79V369.04C0,410.75 33.85,444.6 75.56,444.6H436.44C478.15,444.6 512,410.75 512,369.04V173.79L270.81,320.68Z"
-        android:fillColor="@color/ci_txt_app_color"/>
+        android:fillColor="?attr/ciTxtAppColor"/>
     <path
         android:pathData="M436.44,67.4H75.56C39.9,67.4 9.67,92.79 2.42,126.64L256.3,281.39L509.58,126.64C502.33,92.79 472.1,67.4 436.44,67.4Z"
-        android:fillColor="@color/ci_txt_app_color"/>
+        android:fillColor="?attr/ciTxtAppColor"/>
   </group>
 </vector>

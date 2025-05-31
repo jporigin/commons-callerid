@@ -46,6 +46,7 @@ class HomeFragment : Fragment() {
             _binding.flCiCustom.apply {
                 visibility = View.VISIBLE
                 removeAllViews()
+                (customView.parent as? ViewGroup)?.removeView(customView)
                 addView(customView)
             }
         } ?: run {

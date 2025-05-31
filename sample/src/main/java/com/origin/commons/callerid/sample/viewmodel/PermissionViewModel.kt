@@ -5,20 +5,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.origin.commons.callerid.helpers.Utils.isPermissionAlreadyGranted
 import com.origin.commons.callerid.helpers.Utils.isScreenOverlayEnabled
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-
-@HiltViewModel
-class PermissionViewModel @Inject constructor() : ViewModel() {
+class PermissionViewModel(private val context: Context) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PermissionUiState())
     val uiState: StateFlow<PermissionUiState> = _uiState
 
-    fun checkPermissions(context: Context) {
+    fun checkPermissions() {
         viewModelScope.launch {
             if (isPermissionAlreadyGranted(context)) {
                 _uiState.value = _uiState.value.copy(
@@ -59,7 +55,7 @@ class PermissionViewModel @Inject constructor() : ViewModel() {
 
     fun updatePermissionStatus(context: Context) {
         if (isPermissionAlreadyGranted(context)) {
-            checkPermissions(context)
+            checkPermissions()
         } else if (isPermissionAlreadyGranted(context) && isScreenOverlayEnabled(context)) {
             completePermissions()
         }

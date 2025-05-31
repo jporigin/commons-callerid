@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.service)
     alias(libs.plugins.firebase.crashlytics)
-    alias(libs.plugins.daggerHilt)
     alias(libs.plugins.ksp)
 }
 
@@ -52,9 +51,6 @@ dependencies {
     // optional
     implementation("com.github.loukwn.StageStepBar:stagestepbar:1.2.0")
 
-    // Hilt
-    implementation(libs.dagger.hilt)
-    ksp(libs.dagger.hilt.compiler)
 
     // Firebase
     implementation(platform(libs.firebase.bom))
@@ -64,5 +60,6 @@ dependencies {
     implementation(libs.firebase.messaging)
 
     // CallerID
-    implementation(libs.commons.callerid)
+    implementation(project(":callerid"))
+
 }

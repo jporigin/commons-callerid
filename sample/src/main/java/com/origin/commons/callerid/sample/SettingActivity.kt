@@ -2,6 +2,7 @@ package com.origin.commons.callerid.sample
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -15,7 +16,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.origin.commons.callerid.CallerIdSDKApplication
+import com.origin.commons.callerid.helpers.Utils.calculateDuration
+import com.origin.commons.callerid.helpers.Utils.formatTimeToString
 import com.origin.commons.callerid.sample.databinding.ActivitySettingBinding
+import com.origin.commons.callerid.ui.activity.DetailActivity
+import java.util.Date
 
 class SettingActivity : AppCompatActivity() {
 
@@ -136,6 +141,20 @@ class SettingActivity : AppCompatActivity() {
             }
         }
         //
+        _binding.clToolbar.setOnClickListener {
+            // testing purpose only
+            startDetailActivity(this@SettingActivity, "+919876543210", Date().time, "Missed Call")
+        }
+    }
+
+    private fun startDetailActivity(context: Context, phoneNumber: String?, time: Long, callType: String) {
+        val intent = Intent(context.applicationContext, DetailActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        intent.putExtra("phoneNumber", phoneNumber)
+        intent.putExtra("time", formatTimeToString(time))
+        intent.putExtra("duration", calculateDuration(time, Date().time))
+        intent.putExtra("callType", callType)
+        context.applicationContext.startActivity(intent)
     }
 
     private fun processedDialog(context: Context, @StringRes title: Int, @StringRes description: Int, onPositiveClick: () -> Unit, onNegativeClick: () -> Unit) {

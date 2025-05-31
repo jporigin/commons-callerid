@@ -19,19 +19,19 @@
             android:id="@+id/llMsg1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:foreground="?selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:foreground="?selectableItemBackground"
-            android:paddingHorizontal="15dp"
-            android:paddingVertical="10dp">
+            android:paddingHorizontal="7dp"
+            android:paddingVertical="6dp">
 
             <ImageView
                 android:id="@+id/ivRadio1"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_unselected"
-                tools:src="@drawable/ic_selected" />
+                android:padding="7dp"
+                android:src="@drawable/ic_unselected" />
 
             <TextView
                 android:id="@+id/tvMsg1"
@@ -41,19 +41,20 @@
                 android:includeFontPadding="false"
                 android:paddingHorizontal="10dp"
                 android:text="@string/sorry_i_can_t_talk_right_now"
-                android:textColor="@color/ci_txt_color"
+                android:textColor="?attr/ciTxtColor"
+                android:textSize="14sp"
                 android:textStyle="bold" />
+
 
             <ImageView
                 android:id="@+id/ivSend1"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
                 android:contentDescription="@null"
                 android:foreground="@drawable/bg_ripple_round"
-                android:padding="2dp"
+                android:padding="8dp"
                 android:src="@drawable/ic_send"
-                android:visibility="gone"
-                tools:visibility="visible" />
+                android:visibility="visible" />
 
         </LinearLayout>
 
@@ -61,17 +62,18 @@
             android:id="@+id/llMsg2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:foreground="?selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:foreground="?selectableItemBackground"
-            android:paddingHorizontal="15dp"
-            android:paddingVertical="10dp">
+            android:paddingHorizontal="7dp"
+            android:paddingVertical="6dp">
 
             <ImageView
                 android:id="@+id/ivRadio2"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
                 android:contentDescription="@null"
+                android:padding="7dp"
                 android:src="@drawable/ic_unselected" />
 
             <TextView
@@ -82,18 +84,20 @@
                 android:includeFontPadding="false"
                 android:paddingHorizontal="10dp"
                 android:text="@string/can_i_call_you_later"
-                android:textColor="@color/ci_txt_color"
+                android:textColor="?attr/ciTxtColor"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/ivSend2"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
                 android:contentDescription="@null"
                 android:foreground="@drawable/bg_ripple_round"
-                android:padding="2dp"
+                android:padding="8dp"
                 android:src="@drawable/ic_send"
                 android:visibility="gone" />
+
 
         </LinearLayout>
 
@@ -101,17 +105,18 @@
             android:id="@+id/llMsg3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:foreground="?selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:foreground="?selectableItemBackground"
-            android:paddingHorizontal="15dp"
-            android:paddingVertical="10dp">
+            android:paddingHorizontal="7dp"
+            android:paddingVertical="6dp">
 
             <ImageView
                 android:id="@+id/ivRadio3"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
                 android:contentDescription="@null"
+                android:padding="7dp"
                 android:src="@drawable/ic_unselected" />
 
             <TextView
@@ -122,16 +127,17 @@
                 android:includeFontPadding="false"
                 android:paddingHorizontal="10dp"
                 android:text="@string/i_m_on_my_way"
-                android:textColor="@color/ci_txt_color"
+                android:textColor="?attr/ciTxtColor"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/ivSend3"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
                 android:contentDescription="@null"
                 android:foreground="@drawable/bg_ripple_round"
-                android:padding="2dp"
+                android:padding="8dp"
                 android:src="@drawable/ic_send"
                 android:visibility="gone" />
 
@@ -141,44 +147,49 @@
             android:id="@+id/llMsg4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="14dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/ci_boarder_light_gray_8"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="15dp"
-            android:paddingVertical="10dp">
+            android:paddingVertical="10dp"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp">
 
             <ImageView
                 android:id="@+id/ivEdit"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="34dp"
+                android:padding="8dp"
+                android:layout_height="34dp"
                 android:contentDescription="@null"
                 android:foreground="@drawable/bg_ripple_round"
-                android:padding="2dp"
                 android:src="@drawable/ic_edit_unselected" />
 
             <EditText
                 android:id="@+id/etMsg"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autofillHints="all"
                 android:background="@null"
                 android:hint="@string/write_personal_message"
+                android:textColor="?attr/ciTxtColor"
+                android:imeOptions="actionDone"
                 android:includeFontPadding="false"
                 android:inputType="text"
                 android:paddingHorizontal="10dp"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/ivSend4"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
                 android:contentDescription="@null"
                 android:foreground="@drawable/bg_ripple_round"
-                android:padding="2dp"
+                android:padding="8dp"
                 android:src="@drawable/ic_send"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
         </LinearLayout>
 

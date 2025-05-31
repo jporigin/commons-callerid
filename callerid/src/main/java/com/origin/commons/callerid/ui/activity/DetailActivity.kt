@@ -3,6 +3,7 @@ package com.origin.commons.callerid.ui.activity
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
@@ -29,10 +30,7 @@ import com.origin.commons.callerid.ui.fragment.HomeFragment
 import com.origin.commons.callerid.ui.fragment.MessageFragment
 import com.origin.commons.callerid.ui.fragment.MoreFragment
 import com.origin.commons.callerid.ui.fragment.NotificationFragment
-import dagger.hilt.android.AndroidEntryPoint
 
-
-@AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var _binding: ActivityDetailBinding

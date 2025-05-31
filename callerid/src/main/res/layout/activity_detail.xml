@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ci_screen_bg"
-    tools:context=".ui.activity.DetailActivity">
+    android:background="?attr/ciScreenBg">
 
     <!-- MainView -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/clAdView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,10 +45,9 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cardId"
                 app:layout_constraintTop_toTopOf="parent">
@@ -64,7 +63,7 @@
                         android:layout_height="wrap_content"
                         android:includeFontPadding="false"
                         android:text="@string/private_number"
-                        android:textColor="@color/ci_txt_color"
+                        android:textColor="?attr/ciTxtColor"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:includeFontPadding="false"
-                        android:textColor="@color/ci_txt_color"
+                        android:textColor="?attr/ciTxtColor"
                         android:textSize="12sp"
                         android:textStyle="italic"
                         app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +84,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardBackgroundColor="@color/ci_screen_bg"
+                        app:cardBackgroundColor="?attr/ciScreenBg"
                         app:cardCornerRadius="16dp"
                         app:cardElevation="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -98,11 +97,11 @@
 
                             <ImageView
                                 android:id="@+id/ivLogo"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
                                 android:background="@drawable/bg_app_logo_holder"
                                 android:contentDescription="@null"
-                                android:padding="2dp" />
+                                android:padding="6dp" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -113,7 +112,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/ci_light_grey"
+                    android:background="?attr/ciLightGrey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -138,7 +137,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:includeFontPadding="false"
-                            android:textColor="@color/ci_txt_color"
+                            android:textColor="?attr/ciTxtColor"
                             android:textStyle="bold" />
 
                         <TextView
@@ -147,7 +146,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:includeFontPadding="false"
-                            android:textColor="@color/ci_txt_color"
+                            android:textColor="?attr/ciTxtColor"
                             android:textStyle="italic" />
 
                     </LinearLayout>
@@ -168,7 +167,7 @@
                             android:layout_height="wrap_content"
                             android:includeFontPadding="false"
                             android:text="@string/ci_duration"
-                            android:textColor="@color/ci_txt_color"
+                            android:textColor="?attr/ciTxtColor"
                             android:textStyle="bold" />
 
                         <TextView
@@ -177,17 +176,17 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:includeFontPadding="false"
-                            android:textColor="@color/ci_txt_color"
+                            android:textColor="?attr/ciTxtColor"
                             android:textStyle="bold" />
 
                     </LinearLayout>
 
                     <ImageView
                         android:id="@+id/ivCall"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
                         android:contentDescription="@null"
-                        android:padding="3dp"
+                        android:padding="8dp"
                         android:src="@drawable/ci_call_green"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -203,7 +202,7 @@
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/ci_light_grey"
+            android:background="?attr/ciLightGrey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/clTopView" />
@@ -227,13 +226,13 @@
                 app:tabGravity="fill"
                 app:tabIconTint="@color/ci_tab_icon_selector"
                 app:tabIndicatorAnimationMode="elastic"
-                app:tabIndicatorColor="@color/ci_app_color"
+                app:tabIndicatorColor="?attr/ciAppColor"
                 app:tabInlineLabel="true"
                 app:tabMode="fixed"
-                app:tabRippleColor="@color/ci_app_color"
-                app:tabSelectedTextColor="@color/ci_app_color"
+                app:tabRippleColor="?attr/ciAppColor"
+                app:tabSelectedTextColor="?attr/ciAppColor"
                 app:tabTextAppearance="@style/CustomTabStyle"
-                app:tabTextColor="@color/ci_grey" />
+                app:tabTextColor="?attr/ciGrey" />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vpTab"
@@ -259,9 +258,9 @@
 
         <include
             android:id="@+id/incAdsView"
+            layout="@layout/include_ads_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            layout="@layout/include_ads_view"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

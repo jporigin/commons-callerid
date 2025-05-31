@@ -7,11 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.telephony.TelephonyManager
 import android.util.Log
-import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.prefsHelper
-import com.origin.commons.callerid.helpers.SharedPreferencesHelper.Companion.IS_COMPLETE_CALL_FEATURE_ENABLE
-import com.origin.commons.callerid.helpers.SharedPreferencesHelper.Companion.IS_MISSED_CALL_FEATURE_ENABLE
-import com.origin.commons.callerid.helpers.SharedPreferencesHelper.Companion.IS_NO_ANSWER_FEATURE_ENABLE
 import com.origin.commons.callerid.helpers.Utils
 import com.origin.commons.callerid.helpers.Utils.calculateDuration
 import com.origin.commons.callerid.helpers.Utils.formatTimeToString

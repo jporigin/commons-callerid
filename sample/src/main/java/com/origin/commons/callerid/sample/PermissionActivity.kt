@@ -44,18 +44,16 @@ import com.origin.commons.callerid.sample.helpers.Utils.isPhonePermissionAlready
 import com.origin.commons.callerid.sample.viewmodel.PermissionState
 import com.origin.commons.callerid.sample.viewmodel.PermissionUiState
 import com.origin.commons.callerid.sample.viewmodel.PermissionViewModel
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
 class PermissionActivity : AppCompatActivity() {
 
     private val _binding by lazy {
         ActivityPermissionBinding.inflate(layoutInflater)
     }
 
-    private val viewModel by viewModels<PermissionViewModel>()
+    private val viewModel by lazy { PermissionViewModel(this) }
 
     private val overlayPermissionHandler = Handler(Looper.getMainLooper())
     private val overlayPermissionCheckInterval = 1000L
@@ -71,7 +69,7 @@ class PermissionActivity : AppCompatActivity() {
         }
         setUpObservers()
         setUpClickEvents()
-        viewModel.checkPermissions(this)
+        viewModel.checkPermissions()
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 

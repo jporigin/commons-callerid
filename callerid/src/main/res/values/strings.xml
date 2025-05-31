@@ -2,7 +2,6 @@
 <resources>
     <string name="ci_duration">Duration</string>
 
-
     <string name="add_email_to_contact">Add Email to\nContact</string>
     <string name="send_number_to_email">Send number to\nemail</string>
     <string name="write_personal_message">Write Personal message</string>
@@ -31,12 +30,8 @@
     <string name="confirm_dialog_description">This great feature give you information on anybody who calls and helps you avoid spam callers.</string>
     <string name="good_afternoon">Good Afternoon!</string>
     <string name="good_evening">Good Evening!</string>
-    <string name="good_night">good Night!</string>
-<!--    <string name="open_setting">Open Setting</string>-->
-<!--    <string name="open_setting_desc">Please provide required permission to use application with hastle free.</string>-->
-<!--    <string name="required_permission">Required Permission</string>-->
+    <string name="good_night">Good Night!</string>
     <string name="required_permission_desc">Permission is required please allow all permission.</string>
-<!--    <string name="allow_permission">Allow Permission</string>-->
     <string name="reminder_title">Reminder Title</string>
     <string name="i_m_on_my_way">I\'m on my way</string>
     <string name="sorry_i_can_t_talk_right_now">Sorry, I can\'t talk right now</string>
@@ -47,6 +42,5 @@
     <string name="ad_attribution_text" translatable="false">Ad</string>
 
     <string name="space_for_ads">Space For Ads</string>
-
 
 </resources>

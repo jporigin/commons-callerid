@@ -22,7 +22,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/space_for_ads"
-            android:textColor="@color/ci_txt_color"
+            android:textColor="?attr/ciTxtColor"
             android:textSize="16sp"
             android:visibility="visible" />
 

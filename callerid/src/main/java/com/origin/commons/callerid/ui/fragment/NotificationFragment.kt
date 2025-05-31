@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.origin.commons.callerid.states.ReminderState
@@ -32,10 +31,10 @@ import java.util.Locale
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 
-import dagger.hilt.android.AndroidEntryPoint
-
-@AndroidEntryPoint
 class NotificationFragment : Fragment() {
+    private val viewModel: NotificationFragmentViewModel by lazy {
+        NotificationFragmentViewModel(requireContext())
+    }
 
     private val _binding by lazy {
         FragmentNotificationBinding.inflate(layoutInflater)
@@ -53,7 +52,6 @@ class NotificationFragment : Fragment() {
     private var updateModel: ReminderEntity? = ReminderEntity()
     private var TIME_PICKER_INTERVAL = 5
 
-    private val viewModel: NotificationFragmentViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         init()
@@ -296,17 +294,13 @@ class NotificationFragment : Fragment() {
 
     private fun getDatesFromCalender(): Array<String> {
         val c1 = Calendar.getInstance()
-
         val dates = ArrayList<String>()
         val dateFormat = SimpleDateFormat("EEE, MMM dd")
         dates.add("Today")
-
         for (i in 0..364) {
             c1.add(Calendar.DATE, 1)
             dates.add(dateFormat.format(c1.time))
         }
-
-        Log.e("DATES", "" + dates)
         return dates.toTypedArray()
     }
 

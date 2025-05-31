@@ -5,14 +5,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.telephony.SmsManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.databinding.FragmentMessageBinding
+import com.origin.commons.callerid.extensions.getColorFromAttr
 import com.origin.commons.callerid.extensions.showCustomToast
 import com.origin.commons.callerid.extensions.value
 
@@ -22,13 +22,8 @@ class MessageFragment : Fragment() {
         FragmentMessageBinding.inflate(layoutInflater)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         init()
-
         return _binding.root
     }
 
@@ -38,23 +33,16 @@ class MessageFragment : Fragment() {
 
     private fun clickEvents() {
         with(_binding) {
+            val ciAppColor = requireContext().getColorFromAttr(R.attr.ciAppColor, R.color.ci_app_color)
+            val ciTxtColor = requireContext().getColorFromAttr(R.attr.ciTxtColor, R.color.ci_txt_color)
+            clickMsgLl1()
             llMsg1.setOnClickListener {
-                tvMsg1.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_app_color))
-                tvMsg2.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
-                tvMsg3.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
-                ivSend1.visibility = View.VISIBLE
-                ivSend2.visibility = View.INVISIBLE
-                ivSend3.visibility = View.INVISIBLE
-                ivSend4.visibility = View.INVISIBLE
-                ivRadio1.setImageResource(R.drawable.ic_selected)
-                ivRadio2.setImageResource(R.drawable.ic_unselected)
-                ivRadio3.setImageResource(R.drawable.ic_unselected)
-                ivEdit.setImageResource(R.drawable.ic_edit_unselected)
+                clickMsgLl1()
             }
             llMsg2.setOnClickListener {
-                tvMsg1.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
-                tvMsg2.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_app_color))
-                tvMsg3.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
+                tvMsg1.setTextColor(ciTxtColor)
+                tvMsg2.setTextColor(ciAppColor)
+                tvMsg3.setTextColor(ciTxtColor)
                 ivSend1.visibility = View.INVISIBLE
                 ivSend2.visibility = View.VISIBLE
                 ivSend3.visibility = View.INVISIBLE
@@ -63,11 +51,15 @@ class MessageFragment : Fragment() {
                 ivRadio2.setImageResource(R.drawable.ic_selected)
                 ivRadio3.setImageResource(R.drawable.ic_unselected)
                 ivEdit.setImageResource(R.drawable.ic_edit_unselected)
+                try {
+                    requireActivity().dismissKeyboard()
+                } catch (_: Exception) {
+                }
             }
             llMsg3.setOnClickListener {
-                tvMsg1.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
-                tvMsg2.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
-                tvMsg3.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_app_color))
+                tvMsg1.setTextColor(ciTxtColor)
+                tvMsg2.setTextColor(ciTxtColor)
+                tvMsg3.setTextColor(ciAppColor)
                 ivSend1.visibility = View.INVISIBLE
                 ivSend2.visibility = View.INVISIBLE
                 ivSend3.visibility = View.VISIBLE
@@ -76,11 +68,15 @@ class MessageFragment : Fragment() {
                 ivRadio2.setImageResource(R.drawable.ic_unselected)
                 ivRadio3.setImageResource(R.drawable.ic_selected)
                 ivEdit.setImageResource(R.drawable.ic_edit_unselected)
+                try {
+                    requireActivity().dismissKeyboard()
+                } catch (_: Exception) {
+                }
             }
             llMsg4.setOnClickListener {
-                tvMsg1.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
-                tvMsg2.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
-                tvMsg3.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
+                tvMsg1.setTextColor(ciTxtColor)
+                tvMsg2.setTextColor(ciTxtColor)
+                tvMsg3.setTextColor(ciTxtColor)
                 ivSend1.visibility = View.INVISIBLE
                 ivSend2.visibility = View.INVISIBLE
                 ivSend3.visibility = View.INVISIBLE
@@ -89,15 +85,14 @@ class MessageFragment : Fragment() {
                 ivRadio2.setImageResource(R.drawable.ic_unselected)
                 ivRadio3.setImageResource(R.drawable.ic_unselected)
                 ivEdit.setImageResource(R.drawable.ic_edit)
-
                 etMsg.postDelayed({
                     etMsg.showKeyboard()
-                },50)
+                }, 50)
             }
             ivEdit.setOnClickListener {
-                tvMsg1.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
-                tvMsg2.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
-                tvMsg3.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
+                tvMsg1.setTextColor(ciTxtColor)
+                tvMsg2.setTextColor(ciTxtColor)
+                tvMsg3.setTextColor(ciTxtColor)
                 ivSend1.visibility = View.INVISIBLE
                 ivSend2.visibility = View.INVISIBLE
                 ivSend3.visibility = View.INVISIBLE
@@ -107,20 +102,14 @@ class MessageFragment : Fragment() {
                 ivRadio3.setImageResource(R.drawable.ic_unselected)
                 ivEdit.setImageResource(R.drawable.ic_edit)
                 etMsg.requestFocus()
-//                Handler(Looper.getMainLooper()).postDelayed({
-//                    if (!isKeyboardVisible(requireActivity())) {
-//                        requireActivity().showKeyBoard(etMsg)
-//                    }
-//                }, 50)
-
                 etMsg.postDelayed({
                     etMsg.showKeyboard()
-                },50)
+                }, 50)
             }
             etMsg.setOnClickListener {
-                tvMsg1.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
-                tvMsg2.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
-                tvMsg3.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
+                tvMsg1.setTextColor(ciTxtColor)
+                tvMsg2.setTextColor(ciTxtColor)
+                tvMsg3.setTextColor(ciTxtColor)
                 ivSend1.visibility = View.INVISIBLE
                 ivSend2.visibility = View.INVISIBLE
                 ivSend3.visibility = View.INVISIBLE
@@ -130,21 +119,23 @@ class MessageFragment : Fragment() {
                 ivRadio3.setImageResource(R.drawable.ic_unselected)
                 ivEdit.setImageResource(R.drawable.ic_edit)
                 etMsg.requestFocus()
-//                Handler(Looper.getMainLooper()).postDelayed({
-//                    if (!isKeyboardVisible(requireActivity())) {
-//                        requireActivity().showKeyBoard(etMsg)
-//                    }
-//                }, 50)
-
                 etMsg.postDelayed({
                     etMsg.showKeyboard()
-                },50)
+                }, 50)
             }
+            etMsg.setOnEditorActionListener { _, actionID: Int, _ ->
+                if (actionID == EditorInfo.IME_ACTION_DONE) {
+                    clickSend4()
+                    true
+                }
+                false
+            }
+
             etMsg.setOnFocusChangeListener { v, hasFocus ->
                 if (hasFocus) {
-                    tvMsg1.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
-                    tvMsg2.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
-                    tvMsg3.setTextColor(ContextCompat.getColor(requireContext(), R.color.ci_txt_color))
+                    tvMsg1.setTextColor(ciTxtColor)
+                    tvMsg2.setTextColor(ciTxtColor)
+                    tvMsg3.setTextColor(ciTxtColor)
                     ivSend1.visibility = View.INVISIBLE
                     ivSend2.visibility = View.INVISIBLE
                     ivSend3.visibility = View.INVISIBLE
@@ -172,33 +163,48 @@ class MessageFragment : Fragment() {
             }
 
             ivSend4.setOnClickListener {
-                if (etMsg.value.isNotEmpty()) {
-                    val message = etMsg.text.toString()
-                    openMessage(requireContext(), message)
-                } else {
-                    requireActivity().showCustomToast("Please enter message")
+                clickSend4()
+            }
+        }
+    }
+
+    fun clickSend4() {
+        with(_binding) {
+            if (etMsg.value.isNotEmpty()) {
+                val message = etMsg.text.toString()
+                openMessage(requireContext(), message)
+                try {
+                    requireActivity().dismissKeyboard()
+                } catch (_: Exception) {
                 }
+            } else {
+                requireActivity().showCustomToast("Please enter message")
             }
 
         }
     }
 
-//    private fun openMessage(context: Context, message: String) {
-//        try {
-//            val intent = Intent(Intent.ACTION_VIEW)
-//            intent.type = "vnd.android-dir/mms-sms"
-//            intent.putExtra("sms_body", message)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//            context.startActivity(intent)
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//            val intent2 = Intent(Intent.ACTION_MAIN)
-//            intent2.addCategory(Intent.CATEGORY_APP_MESSAGING)
-//            intent2.addCategory(Intent.CATEGORY_DEFAULT)
-//            intent2.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//            context.startActivity(intent2)
-//        }
-//    }
+    fun clickMsgLl1() {
+        val ciAppColor = requireContext().getColorFromAttr(R.attr.ciAppColor, R.color.ci_app_color)
+        val ciTxtColor = requireContext().getColorFromAttr(R.attr.ciTxtColor, R.color.ci_txt_color)
+        with(_binding) {
+            tvMsg1.setTextColor(ciAppColor)
+            tvMsg2.setTextColor(ciTxtColor)
+            tvMsg3.setTextColor(ciTxtColor)
+            ivSend1.visibility = View.VISIBLE
+            ivSend2.visibility = View.INVISIBLE
+            ivSend3.visibility = View.INVISIBLE
+            ivSend4.visibility = View.INVISIBLE
+            ivRadio1.setImageResource(R.drawable.ic_selected)
+            ivRadio2.setImageResource(R.drawable.ic_unselected)
+            ivRadio3.setImageResource(R.drawable.ic_unselected)
+            ivEdit.setImageResource(R.drawable.ic_edit_unselected)
+        }
+        try {
+            requireActivity().dismissKeyboard()
+        } catch (_: Exception) {
+        }
+    }
 
     /*** Replace Above Function With This Function ***/
     private fun openMessage(context: Context, message: String) {
@@ -229,19 +235,4 @@ class MessageFragment : Fragment() {
             }
         }
     }
-
-
-    private fun sendMessage(mobileNumber: String, message: String) {
-//        val smsIntent = Intent(Intent.ACTION_SENDTO)
-//        smsIntent.addCategory(Intent.CATEGORY_DEFAULT)
-//        smsIntent.setType("vnd.android-dir/mms-sms")
-//        smsIntent.putExtra("address", "882645964")
-//        smsIntent.putExtra("sms_body", message)
-//        startActivity(smsIntent)
-        val smsManager = SmsManager.getDefault()
-        smsManager.sendTextMessage(mobileNumber, null, message, null, null)
-        requireActivity().showCustomToast("Message sent")
-    }
-
-
 }

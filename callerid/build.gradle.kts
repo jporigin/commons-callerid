@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.daggerHilt)
 }
 
 android {
@@ -47,9 +46,7 @@ dependencies {
 
     implementation(libs.androidx.fragment.ktx)
 
-    // Hilt
-    implementation(libs.dagger.hilt)
-    ksp(libs.dagger.hilt.compiler)
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
 
     // Firebase
     implementation(platform(libs.firebase.bom))

@@ -5,10 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import com.origin.commons.callerid.db.entity.ReminderEntity
+import com.origin.commons.callerid.di.AppProvider
 import com.origin.commons.callerid.model.toNotificationInfo
-import com.origin.commons.callerid.repository.ReminderRepository
 import com.origin.commons.callerid.service.NotificationService
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -16,15 +15,8 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import javax.inject.Inject
-import kotlin.let
-import kotlin.text.toInt
 
-@AndroidEntryPoint
 class OgCallerIdReminderReceiver: BroadcastReceiver() {
-
-    @Inject
-    lateinit var reminderRepository: ReminderRepository
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context == null || intent == null) return
@@ -33,9 +25,8 @@ class OgCallerIdReminderReceiver: BroadcastReceiver() {
         val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
         val service = NotificationService(context)
         val reminderId = intent.getStringExtra("reminderId")
-
         coroutineScope.launch {
-            val item = reminderId?.let { reminderRepository.getReminderByIdNormal(it.toInt()) }
+            val item = reminderId?.let { AppProvider(context).reminderRepository.getReminderByIdNormal(it.toInt()) }
             val timeInMillis = item?.let { provideTimeInMillis(it) }
             val notificationInfo = timeInMillis?.let { item.toNotificationInfo(it) }
             notificationInfo?.let { service.showNotification(it) }

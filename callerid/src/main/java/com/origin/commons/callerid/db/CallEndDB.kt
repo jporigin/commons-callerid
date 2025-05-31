@@ -1,6 +1,8 @@
 package com.origin.commons.callerid.db
 
+import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.origin.commons.callerid.db.dao.ReminderDao
 import com.origin.commons.callerid.db.entity.ReminderEntity
@@ -12,6 +14,16 @@ abstract class CallEndDB : RoomDatabase() {
 
     companion object {
         const val DATABASE_NAME = "call_end_demo.db"
+
+        @Volatile
+        private var INSTANCE: CallEndDB? = null
+        fun getInstance(context: Context): CallEndDB {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(context.applicationContext, CallEndDB::class.java, DATABASE_NAME).fallbackToDestructiveMigration().build()
+                INSTANCE = instance
+                instance
+            }
+        }
     }
 
 }
