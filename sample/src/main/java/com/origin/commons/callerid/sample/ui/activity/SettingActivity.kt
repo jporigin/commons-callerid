@@ -1,4 +1,4 @@
-package com.origin.commons.callerid.sample
+package com.origin.commons.callerid.sample.ui.activity
 
 import android.app.Dialog
 import android.content.Context
@@ -18,8 +18,9 @@ import androidx.core.view.WindowInsetsCompat
 import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.helpers.Utils.calculateDuration
 import com.origin.commons.callerid.helpers.Utils.formatTimeToString
+import com.origin.commons.callerid.sample.R
 import com.origin.commons.callerid.sample.databinding.ActivitySettingBinding
-import com.origin.commons.callerid.ui.activity.DetailActivity
+import com.origin.commons.callerid.ui.activity.OgCallerIdActivity
 import java.util.Date
 
 class SettingActivity : AppCompatActivity() {
@@ -148,7 +149,7 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun startDetailActivity(context: Context, phoneNumber: String?, time: Long, callType: String) {
-        val intent = Intent(context.applicationContext, DetailActivity::class.java)
+        val intent = Intent(context.applicationContext, OgCallerIdActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         intent.putExtra("phoneNumber", phoneNumber)
         intent.putExtra("time", formatTimeToString(time))

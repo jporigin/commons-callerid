@@ -48,10 +48,6 @@ class MoreFragment : Fragment() {
             clWeb.setOnClickListener {
                 openWebBrowser(requireContext(), "http://www.google.com")
             }
-
-//            clAfterCallSetting.setOnClickListener {
-//                requireActivity().startIntent(AfterCallSettingActivity::class.java)
-//            }
         }
     }
 

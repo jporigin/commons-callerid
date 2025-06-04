@@ -1,4 +1,4 @@
-package com.origin.commons.callerid.sample
+package com.origin.commons.callerid.sample.ui.activity
 
 import android.content.Intent
 import android.graphics.Color
@@ -8,8 +8,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.origin.commons.callerid.helpers.Utils.isPermissionAlreadyGranted
+import com.origin.commons.callerid.helpers.Utils.isPhoneStatePermissionGranted
 import com.origin.commons.callerid.helpers.Utils.isScreenOverlayEnabled
+import com.origin.commons.callerid.sample.R
 import com.origin.commons.callerid.sample.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {
@@ -30,7 +31,7 @@ class SplashActivity : AppCompatActivity() {
         runOnUiThread {
             _binding.root.postDelayed({
                 when {
-                    !isPermissionAlreadyGranted(this@SplashActivity) || !isScreenOverlayEnabled(this@SplashActivity) -> {
+                    !isPhoneStatePermissionGranted(this@SplashActivity) || !isScreenOverlayEnabled(this@SplashActivity) -> {
                         startActivity(Intent(this@SplashActivity, PermissionActivity::class.java))
                     }
 

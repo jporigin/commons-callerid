@@ -11,20 +11,25 @@ import java.util.Locale
 
 object Utils {
 
-    fun isPermissionAlreadyGranted(context: Context): Boolean {
+    fun isPhoneStatePermissionGranted(context: Context): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
         } else {
             ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
         }
     }
 
+    fun isNotificationPermissionGranted(context: Context): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+    }
 
     fun isScreenOverlayEnabled(context: Context): Boolean {
         return Settings.canDrawOverlays(context)
     }
-
 
     fun formatTimeToString(millies: Long): String {
         val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())

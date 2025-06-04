@@ -8,6 +8,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -59,14 +60,14 @@ fun systemLogE(tag: String, messageString: String?) {
     }
 }
 
-fun Activity.showCustomToast(message: String, length: Int = Toast.LENGTH_SHORT) {
-    runOnUiThread {
+fun Context.showCustomToast(message: String, length: Int = Toast.LENGTH_SHORT) {
+    Handler(mainLooper).post {
         Toast.makeText(this, message, length).show()
     }
 }
 
-fun Activity.showCustomToast(@StringRes message: Int, length: Int = Toast.LENGTH_SHORT) {
-    runOnUiThread {
+fun Context.showCustomToast(@StringRes message: Int, length: Int = Toast.LENGTH_SHORT) {
+    Handler(mainLooper).post {
         Toast.makeText(this, getString(message), length).show()
     }
 }

@@ -11,34 +11,29 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.os.Bundle
 import com.origin.commons.callerid.R
-import com.origin.commons.callerid.extensions.prefsHelper
+import com.origin.commons.callerid.extensions.getOpenAppIntent
+import com.origin.commons.callerid.helpers.Utils.isNotificationPermissionGranted
 import com.origin.commons.callerid.model.NotificationInfo
 
 class NotificationService(private val context: Context) {
-
     private lateinit var mNotification: Notification
-
-    private val notificationManager = context
-        .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     fun showNotification(notificationInfo: NotificationInfo) {
+        if (!isNotificationPermissionGranted(context)) {
+            return
+        }
         createChannel()
+        val mIntent: Intent? = context.getOpenAppIntent()
         val bundle = Bundle().apply {
             putString("title", notificationInfo.title)
             putString("message", notificationInfo.description)
             putBoolean("notification", true)
         }
-
-        var mClass2High: Class<*>? = try {
-            Class.forName(context.prefsHelper.mClass2High)
-        } catch (_: Exception) {
-            null
-        }
-
         val pendingIntent: PendingIntent? = try {
-            if (mClass2High != null) {
+            if (mIntent != null) {
                 PendingIntent.getActivity(
-                    context, notificationInfo.notificationId.hashCode(), Intent(context, mClass2High).putExtras(bundle).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK },
+                    context, notificationInfo.notificationId.hashCode(), mIntent.putExtras(bundle).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK },
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
             } else {

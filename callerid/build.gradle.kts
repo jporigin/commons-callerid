@@ -43,10 +43,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
     implementation(libs.androidx.fragment.ktx)
-
-    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
 
     // Firebase
     implementation(platform(libs.firebase.bom))

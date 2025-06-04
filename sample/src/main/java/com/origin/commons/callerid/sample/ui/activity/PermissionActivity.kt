@@ -1,4 +1,4 @@
-package com.origin.commons.callerid.sample
+package com.origin.commons.callerid.sample.ui.activity
 
 import android.Manifest
 import android.app.Dialog
@@ -19,7 +19,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -28,6 +27,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.loukwn.stagestepbar.StageStepBar
+import com.origin.commons.callerid.helpers.Utils.isNotificationPermissionGranted
+import com.origin.commons.callerid.helpers.Utils.isPhoneStatePermissionGranted
+import com.origin.commons.callerid.helpers.Utils.isScreenOverlayEnabled
+import com.origin.commons.callerid.sample.R
 import com.origin.commons.callerid.sample.databinding.ActivityPermissionBinding
 import com.origin.commons.callerid.sample.extensions.isNotiPermissionReqAsked
 import com.origin.commons.callerid.sample.extensions.isPermissionRequestAsked
@@ -37,10 +40,6 @@ import com.origin.commons.callerid.sample.extensions.setPermissionRequestAsked
 import com.origin.commons.callerid.sample.extensions.setScreenOverlayEnabled
 import com.origin.commons.callerid.sample.extensions.startIntent
 import com.origin.commons.callerid.sample.extensions.startIntentWithFlags
-import com.origin.commons.callerid.sample.helpers.Utils
-import com.origin.commons.callerid.sample.helpers.Utils.isNotiPermissionAlreadyGranted
-import com.origin.commons.callerid.sample.helpers.Utils.isPermissionAlreadyGranted
-import com.origin.commons.callerid.sample.helpers.Utils.isPhonePermissionAlreadyGranted
 import com.origin.commons.callerid.sample.viewmodel.PermissionState
 import com.origin.commons.callerid.sample.viewmodel.PermissionUiState
 import com.origin.commons.callerid.sample.viewmodel.PermissionViewModel
@@ -88,7 +87,7 @@ class PermissionActivity : AppCompatActivity() {
         _binding.btnAskPermission.setOnClickListener {
             when (viewModel.uiState.value.permissionState) {
                 PermissionState.REGULAR_PERMISSION -> {
-                    if (!isPhonePermissionAlreadyGranted(this)) {
+                    if (!isPhoneStatePermissionGranted(this)) {
                         requestPhonePermission()
                     } else {
                         requestNotificationPermission()
@@ -107,25 +106,23 @@ class PermissionActivity : AppCompatActivity() {
     }
 
     private val requestOpenSetting = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (isPermissionAlreadyGranted(this)) {
+        if (isPhoneStatePermissionGranted(this) && isNotificationPermissionGranted(this)) {
             setPermissionGranted(true)
             viewModel.updatePermissionStatus(this)
-
         }
     }
 
     private val requestPhonePermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
         val granted = permissions.entries.all { it.value }
         if (granted) {
-            if (isPermissionAlreadyGranted(this)) {
+            if (isPhoneStatePermissionGranted(this) && isNotificationPermissionGranted(this)) {
                 setPermissionGranted(true)
                 viewModel.updatePermissionStatus(this)
-
             } else {
-                if (!isPhonePermissionAlreadyGranted(this)) {
+                if (!isPhoneStatePermissionGranted(this)) {
                     requestPhonePermission()
                 } else {
-                    if (!isNotiPermissionAlreadyGranted(this)) {
+                    if (!isNotificationPermissionGranted(this)) {
                         requestNotificationPermission()
                     }
                 }
@@ -134,7 +131,7 @@ class PermissionActivity : AppCompatActivity() {
             if (!isNotiPermissionReqAsked()) {
                 setNotiPermissionReqAsked(true)
                 requiredPermissionDialog(this, R.string.required_permission, R.string.required_permission_desc, onNegativeClick = {}, onPositiveClick = {
-                    if (!isPhonePermissionAlreadyGranted(this)) {
+                    if (!isPhoneStatePermissionGranted(this)) {
                         requestPhonePermission()
                     } else {
                         requestNotificationPermission()
@@ -159,14 +156,14 @@ class PermissionActivity : AppCompatActivity() {
     private val requestNotificationPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
         val granted = permissions.entries.all { it.value }
         if (granted) {
-            if (isPermissionAlreadyGranted(this)) {
+            if (isPhoneStatePermissionGranted(this) && isNotificationPermissionGranted(this)) {
                 setPermissionGranted(true)
                 viewModel.updatePermissionStatus(this)
             } else {
-                if (!isPhonePermissionAlreadyGranted(this)) {
+                if (!isPhoneStatePermissionGranted(this)) {
                     requestPhonePermission()
                 } else {
-                    if (!isNotiPermissionAlreadyGranted(this)) {
+                    if (!isNotificationPermissionGranted(this)) {
                         requestNotificationPermission()
                     }
                 }
@@ -177,7 +174,7 @@ class PermissionActivity : AppCompatActivity() {
                 requiredPermissionDialog(
                     this, R.string.required_permission, R.string.required_permission_desc,
                     onNegativeClick = {}, onPositiveClick = {
-                        if (!isPhonePermissionAlreadyGranted(this)) {
+                        if (!isPhoneStatePermissionGranted(this)) {
                             requestPhonePermission()
                         } else {
                             requestNotificationPermission()
@@ -210,7 +207,7 @@ class PermissionActivity : AppCompatActivity() {
     }
 
     private val requestScreenOverlayPermission = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (Utils.isScreenOverlayEnabled(this)) {
+        if (isScreenOverlayEnabled(this)) {
             setScreenOverlayEnabled(true)
             viewModel.updatePermissionStatus(this)
         }
@@ -218,7 +215,7 @@ class PermissionActivity : AppCompatActivity() {
 
     private val checkOverlayPermissionRunnable = object : Runnable {
         override fun run() {
-            if (Utils.isScreenOverlayEnabled(this@PermissionActivity)) {
+            if (isScreenOverlayEnabled(this@PermissionActivity)) {
                 overlayPermissionHandler.removeCallbacks(this)
                 val flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                 startIntentWithFlags(PermissionActivity::class.java, flags)
@@ -229,10 +226,7 @@ class PermissionActivity : AppCompatActivity() {
     }
 
     private fun requestScreenOverlayPermission() {
-        val intent = Intent(
-            Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-            Uri.parse("package:${packageName}")
-        )
+        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${packageName}"))
         requestScreenOverlayPermission.launch(intent)
         overlayPermissionHandler.post(checkOverlayPermissionRunnable)
     }
@@ -254,7 +248,6 @@ class PermissionActivity : AppCompatActivity() {
             PermissionState.COMPLETE -> {
                 setScreenOverlayEnabled(true)
                 setPermissionGranted(true)
-
             }
 
             PermissionState.DISPLAY_OVER_APP_PERMISSION -> {
@@ -302,7 +295,6 @@ class PermissionActivity : AppCompatActivity() {
             onPositiveClick.invoke()
             dialog.dismiss()
         }
-
         dialog.show()
     }
 

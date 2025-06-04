@@ -16,9 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.origin.commons.callerid.states.ReminderState
 import com.origin.commons.callerid.databinding.FragmentNotificationBinding
 import com.origin.commons.callerid.db.entity.ReminderEntity
+import com.origin.commons.callerid.di.AppProvider
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.extensions.showCustomToast
 import com.origin.commons.callerid.extensions.value
+import com.origin.commons.callerid.helpers.Utils.isNotificationPermissionGranted
 import com.origin.commons.callerid.ui.adapter.ReminderAdapter
 import com.origin.commons.callerid.viewmodel.NotificationFragmentViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -32,8 +34,10 @@ import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 class NotificationFragment : Fragment() {
+    private val appProvider by lazy { AppProvider(requireContext()) }
+
     private val viewModel: NotificationFragmentViewModel by lazy {
-        NotificationFragmentViewModel(requireContext())
+        NotificationFragmentViewModel(appProvider.reminderRepository)
     }
 
     private val _binding by lazy {
@@ -62,17 +66,24 @@ class NotificationFragment : Fragment() {
         prepareRecyclerViewFOrReminder()
         setUpObserver()
         _binding.btnCreateReminder.setOnClickListener {
-            createReminderVisible = !createReminderVisible
-            if (createReminderVisible) {
-                _binding.clReminderView.visibility = View.INVISIBLE
-                _binding.clAddReminderView.visibility = View.VISIBLE
-            } else {
-                _binding.clAddReminderView.visibility = View.INVISIBLE
-                _binding.clReminderView.visibility = View.VISIBLE
+            context?.let { mContext ->
+                if (!isNotificationPermissionGranted(mContext)) {
+                    mContext.showCustomToast("Notification permission not allowed")
+                    return@setOnClickListener
+                }
+                createReminderVisible = !createReminderVisible
+                if (createReminderVisible) {
+                    _binding.clReminderView.visibility = View.INVISIBLE
+                    _binding.clAddReminderView.visibility = View.VISIBLE
+                } else {
+                    _binding.clAddReminderView.visibility = View.INVISIBLE
+                    _binding.clReminderView.visibility = View.VISIBLE
+                }
+                _binding.etMsg.postDelayed({
+                    _binding.etMsg.showKeyboard()
+                }, 200)
             }
-            _binding.etMsg.postDelayed({
-                _binding.etMsg.showKeyboard()
-            }, 200)
+
         }
 
         dates = getDatesFromCalender()
@@ -137,60 +148,65 @@ class NotificationFragment : Fragment() {
         }
 
         _binding.btnSave.setOnClickListener {
-            requireActivity().dismissKeyboard()
-            val overallDate = "${hourVal}:${minuteVal}, $dateVal"
-            if (overallDate.isEmpty())
-                return@setOnClickListener
-
-            if (_binding.etMsg.value.isEmpty()) {
-                requireActivity().showCustomToast("Please add reminder title")
-                return@setOnClickListener
-            }
-
-            val datetimeToAlarm = Calendar.getInstance(Locale.getDefault())
-            datetimeToAlarm.timeInMillis = System.currentTimeMillis()
-            datetimeToAlarm.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hourVal!!))
-            datetimeToAlarm.set(Calendar.MINUTE, Integer.parseInt(minuteVal!!))
-            datetimeToAlarm.set(Calendar.SECOND, 0)
-            datetimeToAlarm.set(Calendar.MILLISECOND, 0)
-            Log.e("dateVal", "" + dateVal)
-            Log.e("hourVal", "" + hourVal)
-            Log.e("minuteVal", "" + minuteVal)
-            if (dateVal == "Today") {
-                datetimeToAlarm.set(Calendar.DAY_OF_MONTH, rightNow.get(Calendar.DAY_OF_MONTH))
-                datetimeToAlarm.set(Calendar.MONTH, rightNow.get(Calendar.MONTH))
-            } else {
-                val df = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
-                val readDate = dateVal?.let { it1 -> df.parse(it1) }
-                val cal = Calendar.getInstance()
-                if (readDate != null) {
-                    cal.timeInMillis = readDate.time
+            activity?.let { mActivity ->
+                mActivity.dismissKeyboard()
+                val overallDate = "${hourVal}:${minuteVal}, $dateVal"
+                if (overallDate.isEmpty()) {
+                    return@setOnClickListener
                 }
-                datetimeToAlarm.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH))
-                datetimeToAlarm.set(Calendar.MONTH, cal.get(Calendar.MONTH))
-            }
-            datetimeToAlarm.set(Calendar.YEAR, rightNow.get(Calendar.YEAR))
-
-            val title = _binding.etMsg.value.ifEmpty { "No Title" }
-            if (updateReminder) {
-                val reminderEntity = ReminderEntity(id = updateModel?.id, title = title, date = dateVal, hours = hourVal, minutes = minuteVal)
-                CoroutineScope(Dispatchers.IO).launch {
-                    viewModel.updateReminder(reminderEntity)
+                if (_binding.etMsg.value.isEmpty()) {
+                    mActivity.showCustomToast("Please add reminder title")
+                    return@setOnClickListener
                 }
-                updateReminder = false
-                updateModel = null
-            } else {
-                val reminderEntity = ReminderEntity(id = generateUnique4DigitId().toLong(), title = title, date = dateVal, hours = hourVal, minutes = minuteVal)
-                CoroutineScope(Dispatchers.IO).launch {
-                    viewModel.saveReminder(reminderEntity)
+                if (!isNotificationPermissionGranted(mActivity)) {
+                    mActivity.showCustomToast("Notification permission not allowed")
+                    return@setOnClickListener
                 }
-                requireActivity().showCustomToast("Reminder set")
-            }
-            createReminderVisible = !createReminderVisible
-            _binding.clReminderView.visibility = View.VISIBLE
-            _binding.clAddReminderView.visibility = View.INVISIBLE
+                val datetimeToAlarm = Calendar.getInstance(Locale.getDefault())
+                datetimeToAlarm.timeInMillis = System.currentTimeMillis()
+                datetimeToAlarm.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hourVal!!))
+                datetimeToAlarm.set(Calendar.MINUTE, Integer.parseInt(minuteVal!!))
+                datetimeToAlarm.set(Calendar.SECOND, 0)
+                datetimeToAlarm.set(Calendar.MILLISECOND, 0)
+                Log.e("dateVal", "" + dateVal)
+                Log.e("hourVal", "" + hourVal)
+                Log.e("minuteVal", "" + minuteVal)
+                if (dateVal == "Today") {
+                    datetimeToAlarm.set(Calendar.DAY_OF_MONTH, rightNow.get(Calendar.DAY_OF_MONTH))
+                    datetimeToAlarm.set(Calendar.MONTH, rightNow.get(Calendar.MONTH))
+                } else {
+                    val df = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
+                    val readDate = dateVal?.let { it1 -> df.parse(it1) }
+                    val cal = Calendar.getInstance()
+                    if (readDate != null) {
+                        cal.timeInMillis = readDate.time
+                    }
+                    datetimeToAlarm.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH))
+                    datetimeToAlarm.set(Calendar.MONTH, cal.get(Calendar.MONTH))
+                }
+                datetimeToAlarm.set(Calendar.YEAR, rightNow.get(Calendar.YEAR))
 
-            _binding.etMsg.text.clear()
+                val title = _binding.etMsg.value.ifEmpty { "No Title" }
+                if (updateReminder) {
+                    val reminderEntity = ReminderEntity(id = updateModel?.id, title = title, date = dateVal, hours = hourVal, minutes = minuteVal)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        viewModel.updateReminder(reminderEntity)
+                    }
+                    updateReminder = false
+                    updateModel = null
+                } else {
+                    val reminderEntity = ReminderEntity(id = generateUnique4DigitId().toLong(), title = title, date = dateVal, hours = hourVal, minutes = minuteVal)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        viewModel.saveReminder(reminderEntity)
+                    }
+                    mActivity.showCustomToast("Reminder set")
+                }
+                createReminderVisible = !createReminderVisible
+                _binding.clReminderView.visibility = View.VISIBLE
+                _binding.clAddReminderView.visibility = View.INVISIBLE
+
+                _binding.etMsg.text.clear()
+            }
         }
 
         _binding.btnCancel.setOnClickListener {

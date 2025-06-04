@@ -15,15 +15,33 @@ import com.origin.commons.callerid.databinding.FragmentHomeBinding
 import java.util.Calendar
 
 class HomeFragment : Fragment() {
-
     private val _binding by lazy {
         FragmentHomeBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        initDefaultView()
         init()
         return _binding.root
+    }
+
+
+    private fun init() {
+        val callerIdSDKApplication = try {
+            this@HomeFragment.activity?.application as? CallerIdSDKApplication
+        } catch (_: Exception) {
+            null
+        }
+        val fragmentProvider = callerIdSDKApplication?.customFragmentProvider
+        if (fragmentProvider != null) {
+            _binding.llCiDefault.visibility = View.GONE
+            _binding.flCiCustom.visibility = View.VISIBLE
+            childFragmentManager.beginTransaction().replace(_binding.flCiCustom.id, fragmentProvider.invoke()).commitAllowingStateLoss()
+        } else {
+            _binding.flCiCustom.visibility = View.GONE
+            _binding.llCiDefault.visibility = View.VISIBLE
+            initDefaultView()
+            clickEvents()
+        }
     }
 
     private fun initDefaultView() {
@@ -32,27 +50,6 @@ class HomeFragment : Fragment() {
             this@HomeFragment.activity?.apply {
                 Toast.makeText(this, getGreetingMessage(), Toast.LENGTH_SHORT).show()
             }
-        }
-    }
-
-    private fun init() {
-        val callerIdSDKApplication = try {
-            this@HomeFragment.activity?.application as? CallerIdSDKApplication
-        } catch (_: Exception) {
-            null
-        }
-        callerIdSDKApplication?.mCustomView?.let { customView ->
-            _binding.llCiDefault.visibility = View.GONE
-            _binding.flCiCustom.apply {
-                visibility = View.VISIBLE
-                removeAllViews()
-                (customView.parent as? ViewGroup)?.removeView(customView)
-                addView(customView)
-            }
-        } ?: run {
-            _binding.flCiCustom.visibility = View.GONE
-            _binding.llCiDefault.visibility = View.VISIBLE
-            clickEvents()
         }
     }
 

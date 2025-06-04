@@ -51,7 +51,6 @@ dependencies {
     // optional
     implementation("com.github.loukwn.StageStepBar:stagestepbar:1.2.0")
 
-
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)

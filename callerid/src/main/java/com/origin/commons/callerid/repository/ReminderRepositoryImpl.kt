@@ -7,6 +7,8 @@ import android.content.Intent
 import android.util.Log
 import com.origin.commons.callerid.db.dao.ReminderDao
 import com.origin.commons.callerid.db.entity.ReminderEntity
+import com.origin.commons.callerid.extensions.showCustomToast
+import com.origin.commons.callerid.helpers.Utils.isNotificationPermissionGranted
 import com.origin.commons.callerid.receiver.OgCallerIdReminderReceiver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -16,9 +18,8 @@ import kotlinx.coroutines.flow.flowOn
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import javax.inject.Inject
 
-class ReminderRepositoryImpl @Inject constructor(private val context: Context, private var alarmManager: AlarmManager, private val reminderDao: ReminderDao) : ReminderRepository {
+class ReminderRepositoryImpl (private val context: Context, private var alarmManager: AlarmManager, private val reminderDao: ReminderDao) : ReminderRepository {
 
     override fun getReminder(): Flow<List<ReminderEntity>> {
         return reminderDao.getAll().flowOn(Dispatchers.IO).distinctUntilChanged()
@@ -46,7 +47,6 @@ class ReminderRepositoryImpl @Inject constructor(private val context: Context, p
     }
 
     private fun setReminderNotification(reminder: ReminderEntity) {
-        Log.e("ReminderRepositoryImpl", "setReminderNotification")
         val alarmIntent = Intent(context, OgCallerIdReminderReceiver::class.java)
         alarmIntent.putExtra("reminderId", reminder.id.toString())
         val rightNow = Calendar.getInstance()
@@ -78,6 +78,9 @@ class ReminderRepositoryImpl @Inject constructor(private val context: Context, p
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = timeInMilliSeconds
 
+        if (!isNotificationPermissionGranted(context)) {
+            return
+        }
         val pendingIntent = PendingIntent.getBroadcast(context, reminder.id!!.toInt(), alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
     }

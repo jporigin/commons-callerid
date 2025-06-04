@@ -1,9 +1,7 @@
 package com.origin.commons.callerid.ui.activity
 
-import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
@@ -21,9 +19,10 @@ import com.origin.commons.callerid.ads.AdFormat
 import com.origin.commons.callerid.ads.bannerads.GoogleBannerAds
 import com.origin.commons.callerid.ads.nativeads.GoogleNativeAds
 import com.origin.commons.callerid.ads.utils.getBannerAdSize
-import com.origin.commons.callerid.databinding.ActivityDetailBinding
+import com.origin.commons.callerid.databinding.ActivityOgCallerIdBinding
 import com.origin.commons.callerid.extensions.beGone
 import com.origin.commons.callerid.extensions.beInvisible
+import com.origin.commons.callerid.extensions.getOpenAppIntent
 import com.origin.commons.callerid.extensions.logEventE
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.ui.fragment.HomeFragment
@@ -31,9 +30,9 @@ import com.origin.commons.callerid.ui.fragment.MessageFragment
 import com.origin.commons.callerid.ui.fragment.MoreFragment
 import com.origin.commons.callerid.ui.fragment.NotificationFragment
 
-class DetailActivity : AppCompatActivity() {
+class OgCallerIdActivity : AppCompatActivity() {
 
-    private lateinit var _binding: ActivityDetailBinding
+    private lateinit var _binding: ActivityOgCallerIdBinding
 
     private val phoneNumber by lazy { intent.getStringExtra("phoneNumber") }
     private val time by lazy { intent.getStringExtra("time") }
@@ -44,7 +43,7 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         this.enableEdgeToEdge(SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT), SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT))
-        _binding = ActivityDetailBinding.inflate(layoutInflater)
+        _binding = ActivityOgCallerIdBinding.inflate(layoutInflater)
         setContentView(_binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -82,7 +81,7 @@ class DetailActivity : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         var appendValue = ""
-        this@DetailActivity.prefsHelper.apply {
+        this@OgCallerIdActivity.prefsHelper.apply {
             if (this.isMissedCallFeatureEnable) {
                 appendValue += "_m"
             } else if (this.isCompleteCallFeatureEnable) {
@@ -92,12 +91,12 @@ class DetailActivity : AppCompatActivity() {
             } else {
                 ""
             }
-            this@DetailActivity.logEventE("Showed_OGCallerScreen$appendValue")
+            this@OgCallerIdActivity.logEventE("Showed_OGCallerScreen$appendValue")
         }
     }
 
     private fun setUpAds() {
-        this@DetailActivity.prefsHelper.apply {
+        this@OgCallerIdActivity.prefsHelper.apply {
             val adFormat: AdFormat = try {
                 if (mAdFormat.isNotEmpty()) {
                     AdFormat.valueOf(mAdFormat)
@@ -116,13 +115,13 @@ class DetailActivity : AppCompatActivity() {
                 AdFormat.NATIVE_SMALL -> {
                     _binding.incAdsView.rlMainGoogleAds.beInvisible()
                     setupGoogleNativeAds()
-                    mGoogleNativeAds?.showXlAd(this@DetailActivity, mAdUnitId)
+                    mGoogleNativeAds?.showXlAd(this@OgCallerIdActivity, mAdUnitId)
                 }
 
                 AdFormat.NATIVE_BIG -> {
                     _binding.incAdsView.rlMainGoogleAds.beInvisible()
                     setupGoogleNativeAds()
-                    mGoogleNativeAds?.showXxlAd(this@DetailActivity, mAdUnitId)
+                    mGoogleNativeAds?.showXxlAd(this@OgCallerIdActivity, mAdUnitId)
                 }
 
                 else -> {
@@ -130,13 +129,12 @@ class DetailActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
 
     private fun setUpTabPagerAdapter() {
         _binding.vpTab.apply {
-            adapter = TabPagerAdapter(this@DetailActivity)
+            adapter = TabPagerAdapter(this@OgCallerIdActivity)
             offscreenPageLimit = 4
         }
 
@@ -154,46 +152,13 @@ class DetailActivity : AppCompatActivity() {
 
 
         _binding.ivLogo.setOnClickListener {
-            var mClass1: Class<*>? = try {
-                Class.forName(this@DetailActivity.prefsHelper.mClass1)
-            } catch (_: Exception) {
-                null
-            }
-            var mClass2High: Class<*>? = try {
-                Class.forName(this@DetailActivity.prefsHelper.mClass2High)
-            } catch (_: Exception) {
-                null
-            }
-            val intent: Intent? = when {
-                mClass1 != null && isActivityRunning(this@DetailActivity, mClass1) -> {
-                    Intent(this@DetailActivity, mClass1)
-                }
-
-                mClass2High != null -> {
-                    Intent(this@DetailActivity, mClass2High)
-                }
-
-                else -> null
-            }
+            val intent: Intent? = this@OgCallerIdActivity.getOpenAppIntent()
             intent?.let { startActivity(it) }
         }
 
         _binding.ivCall.setOnClickListener {
             makePhoneCall(this)
         }
-    }
-
-
-    fun isActivityRunning(context: Context, activityClass: Class<*>): Boolean {
-        val activityManager = context.getSystemService(ACTIVITY_SERVICE) as ActivityManager
-        val runningTasks = activityManager.appTasks
-        for (task in runningTasks) {
-            val info = task.taskInfo
-            if (activityClass.canonicalName == info.baseActivity?.className || activityClass.canonicalName == info.topActivity?.className) {
-                return true
-            }
-        }
-        return false
     }
 
 
@@ -255,10 +220,10 @@ class DetailActivity : AppCompatActivity() {
             GoogleBannerAds().apply {
                 mGoogleBannerAds = this
                 setupAdsViews(
-                    this@DetailActivity, getCurrentAdFormat(this@DetailActivity) == AdFormat.NONE, this@DetailActivity.prefsHelper.mIsShowAdsShimmerView,
+                    this@OgCallerIdActivity, getCurrentAdFormat(this@OgCallerIdActivity) == AdFormat.NONE, this@OgCallerIdActivity.prefsHelper.mIsShowAdsShimmerView,
                     _binding.incAdsView.rlMainGoogleAds, _binding.incAdsView.flSpaceLayout, _binding.incAdsView.tvSpaceAds, _binding.incAdsView.flShimmerGoogleAds, _binding.incAdsView.flGoogleAds
                 )
-                showAd(this@DetailActivity, this@DetailActivity.prefsHelper.mAdUnitId, this@DetailActivity.getBannerAdSize(_binding.incAdsView.flGoogleAds))
+                showAd(this@OgCallerIdActivity, this@OgCallerIdActivity.prefsHelper.mAdUnitId, this@OgCallerIdActivity.getBannerAdSize(_binding.incAdsView.flGoogleAds))
             }
         }
     }
@@ -269,7 +234,7 @@ class DetailActivity : AppCompatActivity() {
             GoogleNativeAds().apply {
                 mGoogleNativeAds = this
                 setupAdsViews(
-                    this@DetailActivity, getCurrentAdFormat(this@DetailActivity) == AdFormat.NONE, this@DetailActivity.prefsHelper.mIsShowAdsShimmerView,
+                    this@OgCallerIdActivity, getCurrentAdFormat(this@OgCallerIdActivity) == AdFormat.NONE, this@OgCallerIdActivity.prefsHelper.mIsShowAdsShimmerView,
                     _binding.incAdsView.rlMainGoogleAds, _binding.incAdsView.flSpaceLayout,
                     _binding.incAdsView.spMain, _binding.incAdsView.tvSpaceAds,
                     _binding.incAdsView.flShimmerGoogleAds, _binding.incAdsView.flGoogleAds
@@ -284,3 +249,4 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 }
+

@@ -1,11 +1,33 @@
 package com.origin.commons.callerid.extensions
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.util.DisplayMetrics
 import android.view.Display
 import androidx.core.hardware.display.DisplayManagerCompat
+import com.origin.commons.callerid.CallerIdSDKApplication
 
+fun Activity.getOpenAppIntent(): Intent? {
+    val callerIdSDKApplication = try {
+        this.application as? CallerIdSDKApplication
+    } catch (_: Exception) {
+        null
+    }
+    val mClass1 = callerIdSDKApplication?.openClass1
+    val mClass2High = callerIdSDKApplication?.openClass2High
+    return when {
+        mClass1 != null && isActivityRunning(mClass1.invoke()) -> {
+            Intent(this@getOpenAppIntent, mClass1.invoke())
+        }
+
+        mClass2High != null -> {
+            Intent(this@getOpenAppIntent, mClass2High.invoke())
+        }
+        else -> null
+    }
+}
 var mHeight: Int? = null
 fun Activity.getScreenHeight(): Int {
     if (mHeight == null || mHeight == 0) {

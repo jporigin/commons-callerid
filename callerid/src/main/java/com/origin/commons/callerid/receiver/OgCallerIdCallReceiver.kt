@@ -11,7 +11,7 @@ import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.helpers.Utils
 import com.origin.commons.callerid.helpers.Utils.calculateDuration
 import com.origin.commons.callerid.helpers.Utils.formatTimeToString
-import com.origin.commons.callerid.ui.activity.DetailActivity
+import com.origin.commons.callerid.ui.activity.OgCallerIdActivity
 import java.util.Date
 
 class OgCallerIdCallReceiver : BroadcastReceiver() {
@@ -107,7 +107,7 @@ class OgCallerIdCallReceiver : BroadcastReceiver() {
     }
 
     private fun startDetailActivity(context: Context, phoneNumber: String?, time: Long, callType: String) {
-        val intent = Intent(context.applicationContext, DetailActivity::class.java)
+        val intent = Intent(context.applicationContext, OgCallerIdActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         intent.putExtra("phoneNumber", phoneNumber)
         intent.putExtra("time", formatTimeToString(time))

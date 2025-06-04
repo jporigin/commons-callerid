@@ -1,18 +1,15 @@
 package com.origin.commons.callerid
 
-import android.app.Activity
 import android.app.Application
 import android.content.IntentFilter
-import android.view.View
+import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.Firebase
 import com.origin.commons.callerid.extensions.prefsHelper
-import com.origin.commons.callerid.extensions.showCustomToast
 import com.origin.commons.callerid.helpers.Utils
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.analytics
 import com.origin.commons.callerid.ads.AdFormat
-import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.logEventE
 import com.origin.commons.callerid.helpers.SharedPreferencesHelper
 import com.origin.commons.callerid.receiver.OgCallerIdCallReceiver
@@ -20,52 +17,49 @@ import com.origin.commons.callerid.receiver.OgCallerIdCallReceiver
 open class CallerIdSDKApplication : Application() {
 
     var mSharedPreferencesHelper: SharedPreferencesHelper? = null
-    private var mActivity: Activity? = null
-    fun initSDK(activity: Activity): Boolean {
-        mActivity = activity
+
+    var openClass1: (() -> Class<*>)? = null
+    var openClass2High: (() -> Class<*>)? = null
+
+    var customFragmentProvider: (() -> Fragment)? = null
+
+    fun initSDK(): Boolean {
         try {
-            MobileAds.initialize(this)
+            Thread {
+                MobileAds.initialize(this)
+            }.start()
         } catch (_: Exception) {
         }
-
-        registerCallReceiver(activity)
+        registerCallReceiver()
         mFirebaseAnalytics = Firebase.analytics
-        activity.prefsHelper.apply {
+        prefsHelper.apply {
             mSharedPreferencesHelper = this
             if (this.isMissedCallFeatureEnable || this.isCompleteCallFeatureEnable || this.isNoAnswerFeatureEnable) {
-                if (!Utils.isPermissionAlreadyGranted(activity) && !Utils.isScreenOverlayEnabled(activity)) {
-                    activity.showCustomToast(R.string.required_permission_desc)
+                if (!Utils.isPhoneStatePermissionGranted(applicationContext) && !Utils.isScreenOverlayEnabled(applicationContext)) {
                     return false
                 }
             } else {
                 return false
             }
         }
-        activity.logEventE("Initialized_OGCallerIdSDK")
+        logEventE("Initialized_OGCallerIdSDK")
         return true
     }
 
-    fun setUpClassToOpenApp(class1: Class<*>, class2High: Class<*>) {
-        mActivity?.prefsHelper?.apply {
-            this.mClass1 = class1.name
-            this.mClass2High = class2High.name
-        }
-        logE("setUpClass::${class1.name}::${class2High.name}")
-    }
 
     private var mOgCallerIdCallReceiver: OgCallerIdCallReceiver? = null
-    private fun registerCallReceiver(activity: Activity) {
+    private fun registerCallReceiver() {
         try {
-            if (!activity.isFinishing && mOgCallerIdCallReceiver == null) {
+            if (mOgCallerIdCallReceiver == null) {
                 mOgCallerIdCallReceiver = OgCallerIdCallReceiver()
-                activity.registerReceiver(mOgCallerIdCallReceiver, IntentFilter("android.intent.action.PHONE_STATE"))
+                registerReceiver(mOgCallerIdCallReceiver, IntentFilter("android.intent.action.PHONE_STATE"))
             }
         } catch (_: Exception) {
         }
     }
 
     fun initSDKAds(adFormat: AdFormat, adUnitId: String, isShowAdsShimmerView: Boolean = true) {
-        mActivity?.prefsHelper?.apply {
+        prefsHelper.apply {
             this.mAdFormat = adFormat.name
             this.mAdUnitId = adUnitId
             this.mIsShowAdsShimmerView = isShowAdsShimmerView
@@ -108,13 +102,6 @@ open class CallerIdSDKApplication : Application() {
     *
     * */
 
-    /*
-    *
-    * */
-    var mCustomView: View? = null
-    /*
-    *
-    * */
 
     companion object {
         @Volatile

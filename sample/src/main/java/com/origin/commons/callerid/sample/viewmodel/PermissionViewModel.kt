@@ -3,7 +3,7 @@ package com.origin.commons.callerid.sample.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.origin.commons.callerid.helpers.Utils.isPermissionAlreadyGranted
+import com.origin.commons.callerid.helpers.Utils.isPhoneStatePermissionGranted
 import com.origin.commons.callerid.helpers.Utils.isScreenOverlayEnabled
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +16,7 @@ class PermissionViewModel(private val context: Context) : ViewModel() {
 
     fun checkPermissions() {
         viewModelScope.launch {
-            if (isPermissionAlreadyGranted(context)) {
+            if (isPhoneStatePermissionGranted(context)) {
                 _uiState.value = _uiState.value.copy(
                     step = 2,
                     title = "Screen Overlay Permission",
@@ -54,9 +54,9 @@ class PermissionViewModel(private val context: Context) : ViewModel() {
     }
 
     fun updatePermissionStatus(context: Context) {
-        if (isPermissionAlreadyGranted(context)) {
+        if (isPhoneStatePermissionGranted(context)) {
             checkPermissions()
-        } else if (isPermissionAlreadyGranted(context) && isScreenOverlayEnabled(context)) {
+        } else if (isPhoneStatePermissionGranted(context) && isScreenOverlayEnabled(context)) {
             completePermissions()
         }
     }

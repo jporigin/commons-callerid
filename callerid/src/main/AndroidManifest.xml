@@ -40,7 +40,7 @@
     <application>
 
         <activity
-            android:name=".ui.activity.DetailActivity"
+            android:name=".ui.activity.OgCallerIdActivity"
             android:configChanges="uiMode"
             android:exported="false"
             android:launchMode="singleTop"

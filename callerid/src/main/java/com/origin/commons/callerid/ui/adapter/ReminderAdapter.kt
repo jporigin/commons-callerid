@@ -8,19 +8,11 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.origin.commons.callerid.db.entity.ReminderEntity
 import com.origin.commons.callerid.databinding.CellReminderItemsBinding
 
-class ReminderAdapter(
-    private val onItemClick: (reminder: ReminderEntity) -> Unit,
-    private val onDeleteClick: (reminder: ReminderEntity) -> Unit
-) : ListAdapter<ReminderEntity, ReminderAdapter.ReminderViewHolder>(COMPARATOR) {
+class ReminderAdapter(private val onItemClick: (reminder: ReminderEntity) -> Unit, private val onDeleteClick: (reminder: ReminderEntity) -> Unit) :
+    ListAdapter<ReminderEntity, ReminderAdapter.ReminderViewHolder>(COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReminderViewHolder {
-        return ReminderViewHolder(
-            CellReminderItemsBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
+        return ReminderViewHolder(CellReminderItemsBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ReminderViewHolder, position: Int) {
@@ -30,7 +22,7 @@ class ReminderAdapter(
         }
     }
 
-    inner class ReminderViewHolder(private val _binding: CellReminderItemsBinding): ViewHolder(_binding.root) {
+    inner class ReminderViewHolder(private val _binding: CellReminderItemsBinding) : ViewHolder(_binding.root) {
         fun bind(data: ReminderEntity) {
             with(_binding) {
                 tvReminderText.text = data.title
@@ -52,17 +44,11 @@ class ReminderAdapter(
 
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<ReminderEntity>() {
-            override fun areItemsTheSame(
-                oldItem: ReminderEntity,
-                newItem: ReminderEntity
-            ): Boolean {
+            override fun areItemsTheSame(oldItem: ReminderEntity, newItem: ReminderEntity): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(
-                oldItem: ReminderEntity,
-                newItem: ReminderEntity
-            ): Boolean {
+            override fun areContentsTheSame(oldItem: ReminderEntity, newItem: ReminderEntity): Boolean {
                 return oldItem == newItem
             }
         }

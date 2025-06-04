@@ -1,10 +1,47 @@
 package com.origin.commons.callerid.extensions
 
+import android.app.ActivityManager
 import android.content.Context
+import android.content.Context.ACTIVITY_SERVICE
+import android.content.Intent
 import android.util.TypedValue
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.helpers.SharedPreferencesHelper
+
+fun Context.getOpenAppIntent(): Intent? {
+    val callerIdSDKApplication = try {
+        this.applicationContext as? CallerIdSDKApplication
+    } catch (_: Exception) {
+        null
+    }
+    val mClass1 = callerIdSDKApplication?.openClass1
+    val mClass2High = callerIdSDKApplication?.openClass2High
+    return when {
+        mClass1 != null && isActivityRunning(mClass1.invoke()) -> {
+            Intent(this@getOpenAppIntent, mClass1.invoke())
+        }
+
+        mClass2High != null -> {
+            Intent(this@getOpenAppIntent, mClass2High.invoke())
+        }
+        else -> null
+    }
+}
+
+fun Context.isActivityRunning(activityClass: Class<*>): Boolean {
+    val activityManager = this.getSystemService(ACTIVITY_SERVICE) as ActivityManager
+    val runningTasks = activityManager.appTasks
+    for (task in runningTasks) {
+        val info = task.taskInfo
+        if (activityClass.canonicalName == info.baseActivity?.className || activityClass.canonicalName == info.topActivity?.className) {
+            return true
+        }
+    }
+    return false
+}
+
 
 val Context.prefsHelper: SharedPreferencesHelper get() = SharedPreferencesHelper.newInstance(this)
 

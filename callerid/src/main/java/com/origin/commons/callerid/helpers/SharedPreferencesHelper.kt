@@ -10,13 +10,6 @@ class SharedPreferencesHelper(private val context: Context) {
         context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
     }
 
-    var mClass1: String
-        get() = sharedPreferences.getString(CLASS_1, "").toString()
-        set(value) = sharedPreferences.edit().putString(CLASS_1, value).apply()
-    var mClass2High: String
-        get() = sharedPreferences.getString(CLASS_2_HIGH, "").toString()
-        set(value) = sharedPreferences.edit().putString(CLASS_2_HIGH, value).apply()
-
     var mAdFormat: String
         get() = sharedPreferences.getString(AD_FORMAT, "").toString()
         set(value) = sharedPreferences.edit().putString(AD_FORMAT, value).apply()
@@ -64,8 +57,6 @@ class SharedPreferencesHelper(private val context: Context) {
 
         const val SAVED_REMINDER_IDS = "SAVED_REMINDER_IDS"
 
-        const val CLASS_1 = "CLASS_1"
-        const val CLASS_2_HIGH = "CLASS_2_HIGH"
 
         const val AD_FORMAT = "AD_FORMAT"
         const val AD_UNIT_ID = "AD_UNIT_ID"
