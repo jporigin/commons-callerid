@@ -19,13 +19,9 @@ class CIHomeScreenFragment : Fragment() {
         val viewToastMap = listOf(binding.v1, binding.v2, binding.v3, binding.v4, binding.v5)
         viewToastMap.forEach { view ->
             view.setOnClickListener {
-                val mIntent = try {
-                    this@CIHomeScreenFragment.activity?.getOpenAppIntent()
-                } catch (_: Exception) {
-                    null
-                }
-                if (mIntent != null) {
-                    this@CIHomeScreenFragment.activity?.startActivity(mIntent)
+                this@CIHomeScreenFragment.activity?.getOpenAppIntent()?.let { intent ->
+                    startActivity(intent)
+                    this@CIHomeScreenFragment.activity?.finish()
                 }
             }
         }

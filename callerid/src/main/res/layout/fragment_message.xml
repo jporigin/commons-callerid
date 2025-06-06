@@ -144,47 +144,59 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/llMsg4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="14dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/ci_boarder_light_gray_8"
+            android:layout_marginStart="12dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingVertical="10dp"
-            android:paddingStart="7dp"
-            android:paddingEnd="7dp">
+            android:layout_marginTop="5dp"
 
-            <ImageView
-                android:id="@+id/ivEdit"
-                android:layout_width="34dp"
-                android:padding="8dp"
-                android:layout_height="34dp"
-                android:contentDescription="@null"
-                android:foreground="@drawable/bg_ripple_round"
-                android:src="@drawable/ic_edit_unselected" />
+            android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/etMsg"
+            <LinearLayout
+                android:id="@+id/llMsg4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:autofillHints="all"
-                android:background="@null"
-                android:hint="@string/write_personal_message"
-                android:textColor="?attr/ciTxtColor"
-                android:imeOptions="actionDone"
-                android:includeFontPadding="false"
-                android:inputType="text"
-                android:paddingHorizontal="10dp"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:background="@drawable/ci_boarder_light_gray_8"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingVertical="10dp"
+                android:paddingStart="7dp"
+                android:paddingEnd="7dp">
+
+                <ImageView
+                    android:id="@+id/ivEdit"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:contentDescription="@null"
+                    android:foreground="@drawable/bg_ripple_round"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_edit_unselected" />
+
+                <EditText
+                    android:id="@+id/etMsg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:autofillHints="all"
+                    android:background="@null"
+                    android:hint="@string/write_personal_message"
+                    android:imeOptions="actionDone"
+                    android:includeFontPadding="false"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingHorizontal="10dp"
+                    android:textColor="?attr/ciTxtColor"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/ivSend4"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
+                android:layout_marginHorizontal="6dp"
                 android:contentDescription="@null"
                 android:foreground="@drawable/bg_ripple_round"
                 android:padding="8dp"

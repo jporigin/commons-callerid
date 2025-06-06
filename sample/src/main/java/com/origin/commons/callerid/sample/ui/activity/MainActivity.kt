@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-
         _binding.ivSetting.setOnClickListener {
             Intent(this@MainActivity, SettingActivity::class.java).apply {
                 startActivity(this)

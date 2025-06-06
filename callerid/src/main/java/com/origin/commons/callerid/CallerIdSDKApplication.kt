@@ -18,6 +18,8 @@ open class CallerIdSDKApplication : Application() {
 
     var mSharedPreferencesHelper: SharedPreferencesHelper? = null
 
+    var openSettings: (() -> Class<*>)? = null
+
     var openClass1: (() -> Class<*>)? = null
     var openClass2High: (() -> Class<*>)? = null
 

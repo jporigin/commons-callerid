@@ -1,5 +1,6 @@
 package com.origin.commons.callerid.ui.fragment
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -8,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.databinding.FragmentMoreBinding
+import com.origin.commons.callerid.extensions.getOpenAppIntent
 import com.origin.commons.callerid.extensions.showCustomToast
 
 
@@ -48,8 +51,15 @@ class MoreFragment : Fragment() {
             clWeb.setOnClickListener {
                 openWebBrowser(requireContext(), "http://www.google.com")
             }
+
+            clAppSetting.setOnClickListener {
+                activity?.let {
+                    openAppSetting(it)
+                }
+            }
         }
     }
+
 
     private fun openContact(context: Context) {
         try {
@@ -130,6 +140,25 @@ class MoreFragment : Fragment() {
             context.startActivity(Intent.createChooser(intent, null))
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    private fun openAppSetting(activity: Activity) {
+        val callerIdSDKApplication = try {
+            activity.application as? CallerIdSDKApplication
+        } catch (_: Exception) {
+            null
+        }
+        val mClass1 = callerIdSDKApplication?.openSettings?.invoke()
+        val mIntent = if (mClass1 != null) {
+            Intent(activity, mClass1)
+        } else {
+            activity.getOpenAppIntent()
+        }
+        mIntent?.let {
+            it.putExtra("ogCallerIdAction", "openCallerSetting")
+            activity.startActivity(it)
+            activity.finish()
         }
     }
 

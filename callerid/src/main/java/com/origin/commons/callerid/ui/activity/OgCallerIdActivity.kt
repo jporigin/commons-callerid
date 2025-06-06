@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
@@ -13,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.ads.AdFormat
@@ -23,6 +26,7 @@ import com.origin.commons.callerid.databinding.ActivityOgCallerIdBinding
 import com.origin.commons.callerid.extensions.beGone
 import com.origin.commons.callerid.extensions.beInvisible
 import com.origin.commons.callerid.extensions.getOpenAppIntent
+import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.logEventE
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.ui.fragment.HomeFragment
@@ -134,10 +138,22 @@ class OgCallerIdActivity : AppCompatActivity() {
 
     private fun setUpTabPagerAdapter() {
         _binding.vpTab.apply {
+            this.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+
+                    logE("check:::$position")
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    var view = currentFocus
+                    if (view == null) {
+                        view = View(this@OgCallerIdActivity)
+                    }
+                    imm.hideSoftInputFromWindow(view.windowToken, 0);
+                }
+            })
             adapter = TabPagerAdapter(this@OgCallerIdActivity)
             offscreenPageLimit = 4
         }
-
         TabLayoutMediator(_binding.tabLayout, _binding.vpTab) { tab, position ->
             tab.setIcon(
                 when (position) {
@@ -150,13 +166,14 @@ class OgCallerIdActivity : AppCompatActivity() {
             )
         }.attach()
 
-
-        _binding.ivLogo.setOnClickListener {
-            val intent: Intent? = this@OgCallerIdActivity.getOpenAppIntent()
-            intent?.let { startActivity(it) }
+        _binding.cvLogo.setOnClickListener {
+            this@OgCallerIdActivity.getOpenAppIntent()?.let { intent ->
+                startActivity(intent)
+                this@OgCallerIdActivity.finish()
+            }
         }
 
-        _binding.ivCall.setOnClickListener {
+        _binding.llCall.setOnClickListener {
             makePhoneCall(this)
         }
     }

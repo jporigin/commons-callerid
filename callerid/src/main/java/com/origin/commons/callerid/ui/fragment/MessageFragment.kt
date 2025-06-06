@@ -9,12 +9,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.databinding.FragmentMessageBinding
 import com.origin.commons.callerid.extensions.getColorFromAttr
+import com.origin.commons.callerid.extensions.hideKeyboard
 import com.origin.commons.callerid.extensions.showCustomToast
+import com.origin.commons.callerid.extensions.showKeyboard
 import com.origin.commons.callerid.extensions.value
+
 
 class MessageFragment : Fragment() {
 
@@ -25,6 +29,11 @@ class MessageFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         init()
         return _binding.root
+    }
+
+    override fun onPause() {
+        super.onPause()
+        etClearFocus()
     }
 
     private fun init() {
@@ -51,10 +60,7 @@ class MessageFragment : Fragment() {
                 ivRadio2.setImageResource(R.drawable.ic_selected)
                 ivRadio3.setImageResource(R.drawable.ic_unselected)
                 ivEdit.setImageResource(R.drawable.ic_edit_unselected)
-                try {
-                    requireActivity().dismissKeyboard()
-                } catch (_: Exception) {
-                }
+                etClearFocus(etMsg)
             }
             llMsg3.setOnClickListener {
                 tvMsg1.setTextColor(ciTxtColor)
@@ -68,10 +74,7 @@ class MessageFragment : Fragment() {
                 ivRadio2.setImageResource(R.drawable.ic_unselected)
                 ivRadio3.setImageResource(R.drawable.ic_selected)
                 ivEdit.setImageResource(R.drawable.ic_edit_unselected)
-                try {
-                    requireActivity().dismissKeyboard()
-                } catch (_: Exception) {
-                }
+                etClearFocus(etMsg)
             }
             llMsg4.setOnClickListener {
                 tvMsg1.setTextColor(ciTxtColor)
@@ -85,9 +88,7 @@ class MessageFragment : Fragment() {
                 ivRadio2.setImageResource(R.drawable.ic_unselected)
                 ivRadio3.setImageResource(R.drawable.ic_unselected)
                 ivEdit.setImageResource(R.drawable.ic_edit)
-                etMsg.postDelayed({
-                    etMsg.showKeyboard()
-                }, 50)
+                etRequestFocus(etMsg)
             }
             ivEdit.setOnClickListener {
                 tvMsg1.setTextColor(ciTxtColor)
@@ -101,10 +102,7 @@ class MessageFragment : Fragment() {
                 ivRadio2.setImageResource(R.drawable.ic_unselected)
                 ivRadio3.setImageResource(R.drawable.ic_unselected)
                 ivEdit.setImageResource(R.drawable.ic_edit)
-                etMsg.requestFocus()
-                etMsg.postDelayed({
-                    etMsg.showKeyboard()
-                }, 50)
+                etRequestFocus(etMsg)
             }
             etMsg.setOnClickListener {
                 tvMsg1.setTextColor(ciTxtColor)
@@ -118,10 +116,7 @@ class MessageFragment : Fragment() {
                 ivRadio2.setImageResource(R.drawable.ic_unselected)
                 ivRadio3.setImageResource(R.drawable.ic_unselected)
                 ivEdit.setImageResource(R.drawable.ic_edit)
-                etMsg.requestFocus()
-                etMsg.postDelayed({
-                    etMsg.showKeyboard()
-                }, 50)
+                etRequestFocus(etMsg)
             }
             etMsg.setOnEditorActionListener { _, actionID: Int, _ ->
                 if (actionID == EditorInfo.IME_ACTION_DONE) {
@@ -144,6 +139,14 @@ class MessageFragment : Fragment() {
                     ivRadio2.setImageResource(R.drawable.ic_unselected)
                     ivRadio3.setImageResource(R.drawable.ic_unselected)
                     ivEdit.setImageResource(R.drawable.ic_edit)
+                }
+                try {
+                    if (hasFocus) {
+                        v.showKeyboard()
+                    } else {
+                        v.hideKeyboard()
+                    }
+                } catch (_: Exception) {
                 }
             }
 
@@ -168,15 +171,38 @@ class MessageFragment : Fragment() {
         }
     }
 
+    fun etRequestFocus(mView: View? = null) {
+        try {
+            if (mView != null) {
+                mView.requestFocus()
+            } else {
+                with(_binding) {
+                    etMsg.requestFocus()
+                }
+            }
+        } catch (_: Exception) {
+
+        }
+    }
+    fun etClearFocus(mView: View? = null) {
+        try {
+            if (mView != null) {
+                mView.clearFocus()
+            } else {
+                with(_binding) {
+                    etMsg.clearFocus()
+                }
+            }
+        } catch (_: Exception) {
+        }
+    }
+
     fun clickSend4() {
         with(_binding) {
             if (etMsg.value.isNotEmpty()) {
                 val message = etMsg.text.toString()
                 openMessage(requireContext(), message)
-                try {
-                    requireActivity().dismissKeyboard()
-                } catch (_: Exception) {
-                }
+                etClearFocus(etMsg)
             } else {
                 requireActivity().showCustomToast("Please enter message")
             }
@@ -200,10 +226,7 @@ class MessageFragment : Fragment() {
             ivRadio3.setImageResource(R.drawable.ic_unselected)
             ivEdit.setImageResource(R.drawable.ic_edit_unselected)
         }
-        try {
-            requireActivity().dismissKeyboard()
-        } catch (_: Exception) {
-        }
+        etClearFocus()
     }
 
     /*** Replace Above Function With This Function ***/

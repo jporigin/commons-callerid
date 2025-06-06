@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Build
 import android.util.DisplayMetrics
 import android.view.Display
+import android.view.inputmethod.InputMethodManager
 import androidx.core.hardware.display.DisplayManagerCompat
 import com.origin.commons.callerid.CallerIdSDKApplication
 
@@ -15,19 +16,25 @@ fun Activity.getOpenAppIntent(): Intent? {
     } catch (_: Exception) {
         null
     }
-    val mClass1 = callerIdSDKApplication?.openClass1
-    val mClass2High = callerIdSDKApplication?.openClass2High
+    val mClass1 = callerIdSDKApplication?.openClass1?.invoke()
+    val mClass2High = callerIdSDKApplication?.openClass2High?.invoke()
+    try {
+        logE("check::getOpenAppIntent::mClass1:${mClass1?.canonicalName}::mClass2High:${mClass2High?.canonicalName}:::${isActivityRunning(mClass1!!)}")
+    } catch (_: Exception) {
+    }
     return when {
-        mClass1 != null && isActivityRunning(mClass1.invoke()) -> {
-            Intent(this@getOpenAppIntent, mClass1.invoke())
+        mClass1 != null && isActivityRunning(mClass1) -> {
+            Intent(this@getOpenAppIntent, mClass1)
         }
 
         mClass2High != null -> {
-            Intent(this@getOpenAppIntent, mClass2High.invoke())
+            Intent(this@getOpenAppIntent, mClass2High)
         }
+
         else -> null
     }
 }
+
 var mHeight: Int? = null
 fun Activity.getScreenHeight(): Int {
     if (mHeight == null || mHeight == 0) {
@@ -43,4 +50,12 @@ fun Activity.getScreenHeight(): Int {
         }
     }
     return mHeight ?: 0
+}
+
+fun Activity.dismissKeyboard() {
+    window.currentFocus?.let { focus ->
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(focus.windowToken, 0)
+        focus.clearFocus()
+    }
 }

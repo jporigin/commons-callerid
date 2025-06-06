@@ -95,11 +95,11 @@
                 android:autofillHints="all"
                 android:background="@null"
                 android:hint="@string/reminder_title"
-                android:textColor="?attr/ciTxtColor"
                 android:imeOptions="actionDone"
                 android:includeFontPadding="false"
                 android:inputType="text"
                 android:paddingHorizontal="10dp"
+                android:textColor="?attr/ciTxtColor"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 

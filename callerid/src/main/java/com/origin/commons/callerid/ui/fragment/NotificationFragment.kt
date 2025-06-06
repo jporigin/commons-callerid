@@ -1,6 +1,5 @@
 package com.origin.commons.callerid.ui.fragment
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
@@ -9,18 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.origin.commons.callerid.states.ReminderState
 import com.origin.commons.callerid.databinding.FragmentNotificationBinding
 import com.origin.commons.callerid.db.entity.ReminderEntity
 import com.origin.commons.callerid.di.AppProvider
+import com.origin.commons.callerid.extensions.hideKeyboard
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.extensions.showCustomToast
+import com.origin.commons.callerid.extensions.showKeyboard
 import com.origin.commons.callerid.extensions.value
 import com.origin.commons.callerid.helpers.Utils.isNotificationPermissionGranted
+import com.origin.commons.callerid.states.ReminderState
 import com.origin.commons.callerid.ui.adapter.ReminderAdapter
 import com.origin.commons.callerid.viewmodel.NotificationFragmentViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -62,6 +62,14 @@ class NotificationFragment : Fragment() {
         return _binding.root
     }
 
+    override fun onPause() {
+        super.onPause()
+        try {
+            etClearFocus()
+        } catch (_: Exception) {
+        }
+    }
+
     private fun init() {
         prepareRecyclerViewFOrReminder()
         setUpObserver()
@@ -79,9 +87,7 @@ class NotificationFragment : Fragment() {
                     _binding.clAddReminderView.visibility = View.INVISIBLE
                     _binding.clReminderView.visibility = View.VISIBLE
                 }
-                _binding.etMsg.postDelayed({
-                    _binding.etMsg.showKeyboard()
-                }, 200)
+                etRequestFocus(_binding.etMsg)
             }
 
         }
@@ -141,15 +147,23 @@ class NotificationFragment : Fragment() {
         val minute = rightNow.get(Calendar.MINUTE)
         minuteVal = prepareFormatTime(minute)
 
+        _binding.etMsg.setOnFocusChangeListener { v, hasFocus ->
+            try {
+                if (hasFocus) {
+                    v.showKeyboard()
+                } else {
+                    v.hideKeyboard()
+                }
+            } catch (_: Exception) {
+            }
+        }
         _binding.ivEdit.setOnClickListener {
-            _binding.etMsg.postDelayed({
-                _binding.etMsg.showKeyboard()
-            }, 200)
+            etRequestFocus(_binding.etMsg)
         }
 
         _binding.btnSave.setOnClickListener {
             activity?.let { mActivity ->
-                mActivity.dismissKeyboard()
+                etClearFocus(_binding.etMsg)
                 val overallDate = "${hourVal}:${minuteVal}, $dateVal"
                 if (overallDate.isEmpty()) {
                     return@setOnClickListener
@@ -194,6 +208,8 @@ class NotificationFragment : Fragment() {
                     }
                     updateReminder = false
                     updateModel = null
+                    mActivity.showCustomToast("Reminder reset")
+
                 } else {
                     val reminderEntity = ReminderEntity(id = generateUnique4DigitId().toLong(), title = title, date = dateVal, hours = hourVal, minutes = minuteVal)
                     CoroutineScope(Dispatchers.IO).launch {
@@ -210,7 +226,7 @@ class NotificationFragment : Fragment() {
         }
 
         _binding.btnCancel.setOnClickListener {
-            requireActivity().dismissKeyboard()
+            etClearFocus(_binding.etMsg)
             createReminderVisible = !createReminderVisible
             if (createReminderVisible) {
                 _binding.clReminderView.visibility = View.INVISIBLE
@@ -224,6 +240,40 @@ class NotificationFragment : Fragment() {
             }
         }
 
+    }
+
+    fun etRequestFocus(mView: View? = null) {
+        try {
+            if (mView != null) {
+                mView.postDelayed({
+                    mView.requestFocus()
+                }, 100)
+            } else {
+                with(_binding) {
+                    etMsg.postDelayed({
+                        etMsg.requestFocus()
+                    }, 100)
+                }
+            }
+        } catch (_: Exception) {
+        }
+    }
+
+    fun etClearFocus(mView: View? = null) {
+        try {
+            if (mView != null) {
+                mView.postDelayed({
+                    mView.clearFocus()
+                }, 100)
+            } else {
+                with(_binding) {
+                    etMsg.postDelayed({
+                        etMsg.clearFocus()
+                    }, 100)
+                }
+            }
+        } catch (_: Exception) {
+        }
     }
 
     private fun generateUnique4DigitId(): Int {
@@ -263,7 +313,7 @@ class NotificationFragment : Fragment() {
                     _binding.minuteNumberPicker.value = finalPosition
 
                     _binding.etMsg.postDelayed({
-                        _binding.etMsg.showKeyboard()
+                        _binding.etMsg.requestFocus()
                         it.title?.length?.let { index ->
                             _binding.etMsg.setSelection(index)
                         }
@@ -281,6 +331,7 @@ class NotificationFragment : Fragment() {
             setHasFixedSize(true)
         }
     }
+
 
     private fun setUpObserver() {
         lifecycleScope.launch(Dispatchers.Main) {
@@ -326,16 +377,3 @@ class NotificationFragment : Fragment() {
 
 }
 
-fun Activity.dismissKeyboard() {
-    window.currentFocus?.let { focus ->
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(focus.windowToken, 0)
-        focus.clearFocus()
-    }
-}
-
-fun EditText.showKeyboard() {
-    requestFocus()
-    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
-}
