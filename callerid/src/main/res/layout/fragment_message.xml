@@ -147,8 +147,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:gravity="center_vertical"
             android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
 
             android:orientation="horizontal">
 
@@ -168,8 +168,8 @@
                     android:id="@+id/ivEdit"
                     android:layout_width="34dp"
                     android:layout_height="34dp"
+                    android:clickable="false"
                     android:contentDescription="@null"
-                    android:foreground="@drawable/bg_ripple_round"
                     android:padding="8dp"
                     android:src="@drawable/ic_edit_unselected" />
 

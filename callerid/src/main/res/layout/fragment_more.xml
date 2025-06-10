@@ -36,7 +36,8 @@
                     android:src="@drawable/ic_add_contact_txt_app_c"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="?attr/ciTxtAppColor" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -113,7 +114,8 @@
                     android:src="@drawable/ic_send_mail_txt_app_c"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="?attr/ciTxtAppColor" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -152,7 +154,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="?attr/ciTxtAppColor" />
+                    app:tint="#FFFFFF" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -190,7 +192,8 @@
                     android:src="@drawable/ic_web_browser_txt_app_c"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="#FFFFFF" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -229,7 +232,8 @@
                     android:src="@drawable/ic_app_setting_txt_app_c"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="?attr/ciTxtAppColor" />
 
                 <TextView
                     android:layout_width="0dp"

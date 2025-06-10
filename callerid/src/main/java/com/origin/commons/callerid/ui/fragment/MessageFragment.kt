@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.databinding.FragmentMessageBinding
@@ -27,6 +26,10 @@ class MessageFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        try {
+            inflater.context.setTheme(R.style.CiTheme_Light)
+        } catch (_: Exception) {
+        }
         init()
         return _binding.root
     }
@@ -88,22 +91,10 @@ class MessageFragment : Fragment() {
                 ivRadio2.setImageResource(R.drawable.ic_unselected)
                 ivRadio3.setImageResource(R.drawable.ic_unselected)
                 ivEdit.setImageResource(R.drawable.ic_edit)
+                etClearFocus(etMsg)
                 etRequestFocus(etMsg)
             }
-            ivEdit.setOnClickListener {
-                tvMsg1.setTextColor(ciTxtColor)
-                tvMsg2.setTextColor(ciTxtColor)
-                tvMsg3.setTextColor(ciTxtColor)
-                ivSend1.visibility = View.INVISIBLE
-                ivSend2.visibility = View.INVISIBLE
-                ivSend3.visibility = View.INVISIBLE
-                ivSend4.visibility = View.VISIBLE
-                ivRadio1.setImageResource(R.drawable.ic_unselected)
-                ivRadio2.setImageResource(R.drawable.ic_unselected)
-                ivRadio3.setImageResource(R.drawable.ic_unselected)
-                ivEdit.setImageResource(R.drawable.ic_edit)
-                etRequestFocus(etMsg)
-            }
+
             etMsg.setOnClickListener {
                 tvMsg1.setTextColor(ciTxtColor)
                 tvMsg2.setTextColor(ciTxtColor)
@@ -174,23 +165,31 @@ class MessageFragment : Fragment() {
     fun etRequestFocus(mView: View? = null) {
         try {
             if (mView != null) {
-                mView.requestFocus()
+                mView.postDelayed({
+                    mView.requestFocus()
+                }, 250)
             } else {
                 with(_binding) {
-                    etMsg.requestFocus()
+                    etMsg.postDelayed({
+                        etMsg.requestFocus()
+                    }, 250)
                 }
             }
         } catch (_: Exception) {
-
         }
     }
+
     fun etClearFocus(mView: View? = null) {
         try {
             if (mView != null) {
-                mView.clearFocus()
+                mView.postDelayed({
+                    mView.clearFocus()
+                }, 100)
             } else {
                 with(_binding) {
-                    etMsg.clearFocus()
+                    etMsg.postDelayed({
+                        etMsg.clearFocus()
+                    }, 100)
                 }
             }
         } catch (_: Exception) {

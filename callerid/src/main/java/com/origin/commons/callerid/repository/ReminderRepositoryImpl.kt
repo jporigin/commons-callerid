@@ -4,22 +4,21 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.origin.commons.callerid.db.dao.ReminderDao
 import com.origin.commons.callerid.db.entity.ReminderEntity
-import com.origin.commons.callerid.extensions.showCustomToast
 import com.origin.commons.callerid.helpers.Utils.isNotificationPermissionGranted
 import com.origin.commons.callerid.receiver.OgCallerIdReminderReceiver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOn
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class ReminderRepositoryImpl (private val context: Context, private var alarmManager: AlarmManager, private val reminderDao: ReminderDao) : ReminderRepository {
+class ReminderRepositoryImpl(private val context: Context, private var alarmManager: AlarmManager, private val reminderDao: ReminderDao) : ReminderRepository {
 
     override fun getReminder(): Flow<List<ReminderEntity>> {
         return reminderDao.getAll().flowOn(Dispatchers.IO).distinctUntilChanged()
@@ -42,8 +41,8 @@ class ReminderRepositoryImpl (private val context: Context, private var alarmMan
         return reminderDao.getReminderById(id)
     }
 
-    override suspend fun getReminderByIdNormal(id: Int): ReminderEntity {
-        return reminderDao.getReminderById(id).first()
+    override suspend fun getReminderByIdNormal(id: Int): ReminderEntity? {
+        return reminderDao.getReminderById(id).firstOrNull()
     }
 
     private fun setReminderNotification(reminder: ReminderEntity) {

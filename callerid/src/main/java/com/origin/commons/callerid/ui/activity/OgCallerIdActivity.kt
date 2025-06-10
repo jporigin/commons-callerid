@@ -2,6 +2,7 @@ package com.origin.commons.callerid.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -43,9 +44,15 @@ class OgCallerIdActivity : AppCompatActivity() {
     private val duration by lazy { intent.getStringExtra("duration") }
     private val callType by lazy { intent.getStringExtra("callType") }
 
+
+    override fun getTheme(): Resources.Theme {
+        val mTheme = super.getTheme()
+        mTheme.applyStyle(R.style.CiTheme_Light, true)
+        return mTheme
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         this.enableEdgeToEdge(SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT), SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT))
         _binding = ActivityOgCallerIdBinding.inflate(layoutInflater)
         setContentView(_binding.root)
@@ -99,6 +106,14 @@ class OgCallerIdActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        mHomeFragment = null
+        mMessageFragment = null
+        mNotificationFragment = null
+        mMoreFragment = null
+        super.onDestroy()
+    }
+
     private fun setUpAds() {
         this@OgCallerIdActivity.prefsHelper.apply {
             val adFormat: AdFormat = try {
@@ -148,7 +163,7 @@ class OgCallerIdActivity : AppCompatActivity() {
                     if (view == null) {
                         view = View(this@OgCallerIdActivity)
                     }
-                    imm.hideSoftInputFromWindow(view.windowToken, 0);
+                    imm.hideSoftInputFromWindow(view.windowToken, 0)
                 }
             })
             adapter = TabPagerAdapter(this@OgCallerIdActivity)
@@ -185,10 +200,10 @@ class OgCallerIdActivity : AppCompatActivity() {
         finishAndRemoveTask()
     }
 
-    var mHomeFragment: HomeFragment? = null
-    var mMessageFragment: MessageFragment? = null
-    var mNotificationFragment: NotificationFragment? = null
-    var mMoreFragment: MoreFragment? = null
+    private var mHomeFragment: HomeFragment? = null
+    private var mMessageFragment: MessageFragment? = null
+    private var mNotificationFragment: NotificationFragment? = null
+    private var mMoreFragment: MoreFragment? = null
 
     inner class TabPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
 

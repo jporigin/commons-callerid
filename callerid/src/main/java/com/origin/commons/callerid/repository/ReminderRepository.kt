@@ -15,7 +15,7 @@ interface ReminderRepository {
 
     suspend fun getReminderById(id: Int): Flow<ReminderEntity>
 
-    suspend fun getReminderByIdNormal(id: Int): ReminderEntity
+    suspend fun getReminderByIdNormal(id: Int): ReminderEntity?
 
     suspend fun scheduleAllReminderNotifications()
 

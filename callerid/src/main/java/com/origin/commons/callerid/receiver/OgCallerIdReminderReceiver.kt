@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class OgCallerIdReminderReceiver: BroadcastReceiver() {
+class OgCallerIdReminderReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context == null || intent == null) return
@@ -27,9 +27,11 @@ class OgCallerIdReminderReceiver: BroadcastReceiver() {
         val reminderId = intent.getStringExtra("reminderId")
         coroutineScope.launch {
             val item = reminderId?.let { AppProvider(context).reminderRepository.getReminderByIdNormal(it.toInt()) }
-            val timeInMillis = item?.let { provideTimeInMillis(it) }
-            val notificationInfo = timeInMillis?.let { item.toNotificationInfo(it) }
-            notificationInfo?.let { service.showNotification(it) }
+            if (item != null) {
+                val timeInMillis = provideTimeInMillis(item)
+                val notificationInfo = timeInMillis.let { item.toNotificationInfo(it) }
+                notificationInfo.let { service.showNotification(it) }
+            }
         }
     }
 

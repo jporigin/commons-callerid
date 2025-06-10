@@ -89,7 +89,6 @@ class NotificationFragment : Fragment() {
                 }
                 etRequestFocus(_binding.etMsg)
             }
-
         }
 
         dates = getDatesFromCalender()
@@ -157,7 +156,9 @@ class NotificationFragment : Fragment() {
             } catch (_: Exception) {
             }
         }
-        _binding.ivEdit.setOnClickListener {
+
+        _binding.llCustomMessage.setOnClickListener {
+            etClearFocus(_binding.etMsg)
             etRequestFocus(_binding.etMsg)
         }
 
@@ -247,12 +248,12 @@ class NotificationFragment : Fragment() {
             if (mView != null) {
                 mView.postDelayed({
                     mView.requestFocus()
-                }, 100)
+                }, 250)
             } else {
                 with(_binding) {
                     etMsg.postDelayed({
                         etMsg.requestFocus()
-                    }, 100)
+                    }, 250)
                 }
             }
         } catch (_: Exception) {
