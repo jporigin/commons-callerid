@@ -27,6 +27,7 @@ import com.origin.commons.callerid.databinding.ActivityOgCallerIdBinding
 import com.origin.commons.callerid.extensions.beGone
 import com.origin.commons.callerid.extensions.beInvisible
 import com.origin.commons.callerid.extensions.getOpenAppIntent
+import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.logEventE
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.ui.fragment.HomeFragment
@@ -45,11 +46,6 @@ class OgCallerIdActivity : AppCompatActivity() {
     private val callType by lazy { intent.getStringExtra("callType") }
 
 
-    override fun getTheme(): Resources.Theme {
-        val mTheme = super.getTheme()
-        mTheme.applyStyle(R.style.CiTheme_Light, true)
-        return mTheme
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +57,7 @@ class OgCallerIdActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        logE("OgCallerIdActivity")
         try {
             _binding.tvCallComingTime.text = time
         } catch (_: Exception) {

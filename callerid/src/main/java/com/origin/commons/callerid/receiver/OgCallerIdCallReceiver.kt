@@ -97,18 +97,17 @@ class OgCallerIdCallReceiver : BroadcastReceiver() {
     }
 
     private fun handleEndedCall(context: Context, phoneNumber: String?, intent: Intent) {
-        Handler(Looper.getMainLooper()).postDelayed({
-            try {
-                if (Utils.isScreenOverlayEnabled(context)) {
-                    startDetailActivity(context, phoneNumber, time, callType)
-                }
-            } catch (_: Exception) {
+        try {
+            if (Utils.isScreenOverlayEnabled(context)) {
+                startDetailActivity(context, phoneNumber, time, callType)
             }
-        }, 50)
+        } catch (_: Exception) {
+        }
     }
 
     private fun startDetailActivity(context: Context, phoneNumber: String?, time: Long, callType: String) {
         val intent = Intent(context.applicationContext, OgCallerIdActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         intent.putExtra("phoneNumber", phoneNumber)
         intent.putExtra("time", formatTimeToString(time))
         intent.putExtra("duration", calculateDuration(time, Date().time))

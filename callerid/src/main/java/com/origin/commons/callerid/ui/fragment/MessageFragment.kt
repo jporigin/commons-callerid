@@ -26,10 +26,6 @@ class MessageFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        try {
-            inflater.context.setTheme(R.style.CiTheme_Light)
-        } catch (_: Exception) {
-        }
         init()
         return _binding.root
     }
