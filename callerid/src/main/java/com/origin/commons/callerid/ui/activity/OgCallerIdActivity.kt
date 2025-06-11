@@ -27,13 +27,13 @@ import com.origin.commons.callerid.databinding.ActivityOgCallerIdBinding
 import com.origin.commons.callerid.extensions.beGone
 import com.origin.commons.callerid.extensions.beInvisible
 import com.origin.commons.callerid.extensions.getOpenAppIntent
-import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.logEventE
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.ui.fragment.HomeFragment
 import com.origin.commons.callerid.ui.fragment.MessageFragment
 import com.origin.commons.callerid.ui.fragment.MoreFragment
 import com.origin.commons.callerid.ui.fragment.NotificationFragment
+
 
 class OgCallerIdActivity : AppCompatActivity() {
 
@@ -156,8 +156,6 @@ class OgCallerIdActivity : AppCompatActivity() {
             this.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-
-                    logE("check:::$position")
                     val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     var view = currentFocus
                     if (view == null) {
@@ -183,7 +181,8 @@ class OgCallerIdActivity : AppCompatActivity() {
 
         _binding.cvLogo.setOnClickListener {
             this@OgCallerIdActivity.getOpenAppIntent()?.let { intent ->
-                startActivity(intent)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                this@OgCallerIdActivity.startActivity(intent)
                 this@OgCallerIdActivity.finish()
             }
         }

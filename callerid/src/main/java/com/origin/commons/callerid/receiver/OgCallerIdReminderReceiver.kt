@@ -26,7 +26,11 @@ class OgCallerIdReminderReceiver : BroadcastReceiver() {
         val service = NotificationService(context)
         val reminderId = intent.getStringExtra("reminderId")
         coroutineScope.launch {
-            val item = reminderId?.let { AppProvider(context).reminderRepository.getReminderByIdNormal(it.toInt()) }
+            val item: ReminderEntity? = try {
+                reminderId?.let { AppProvider(context).reminderRepository.getReminderByIdNormal(it.toInt()) }
+            } catch (_: Exception) {
+                null
+            }
             if (item != null) {
                 val timeInMillis = provideTimeInMillis(item)
                 val notificationInfo = timeInMillis.let { item.toNotificationInfo(it) }

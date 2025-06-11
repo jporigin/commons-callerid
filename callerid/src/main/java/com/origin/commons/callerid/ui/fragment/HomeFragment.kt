@@ -78,7 +78,6 @@ class HomeFragment : Fragment() {
         try {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.setType("vnd.android.cursor.dir/contact")
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         } catch (e: Exception) {

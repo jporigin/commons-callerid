@@ -12,7 +12,12 @@ import kotlinx.coroutines.flow.stateIn
 class NotificationFragmentViewModel(private val reminderRepository: ReminderRepository) : ViewModel() {
 
     val reminderState = reminderRepository.getReminder()
-        .map { ReminderState.Success(it) }
+        .map { listNullableReminders: List<ReminderEntity?> ->
+            // listNullableReminders is List<ReminderEntity?>
+            // filterNotNull() correctly changes the type to List<ReminderEntity>
+            val nonNullReminders: List<ReminderEntity> = listNullableReminders.filterNotNull()
+            ReminderState.Success(nonNullReminders) // This works even if nonNullReminders is empty
+        }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),

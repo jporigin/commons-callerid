@@ -18,10 +18,6 @@ fun Activity.getOpenAppIntent(): Intent? {
     }
     val mClass1 = callerIdSDKApplication?.openClass1?.invoke()
     val mClass2High = callerIdSDKApplication?.openClass2High?.invoke()
-    try {
-        logE("check::getOpenAppIntent::mClass1:${mClass1?.canonicalName}::mClass2High:${mClass2High?.canonicalName}:::${isActivityRunning(mClass1!!)}")
-    } catch (_: Exception) {
-    }
     return when {
         mClass1 != null && isActivityRunning(mClass1) -> {
             Intent(this@getOpenAppIntent, mClass1)

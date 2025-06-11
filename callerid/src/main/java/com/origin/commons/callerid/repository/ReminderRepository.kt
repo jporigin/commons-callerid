@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ReminderRepository {
 
-    fun getReminder(): Flow<List<ReminderEntity>>
+    fun getReminder(): Flow<List<ReminderEntity?>>
 
     suspend fun updateReminder(reminder: ReminderEntity)
 
@@ -13,7 +13,7 @@ interface ReminderRepository {
 
     suspend fun deleteReminder(reminder: ReminderEntity)
 
-    suspend fun getReminderById(id: Int): Flow<ReminderEntity>
+    suspend fun getReminderById(id: Int): Flow<ReminderEntity?>
 
     suspend fun getReminderByIdNormal(id: Int): ReminderEntity?
 

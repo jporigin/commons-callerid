@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.telephony.TelephonyManager
 import android.util.Log
+import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.helpers.Utils
 import com.origin.commons.callerid.helpers.Utils.calculateDuration
@@ -108,7 +109,6 @@ class OgCallerIdCallReceiver : BroadcastReceiver() {
 
     private fun startDetailActivity(context: Context, phoneNumber: String?, time: Long, callType: String) {
         val intent = Intent(context.applicationContext, OgCallerIdActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         intent.putExtra("phoneNumber", phoneNumber)
         intent.putExtra("time", formatTimeToString(time))
         intent.putExtra("duration", calculateDuration(time, Date().time))

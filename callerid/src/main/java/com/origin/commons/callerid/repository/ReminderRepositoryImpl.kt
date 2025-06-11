@@ -20,7 +20,7 @@ import java.util.Locale
 
 class ReminderRepositoryImpl(private val context: Context, private var alarmManager: AlarmManager, private val reminderDao: ReminderDao) : ReminderRepository {
 
-    override fun getReminder(): Flow<List<ReminderEntity>> {
+    override fun getReminder(): Flow<List<ReminderEntity?>> {
         return reminderDao.getAll().flowOn(Dispatchers.IO).distinctUntilChanged()
     }
 
@@ -37,7 +37,7 @@ class ReminderRepositoryImpl(private val context: Context, private var alarmMana
         reminderDao.delete(reminder)
     }
 
-    override suspend fun getReminderById(id: Int): Flow<ReminderEntity> {
+    override suspend fun getReminderById(id: Int): Flow<ReminderEntity?> {
         return reminderDao.getReminderById(id)
     }
 
@@ -85,11 +85,13 @@ class ReminderRepositoryImpl(private val context: Context, private var alarmMana
     }
 
     override suspend fun scheduleAllReminderNotifications() {
-        val reminders = getReminder().first()
-        reminders.forEach { reminder ->
-            setReminderNotification(reminder)
+        val reminders = getReminder().firstOrNull()
+        if (!reminders.isNullOrEmpty()) {
+            reminders.forEach { reminder ->
+                if (reminder != null) {
+                    setReminderNotification(reminder)
+                }
+            }
         }
     }
-
-
 }
