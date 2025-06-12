@@ -149,7 +149,7 @@ class MoreFragment : Fragment() {
         } catch (_: Exception) {
             null
         }
-        val mClass1 = callerIdSDKApplication?.openSettings?.invoke()
+        val mClass1 = callerIdSDKApplication?.openSettingClass?.invoke()
         val mIntent = if (mClass1 != null) {
             Intent(activity, mClass1)
         } else {

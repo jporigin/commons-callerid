@@ -18,12 +18,12 @@ open class CallerIdSDKApplication : Application() {
 
     var mSharedPreferencesHelper: SharedPreferencesHelper? = null
 
-    var openSettings: (() -> Class<*>)? = null
+    var openSettingClass: (() -> Class<*>)? = null
 
     var openClass1: (() -> Class<*>)? = null
     var openClass2High: (() -> Class<*>)? = null
 
-    var customFragmentProvider: (() -> Fragment)? = null
+    var customHomeFragment: (() -> Fragment)? = null
 
     fun initSDK(): Boolean {
         try {

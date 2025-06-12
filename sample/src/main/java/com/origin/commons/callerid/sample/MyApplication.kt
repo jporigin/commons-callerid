@@ -12,20 +12,17 @@ class MyApplication : CallerIdSDKApplication() {
     override fun onCreate() {
         super.onCreate()
         initCallerSDK()
-
     }
-
-    // CallerID
+    // initialize caller id sdk
     private fun initCallerSDK() {
         val isInitialized = initSDK()
         if (isInitialized) {
             initSDKAds(adFormat = AdFormat.NATIVE_BIG, adUnitId = nativeAds)
         }
-
-        openSettings = { SettingActivity::class.java }
+        openSettingClass = { SettingActivity::class.java }
         openClass1 = { MainActivity::class.java }
         openClass2High = { SplashActivity::class.java }
-        customFragmentProvider = { CIHomeScreenFragment() }
-
+        customHomeFragment = { CIHomeScreenFragment() }
     }
+    //
 }

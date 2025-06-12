@@ -181,17 +181,13 @@ class GoogleNativeAds {
         if (mGoogleNativeAds != null) {
             activity.showLoadedXxlAd()
         } else {
-            logE("glNativeAds::00:$adUnitId::${adUnitId.isSkippedAds()}")
             if (!adUnitId.isSkippedAds()) {
-                logE("glNativeAds::11")
                 loadAdsCallback(activity, adUnitId, object : NativeAdsCallback {
                     override fun onNativeAdLoaded(nativeAd: NativeAd) {
-                        logE("glNativeAds::22")
                         activity.showLoadedXxlAd()
                     }
 
                     override fun onNativeAdFailedToLoad() {
-                        logE("glNativeAds::33")
                     }
                 })
             }

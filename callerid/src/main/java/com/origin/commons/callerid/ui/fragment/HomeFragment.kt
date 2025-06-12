@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
         } catch (_: Exception) {
             null
         }
-        val fragmentProvider = callerIdSDKApplication?.customFragmentProvider
+        val fragmentProvider = callerIdSDKApplication?.customHomeFragment
         if (fragmentProvider != null) {
             _binding.llCiDefault.visibility = View.GONE
             _binding.flCiCustom.visibility = View.VISIBLE

@@ -2,7 +2,6 @@ package com.origin.commons.callerid.ui.activity
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -27,7 +26,6 @@ import com.origin.commons.callerid.databinding.ActivityOgCallerIdBinding
 import com.origin.commons.callerid.extensions.beGone
 import com.origin.commons.callerid.extensions.beInvisible
 import com.origin.commons.callerid.extensions.getOpenAppIntent
-import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.logEventE
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.ui.fragment.HomeFragment
@@ -57,7 +55,6 @@ class OgCallerIdActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        logE("OgCallerIdActivity")
         try {
             _binding.tvCallComingTime.text = time
         } catch (_: Exception) {
