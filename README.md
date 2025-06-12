@@ -32,53 +32,35 @@ Check out the latest release version from our [Release notes](https://sites.goog
 Simply extend the `CallerIdSDKApplication` class in your main application like this:
 ```kotlin
 import com.origin.commons.callerid.CallerIdSDKApplication
-import dagger.hilt.android.HiltAndroidApp
+import com.origin.commons.callerid.ads.AdFormat
 
-@HiltAndroidApp
 class MyApplication : CallerIdSDKApplication() {
     override fun onCreate() {
         super.onCreate()
-    }
-}
-```
-
-Call the function below to initialize OG-Caller-ID in your MainActivity:
-```kotlin
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        ...
-
-        // initialize CallerID SDK
-        this@MainActivity.initCallerSDK()
+        initCallerSDK()
     }
 
-    // CallerID
-    private fun Activity.initCallerSDK() {
-        (application as? CallerIdSDKApplication)?.let { callerIdSDKApplication ->
-            val isInitialized = callerIdSDKApplication.initSDK(this)
-            if (isInitialized) {
-                callerIdSDKApplication.initSDKAds(adFormat = AdFormat.NATIVE_BIG, adUnitId = nativeAds)
-            }
-            callerIdSDKApplication.setUpClassToOpenApp(MainActivity::class.java, SplashActivity::class.java)
-	    callerIdSDKApplication.setUpCustomView()
+    // initialize caller id sdk
+    private fun initCallerSDK() {
+        val isInitialized = initSDK()
+        if (isInitialized) {
+            initSDKAds(adFormat = AdFormat.NATIVE_BIG, adUnitId = nativeAds)
         }
-    }
-
-    private fun CallerIdSDKApplication.setUpCustomView() {
-        val customViewBinding = ItemCustomViewBinding.inflate(layoutInflater)
-        this.mCustomView = customViewBinding.root
+        openSettingClass = { SettingActivity::class.java }
+        openClass1 = { MainActivity::class.java }
+        openClass2High = { SplashActivity::class.java }
+        customHomeFragment = { CIHomeScreenFragment() }
     }
 }
 ```
-
 > [!NOTE]
 >* To change the Caller ID ad format, use the `AdFormat` class with one of the following options: `NONE`, `BANNER`, `NATIVE_SMALL`, or `NATIVE_BIG`.
 >* Please provide the correct `adUnitId` based on the selected `AdFormat`.
->* If you want users to open the app from the Caller ID screen, add two classes in the `setUpClassToOpenApp` function: `classA` and `classBHigh`.
->   - If the app is already open, it will launch `classA`.
->   - If the app is closed, it will launch `classBHigh`.
->* To use a custom caller screen, set your view to `mCustomView`.
+>* If you want to open the Caller ID settings activity directly, set `openSettingClass`.
+>* To open the app from the Caller ID screen, define `openClass1` and `openClass2High`:
+>   - If the app is already open, it will launch `openClass1`.
+>   - If the app is closed, it will launch `openClass2High`.
+>* To use a custom Caller ID home screen, assign your fragment to `customHomeFragment`.
 
 ### 🔧 Caller Screen Feature Toggles
 
