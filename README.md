@@ -60,7 +60,7 @@ class MyApplication : CallerIdSDKApplication() {
 >* To open the app from the Caller ID screen, define `openClass1` and `openClass2High`:
 >   - If the app is already open, it will launch `openClass1`.
 >   - If the app is closed, it will launch `openClass2High`.
->* To use a custom Caller ID home screen, assign your fragment to `customHomeFragment`.
+>* To use a custom Caller ID home screen, set your fragment to `customHomeFragment`.
 
 ### 🔧 Caller Screen Feature Toggles
 
