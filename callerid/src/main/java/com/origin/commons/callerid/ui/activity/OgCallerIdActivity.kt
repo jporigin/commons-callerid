@@ -25,7 +25,9 @@ import com.origin.commons.callerid.ads.utils.getBannerAdSize
 import com.origin.commons.callerid.databinding.ActivityOgCallerIdBinding
 import com.origin.commons.callerid.extensions.beGone
 import com.origin.commons.callerid.extensions.beInvisible
+import com.origin.commons.callerid.extensions.dpToPx
 import com.origin.commons.callerid.extensions.getOpenAppIntent
+import com.origin.commons.callerid.extensions.hideSysNavigationBar
 import com.origin.commons.callerid.extensions.logEventE
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.ui.fragment.HomeFragment
@@ -52,9 +54,11 @@ class OgCallerIdActivity : AppCompatActivity() {
         setContentView(_binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 5.dpToPx)
             insets
         }
+        this@OgCallerIdActivity.hideSysNavigationBar()
+
         try {
             _binding.tvCallComingTime.text = time
         } catch (_: Exception) {
