@@ -57,11 +57,11 @@ class MyApplication : CallerIdSDKApplication() {
 ```
 > [!NOTE]
 >* To change the Caller ID ad format, use the `adsRefreshType` with contains string value.
-        >   - "1" mens it shows big native ads everytime.
-        >   - "2" mens it shows small native ads everytime.
-        >   - "3" mens it shows adaptive banner ads everytime.
-        >   - "123" mens it shows all ads one by one.
-        >   - "0" mens skip ads for everytime.
+   >   - "1" mens it shows big native ads everytime.
+   >   - "2" mens it shows small native ads everytime.
+   >   - "3" mens it shows adaptive banner ads everytime.
+   >   - "123" mens it shows all ads one by one.
+   >   - "0" mens skip ads for everytime.
 >* please provide appropriate ads IDs `nativeBigId`, `nativeSmallId`, `bannerId`.
 >* If you want to open the Caller ID settings activity directly, set `openSettingClass`.
 >* To open the app from the Caller ID screen, define `openClass1` and `openClass2High`:
