@@ -43,14 +43,14 @@ class MyApplication : CallerIdSDKApplication() {
 
     // initialize caller id sdk
     private fun initCallerSDK() {
-        setUpAdsIDs()
+        setUpAdsUIDs()
         setUp(R.drawable.app_logo_, R.drawable.app_logo_icon)
         openClass1 = { MainActivity::class.java }
         openClass2High = { SplashActivity::class.java }
         customHomeFragment = { CIHomeScreenFragment() }
     }
 
-    private fun setUpAdsIDs() {
+    private fun setUpAdsUIDs() {
         setUpAdsIDs(adsRefreshType = spHelper.callerScreenAdsRefreshType, nativeBigId = cNativeBigId, nativeSmallId = cNativeSmallId, bannerId = cBannerId)
     }
 }
