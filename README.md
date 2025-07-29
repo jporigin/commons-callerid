@@ -33,7 +33,6 @@ Check out the latest release version from our [Release notes](https://sites.goog
 Simply extend the `CallerIdSDKApplication` class in your main application like this:
 ```kotlin
 import com.origin.commons.callerid.CallerIdSDKApplication
-import com.origin.commons.callerid.ads.AdFormat
 
 class MyApplication : CallerIdSDKApplication() {
     override fun onCreate() {
@@ -43,20 +42,23 @@ class MyApplication : CallerIdSDKApplication() {
 
     // initialize caller id sdk
     private fun initCallerSDK() {
-        val isInitialized = initSDK()
-        if (isInitialized) {
-            initSDKAds(adFormat = AdFormat.NATIVE_BIG, adUnitId = nativeAds)
-        }
-        openSettingClass = { SettingActivity::class.java }
+        setUpAdsUIDs()
+        setUp(R.drawable.app_logo_, R.drawable.app_logo_icon)
         openClass1 = { MainActivity::class.java }
         openClass2High = { SplashActivity::class.java }
         customHomeFragment = { CIHomeScreenFragment() }
+    }	
+    private fun setUpAdsUIDs() {
+       setUpAdsIDs(
+          nativeBigIds = listOf(Utils.nativeBigId1, Utils.nativeBigId2, Utils.nativeBigId3),
+          nativeSmallIds = listOf(Utils.nativeSmallId1, Utils.nativeSmallId2),
+          bannerIds = listOf(Utils.bannerId1, Utils.bannerId2)
+       )
     }
 }
 ```
 > [!NOTE]
->* To change the Caller ID ad format, use the `AdFormat` class with one of the following options: `NONE`, `BANNER`, `NATIVE_SMALL`, or `NATIVE_BIG`.
->* Please provide the correct `adUnitId` based on the selected `AdFormat`.
+>* please provide appropriate ads IDs `nativeBigIds`, `nativeSmallIds`, `bannerIds`.
 >* If you want to open the Caller ID settings activity directly, set `openSettingClass`.
 >* To open the app from the Caller ID screen, define `openClass1` and `openClass2High`:
    >   - If the app is already open, it will launch `openClass1`.
