@@ -33,7 +33,6 @@ Check out the latest release version from our [Release notes](https://sites.goog
 Simply extend the `CallerIdSDKApplication` class in your main application like this:
 ```kotlin
 import com.origin.commons.callerid.CallerIdSDKApplication
-import com.origin.commons.callerid.ads.AdFormat
 
 class MyApplication : CallerIdSDKApplication() {
     override fun onCreate() {
