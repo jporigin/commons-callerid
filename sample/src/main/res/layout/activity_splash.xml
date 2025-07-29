@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_surfaceContainerLowest"
+    android:background="@color/white"
     tools:context=".ui.activity.SplashActivity">
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Splash Activity"
         android:fontFamily="@font/sinteca_medium"
-        android:textColor="@color/md_theme_onSurface"
+        android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

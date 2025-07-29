@@ -4,20 +4,25 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Primary Colors -->
-    <color name="md_theme_primary">#0D9379</color>
-    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="call_theme_primary">#0D9379</color>
+    <color name="call_theme_onPrimary">#FFFFFF</color>
 
     <!-- Surface -->
-    <color name="md_theme_surfaceContainerLowest">#FFFFFF</color>
-    <color name="md_theme_surfaceContainerLow">#F0F7F5</color>
-    <color name="md_theme_surfaceContainer">#E5F2EF</color>
-    <color name="md_theme_surfaceContainerHigh">#D9ECE8</color>
-    <color name="md_theme_surfaceContainerHighest">#CCE6E1</color>
-
-    <color name="md_theme_onSurface">#1A201E</color>
-    <color name="md_theme_onSurfaceVariant">#414B48</color>
+    <color name="call_theme_surfaceContainerLowest">#FFFFFF</color>
+    <color name="call_theme_surfaceContainerLow">#F0F7F5</color>
+    <color name="call_theme_surfaceContainerHighest">#CCE6E1</color>
+    <color name="call_theme_onSurface">#1A201E</color>
+    <color name="call_theme_onSurfaceVariant">#414B48</color>
 
     <!-- Outline -->
-    <color name="md_theme_outline">#717B78</color>
-    <color name="md_theme_outlineVariant">#C1CCC8</color>
+    <color name="call_theme_outline">#717B78</color>
+    <color name="call_theme_outlineVariant">#C1CCC8</color>
+
+    <!--  Ads  -->
+    <color name="call_theme_adsBgColor">#F0F7F5</color>
+    <color name="call_theme_adsBgColorHigh">#CCE6E1</color>
+    <color name="call_theme_adsTextColor">#1A201E</color>
+    <color name="call_theme_adsTextColorVariant">#414B48</color>
+    <color name="call_theme_adsPrimary">#0A85D9</color>
+    <color name="call_theme_adsOnPrimary">#FFFFFF</color>
 </resources>

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_surfaceContainerLowest"
+    android:background="@color/white"
     tools:context=".ui.activity.MainActivity">
 
     <ImageView
@@ -19,7 +19,7 @@
         android:src="@drawable/ic_setting_txt_app_c"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/md_theme_onSurface" />
+        app:tint="@color/black" />
 
     <TextView
         android:id="@+id/tvMainText"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/sinteca_medium"
         android:text="Main Activity"
-        android:textColor="@color/md_theme_onSurface"
+        android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

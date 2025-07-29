@@ -10,10 +10,10 @@ import com.origin.commons.callerid.extensions.dpToPx
 
 fun Activity.updateUIMainLayout(rlMainGoogleBanner: RelativeLayout, tvSpaceAds: TextView) {
     rlMainGoogleBanner.apply {
-        this@apply.setBackgroundColor(ContextCompat.getColor(this@updateUIMainLayout, R.color.call_theme_surfaceContainer))
+        this@apply.setBackgroundColor(ContextCompat.getColor(this@updateUIMainLayout, R.color.call_theme_adsBgColor))
     }
     tvSpaceAds.apply {
-        setTextColor(ContextCompat.getColor(this@updateUIMainLayout, R.color.call_theme_onSurfaceVariant))
+        setTextColor(ContextCompat.getColor(this@updateUIMainLayout, R.color.call_theme_adsTextColorVariant))
     }
 }
 
@@ -25,7 +25,7 @@ fun Activity.updateUIShimmerLayout(shimmerBannerLayoutBinding: ShimmerAdaptiveBa
     shimmerBannerLayoutBinding.apply {
         val views = listOf(tv1, iv1)
         views.forEach { view ->
-            view.setBackgroundColor(ContextCompat.getColor(this@updateUIShimmerLayout, R.color.call_theme_surfaceContainerHighest))
+            view.setBackgroundColor(ContextCompat.getColor(this@updateUIShimmerLayout, R.color.call_theme_adsBgColorHigh))
         }
     }
 }

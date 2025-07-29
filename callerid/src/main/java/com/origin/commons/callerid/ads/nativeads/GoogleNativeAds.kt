@@ -80,7 +80,7 @@ class GoogleNativeAds {
         }
     }
 
-    fun showLoadedXlAd(activity: Activity , nativeAd: NativeAd) {
+    fun showLoadedXlAd(activity: Activity, nativeAd: NativeAd) {
         flSpaceLayout.beGone()
         flShimmerGoogleNative.beGone()
         AdUnifiedNativeXlBinding.inflate(activity.layoutInflater).apply {
@@ -90,7 +90,6 @@ class GoogleNativeAds {
             flGoogleNative.addView(this.root)
         }
     }
-
 
 
     private var mShimmerNativeXxlBinding: ShimmerNativeXxlBinding? = null
@@ -137,14 +136,15 @@ class GoogleNativeAds {
         } catch (_: Exception) {
         }
     }
-    fun showLoadedXxlAd(activity: Activity,nativeAd: NativeAd) {
-            flSpaceLayout.beGone()
-            flShimmerGoogleNative.beGone()
-            AdUnifiedNativeXxlBinding.inflate(activity.layoutInflater).apply {
-                activity.updateUINativeXxlLayout(this)
-                activity.populateNativeXXLAdView(nativeAd, this)
-                flGoogleNative.removeAllViews()
-                flGoogleNative.addView(this.root)
-            }
+
+    fun showLoadedXxlAd(activity: Activity, nativeAd: NativeAd) {
+        flSpaceLayout.beGone()
+        flShimmerGoogleNative.beGone()
+        AdUnifiedNativeXxlBinding.inflate(activity.layoutInflater).apply {
+            activity.updateUINativeXxlLayout(this)
+            activity.populateNativeXXLAdView(nativeAd, this)
+            flGoogleNative.removeAllViews()
+            flGoogleNative.addView(this.root)
+        }
     }
 }

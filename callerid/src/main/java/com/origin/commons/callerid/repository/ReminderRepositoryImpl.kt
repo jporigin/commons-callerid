@@ -45,11 +45,12 @@ class ReminderRepositoryImpl(private val context: Context, private var alarmMana
         return reminderDao.getReminderById(id).firstOrNull()
     }
 
-    private suspend fun setReminderNotification(reminder: ReminderEntity) = withContext(Dispatchers.Default) {
+    private suspend fun setReminderNotification(reminder: ReminderEntity, isRescheduling: Boolean = false) = withContext(Dispatchers.Default) {
         val rightNow = Calendar.getInstance()
         val dateVal = reminder.date
         val hourVal = reminder.hours
         val minuteVal = reminder.minutes
+
         val datetimeToAlarm = Calendar.getInstance(Locale.getDefault())
         datetimeToAlarm.timeInMillis = System.currentTimeMillis()
         if (dateVal == "Today") {
@@ -71,9 +72,15 @@ class ReminderRepositoryImpl(private val context: Context, private var alarmMana
         datetimeToAlarm.set(Calendar.MILLISECOND, 0)
 
         val timeInMilliSeconds = datetimeToAlarm.timeInMillis
+        val nowInMillis = System.currentTimeMillis()
+
+        // Skip scheduling if time is in the past
+        if (isRescheduling && timeInMilliSeconds <= nowInMillis) {
+            return@withContext
+        }
+
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = timeInMilliSeconds
-
         if (!isNotificationPermissionGranted(context)) {
             return@withContext
         }
@@ -87,10 +94,10 @@ class ReminderRepositoryImpl(private val context: Context, private var alarmMana
 
     override suspend fun scheduleAllReminderNotifications() {
         val reminders = getReminder().firstOrNull()
-        if (!reminders.isNullOrEmpty()) {
+        if (!reminders.isNullOrEmpty() ) {
             reminders.forEach { reminder ->
                 if (reminder != null) {
-                    setReminderNotification(reminder)
+                    setReminderNotification(reminder, true)
                 }
             }
         }

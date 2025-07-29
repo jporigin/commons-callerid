@@ -7,8 +7,6 @@
     <!-- Surface -->
     <color name="call_theme_surfaceContainerLowest">#000000</color>
     <color name="call_theme_surfaceContainerLow">#10201C</color>
-    <color name="call_theme_surfaceContainer">#1C2E2A</color>
-    <color name="call_theme_surfaceContainerHigh">#273832</color>
     <color name="call_theme_surfaceContainerHighest">#31413C</color>
     <color name="call_theme_onSurface">#DCE6E2</color>
     <color name="call_theme_onSurfaceVariant">#B0C2BE</color>
@@ -16,4 +14,13 @@
     <!-- Outline -->
     <color name="call_theme_outline">#8B9894</color>
     <color name="call_theme_outlineVariant">#3C4945</color>
+
+    <!--  Ads  -->
+    <color name="call_theme_adsBgColor">#10201C</color>
+    <color name="call_theme_adsBgColorHigh">#31413C</color>
+    <color name="call_theme_adsTextColor">#DCE6E2</color>
+    <color name="call_theme_adsTextColorVariant">#B0C2BE</color>
+    <color name="call_theme_adsPrimary">#0D9379</color>
+    <color name="call_theme_adsOnPrimary">#FFFFFF</color>
+
 </resources>
