@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/flShimmer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -18,28 +19,13 @@
             android:paddingStart="5dp"
             android:paddingEnd="5dp">
 
-            <TextView
-                android:id="@+id/tv1"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="2dp"
-                android:ellipsize="end"
-                android:lines="1"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                android:textAllCaps="true" />
-
             <ImageView
                 android:id="@+id/iv1"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_below="@+id/tv1"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="2dp"
+                android:layout_marginVertical="3dp"
                 android:layout_marginEnd="5dp"
-                android:layout_marginBottom="3dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/ad_content_description"
                 android:scaleType="centerCrop" />
@@ -53,14 +39,38 @@
                 android:layout_toEndOf="@+id/iv1"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv2"
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv1"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:paddingVertical="1.5dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:textAllCaps="true"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/tv2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv3"
@@ -70,6 +80,7 @@
                     android:maxLines="2"
                     android:textSize="12sp" />
             </LinearLayout>
+
         </RelativeLayout>
 
         <TextView
@@ -84,5 +95,6 @@
             android:paddingHorizontal="20dp"
             android:textSize="19sp"
             android:textStyle="bold" />
+
     </LinearLayout>
 </com.facebook.shimmer.ShimmerFrameLayout>

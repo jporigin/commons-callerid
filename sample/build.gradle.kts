@@ -14,15 +14,16 @@ android {
         applicationId = "com.origin.commons.callerid.sample"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 9
+        versionName = "1.0.9"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -35,6 +36,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+    lint {
+        checkReleaseBuilds = false
     }
 }
 
@@ -49,7 +53,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     // optional
-    implementation("com.github.loukwn.StageStepBar:stagestepbar:1.2.0")
+    implementation(libs.stagestepbar)
 
     // Firebase
     implementation(platform(libs.firebase.bom))

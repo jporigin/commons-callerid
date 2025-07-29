@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Colors -->
+    <color name="call_theme_primary">#0D9379</color>
+    <color name="call_theme_onPrimary">#FFFFFF</color>
+
+    <!-- Surface -->
+    <color name="call_theme_surfaceContainerLowest">#000000</color>
+    <color name="call_theme_surfaceContainerLow">#10201C</color>
+    <color name="call_theme_surfaceContainer">#1C2E2A</color>
+    <color name="call_theme_surfaceContainerHigh">#273832</color>
+    <color name="call_theme_surfaceContainerHighest">#31413C</color>
+    <color name="call_theme_onSurface">#DCE6E2</color>
+    <color name="call_theme_onSurfaceVariant">#B0C2BE</color>
+
+    <!-- Outline -->
+    <color name="call_theme_outline">#8B9894</color>
+    <color name="call_theme_outlineVariant">#3C4945</color>
+</resources>

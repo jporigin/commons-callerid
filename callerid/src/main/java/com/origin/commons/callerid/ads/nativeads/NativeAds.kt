@@ -7,6 +7,7 @@ import android.view.ViewGroup.OnHierarchyChangeListener
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.origin.commons.callerid.R
 import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
@@ -18,10 +19,10 @@ import com.origin.commons.callerid.extensions.*
 
 fun Activity.updateUIMainLayout(rlMainGoogleNative: RelativeLayout, tvSpaceAds: TextView) {
     rlMainGoogleNative.apply {
-        this@updateUIMainLayout.setBackgroundFromAttr(this@apply, R.attr.nAdsBackground, R.color.n_bg_color)
+        this@apply.setBackgroundColor(ContextCompat.getColor(this@updateUIMainLayout, R.color.call_theme_surfaceContainerLow))
     }
     tvSpaceAds.apply {
-        setTextColor(this@updateUIMainLayout.getColorFromAttr(R.attr.nAdsTextColor, R.color.n_text_color))
+        setTextColor(ContextCompat.getColor(this@updateUIMainLayout, R.color.call_theme_onSurfaceVariant))
     }
 }
 
@@ -32,7 +33,7 @@ fun Activity.updateUIShimmerXlLayout(shimmerNativeXlBinding: ShimmerNativeXlBind
     shimmerNativeXlBinding.apply {
         val views = listOf(tv1, tv2, tv3, tv4, iv1)
         views.forEach { view ->
-            this@updateUIShimmerXlLayout.setBackgroundFromAttr(view, R.attr.nAdsShimmerColor, R.color.n_shimmer_color)
+            view.setBackgroundColor(ContextCompat.getColor(this@updateUIShimmerXlLayout, R.color.call_theme_surfaceContainerHighest))
         }
     }
 }
@@ -41,14 +42,15 @@ fun Activity.updateUINativeXlLayout(unifiedNativeXlBinding: AdUnifiedNativeXlBin
     unifiedNativeXlBinding.apply {
         val adsTxtViews = listOf(adHeadline, adBody)
         adsTxtViews.forEach { view ->
-            view.setTextColor(this@updateUINativeXlLayout.getColorFromAttr(R.attr.nAdsTextColor, R.color.n_text_color))
+            view.setTextColor(ContextCompat.getColor(this@updateUINativeXlLayout, R.color.call_theme_onSurface))
         }
-        this@updateUINativeXlLayout.setBackgroundFromAttr(adAttribution, R.attr.nAdsAttributionBg, R.color.n_attribution_color)
-        adAttribution.setTextColor(this@updateUINativeXlLayout.getColorFromAttr(R.attr.nAdsCallActionTvColor, R.color.n_attribution_text_color))
+        adAttribution.setBackgroundResource(R.drawable.ads_attribution_bg)
+        adAttribution.setTextColor(ContextCompat.getColor(this@updateUINativeXlLayout, R.color.call_theme_onPrimary))
 
-        this@updateUINativeXlLayout.setBackgroundFromAttr(adCallToAction, R.attr.nAdsCallActionBg, 0, R.drawable.native_call_action_bg)
-        this@updateUINativeXlLayout.setForegroundFromAttr(adCallToAction, R.attr.nAdsCallActionFg, R.drawable.ads_call_action_ripple)
-        adCallToAction.setTextColor(this@updateUINativeXlLayout.getColorFromAttr(R.attr.nAdsCallActionTvColor, R.color.n_call_action_tv_color))
+        adCallToAction.setBackgroundResource(R.drawable.ads_call_action_bg)
+        adCallToAction.foreground = ContextCompat.getDrawable(this@updateUINativeXlLayout, R.drawable.ads_call_action_ripple)
+
+        adCallToAction.setTextColor(ContextCompat.getColor(this@updateUINativeXlLayout, R.color.call_theme_onPrimary))
     }
 }
 
@@ -101,7 +103,7 @@ fun Activity.updateUIShimmerXxlLayout(shimmerNativeXxlBinding: ShimmerNativeXxlB
     shimmerNativeXxlBinding.apply {
         val views = listOf(tv1, tv2, tv3, tv4, iv1, iv2)
         views.forEach { view ->
-            this@updateUIShimmerXxlLayout.setBackgroundFromAttr(view, R.attr.nAdsShimmerColor, R.color.n_shimmer_color)
+            view.setBackgroundColor(ContextCompat.getColor(this@updateUIShimmerXxlLayout, R.color.call_theme_surfaceContainerHighest))
         }
     }
 }
@@ -110,14 +112,17 @@ fun Activity.updateUINativeXxlLayout(unifiedNativeXxlBinding: AdUnifiedNativeXxl
     unifiedNativeXxlBinding.apply {
         val adsTxtViews = listOf(adHeadline, adBody)
         adsTxtViews.forEach { view ->
-            view.setTextColor(this@updateUINativeXxlLayout.getColorFromAttr(R.attr.nAdsTextColor, R.color.n_text_color))
+            view.setTextColor(ContextCompat.getColor(this@updateUINativeXxlLayout, R.color.call_theme_onSurface))
         }
-        this@updateUINativeXxlLayout.setBackgroundFromAttr(adAttribution, R.attr.nAdsAttributionBg, R.color.n_attribution_color)
-        adAttribution.setTextColor(this@updateUINativeXxlLayout.getColorFromAttr(R.attr.nAdsCallActionTvColor, R.color.n_attribution_text_color))
+        adAttribution.setBackgroundResource(R.drawable.ads_attribution_bg)
+        adAttribution.setTextColor(ContextCompat.getColor(this@updateUINativeXxlLayout, R.color.call_theme_onPrimary))
 
-        this@updateUINativeXxlLayout.setBackgroundFromAttr(adCallToAction, R.attr.nAdsCallActionBg, 0, R.drawable.native_call_action_bg)
-        this@updateUINativeXxlLayout.setForegroundFromAttr(adCallToAction, R.attr.nAdsCallActionFg, R.drawable.ads_call_action_ripple)
-        adCallToAction.setTextColor(this@updateUINativeXxlLayout.getColorFromAttr(R.attr.nAdsCallActionTvColor, R.color.n_call_action_tv_color))
+
+        adCallToAction.setBackgroundResource(R.drawable.ads_call_action_bg)
+        adCallToAction.foreground = ContextCompat.getDrawable(this@updateUINativeXxlLayout, R.drawable.ads_call_action_ripple)
+
+
+        adCallToAction.setTextColor(ContextCompat.getColor(this@updateUINativeXxlLayout, R.color.call_theme_onPrimary))
     }
 }
 

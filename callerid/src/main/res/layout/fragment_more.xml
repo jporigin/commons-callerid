@@ -20,35 +20,35 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clAddCallerToYourContacts"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="52dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_ripple_btn_app_color"
+                android:background="@drawable/ci_surface_container_low_12"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/ivAddContact"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_marginStart="15dp"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_add_contact_txt_app_c"
+                    android:src="@drawable/ci_add_contact"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="?attr/ciTxtAppColor" />
+                    app:tint="@color/call_theme_onSurface" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
+                    android:fontFamily="@font/sinteca_medium"
                     android:includeFontPadding="false"
                     android:singleLine="true"
-                    android:text="@string/add_caller_to_your_contacts"
-                    android:textColor="?attr/ciTxtAppColor"
+                    android:text="Add Contact"
+                    android:textColor="@color/call_theme_onSurface"
                     android:textSize="14sp"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ivAddContact"
@@ -59,35 +59,35 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clMessage"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="52dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_ripple_btn_app_color"
+                android:background="@drawable/ci_surface_container_low_12"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/clAddCallerToYourContacts">
 
                 <ImageView
                     android:id="@+id/ivMessage"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_marginStart="15dp"
                     android:contentDescription="@null"
-                    android:src="@drawable/baseline_message_txt_app_c"
+                    android:src="@drawable/ci_messages"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="?attr/ciTxtAppColor" />
+                    app:tint="@color/call_theme_onSurface" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
+                    android:fontFamily="@font/sinteca_medium"
                     android:includeFontPadding="false"
                     android:singleLine="true"
                     android:text="@string/message"
-                    android:textColor="?attr/ciTxtAppColor"
+                    android:textColor="@color/call_theme_onSurface"
                     android:textSize="14sp"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ivMessage"
@@ -98,24 +98,24 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clSendMail"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="52dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_ripple_btn_app_color"
+                android:background="@drawable/ci_surface_container_low_12"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/clMessage">
 
                 <ImageView
                     android:id="@+id/ivMail"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_marginStart="15dp"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_send_mail_txt_app_c"
+                    android:src="@drawable/ci_send_primary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="?attr/ciTxtAppColor" />
+                    app:tint="@color/call_theme_onSurface" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -124,9 +124,9 @@
                     android:includeFontPadding="false"
                     android:singleLine="true"
                     android:text="@string/send_mail"
-                    android:textColor="?attr/ciTxtAppColor"
+                    android:fontFamily="@font/sinteca_medium"
+                    android:textColor="@color/call_theme_onSurface"
                     android:textSize="14sp"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ivMail"
@@ -137,24 +137,24 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clCalender"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="52dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_ripple_btn_app_color"
+                android:background="@drawable/ci_surface_container_low_12"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/clSendMail">
 
                 <ImageView
                     android:id="@+id/ivCalender"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_marginStart="15dp"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_date_txt_app_c"
+                    android:src="@drawable/ci_calendar_"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="#FFFFFF" />
+                    app:tint="@color/call_theme_onSurface" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -163,9 +163,9 @@
                     android:includeFontPadding="false"
                     android:singleLine="true"
                     android:text="@string/calendar"
-                    android:textColor="?attr/ciTxtAppColor"
+                    android:fontFamily="@font/sinteca_medium"
+                    android:textColor="@color/call_theme_onSurface"
                     android:textSize="14sp"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ivCalender"
@@ -176,24 +176,24 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clWeb"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="52dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_ripple_btn_app_color"
+                android:background="@drawable/ci_surface_container_low_12"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/clCalender">
 
                 <ImageView
                     android:id="@+id/ivWeb"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_marginStart="15dp"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_web_browser_txt_app_c"
+                    android:src="@drawable/ci_web"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="#FFFFFF" />
+                    app:tint="@color/call_theme_onSurface" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -202,9 +202,9 @@
                     android:includeFontPadding="false"
                     android:singleLine="true"
                     android:text="@string/web"
-                    android:textColor="?attr/ciTxtAppColor"
+                    android:textColor="@color/call_theme_onSurface"
                     android:textSize="14sp"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/sinteca_medium"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ivWeb"
@@ -215,25 +215,25 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clAppSetting"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="52dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_ripple_btn_app_color"
+                android:background="@drawable/ci_surface_container_low_12"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/clWeb">
 
                 <ImageView
                     android:id="@+id/ivSetting"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_marginStart="15dp"
                     android:contentDescription="@null"
                     android:padding="1.2dp"
-                    android:src="@drawable/ic_app_setting_txt_app_c"
+                    android:src="@drawable/ci_setting"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="?attr/ciTxtAppColor" />
+                    app:tint="@color/call_theme_onSurface" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -241,10 +241,10 @@
                     android:layout_marginStart="15dp"
                     android:includeFontPadding="false"
                     android:singleLine="true"
-                    android:text="@string/call_features"
-                    android:textColor="?attr/ciTxtAppColor"
+                    android:fontFamily="@font/sinteca_medium"
+                    android:text="@string/after_call_setting"
+                    android:textColor="@color/call_theme_onSurface"
                     android:textSize="14sp"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ivSetting"

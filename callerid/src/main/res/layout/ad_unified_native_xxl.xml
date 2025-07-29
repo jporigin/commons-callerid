@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -17,71 +17,93 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:gravity="center|start"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/adAttribution"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_gravity="top"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="2dp"
-                android:ellipsize="end"
-                android:lines="1"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                android:text="@string/ad_attribution_text"
-                android:textAllCaps="true" />
-
-            <ImageView
-                android:id="@+id/adAppIcon"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
-                android:layout_below="@+id/adAttribution"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="3dp"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/ad_content_description"
-                android:scaleType="centerCrop" />
+            android:orientation="vertical">
 
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_toEndOf="@+id/adAppIcon"
-                android:orientation="vertical">
+                android:layout_marginTop="2dp">
 
-                <TextView
-                    android:id="@+id/adHeadline"
+                <ImageView
+                    android:id="@+id/adAppIcon"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="3dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/ad_content_description"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_toEndOf="@+id/adAppIcon"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/adBody"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:maxLines="2"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/adAttribution"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top"
+                            android:ellipsize="end"
+                            android:paddingVertical="1.5dp"
+                            android:fontFamily="@font/sinteca_regular"
+                            android:includeFontPadding="false"
+                            android:lines="1"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:text="@string/ad_attribution_text"
+                            android:textAllCaps="true"
+                            android:textSize="11sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/adHeadline"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:layout_marginStart="3dp"
+                            android:fontFamily="@font/sinteca_medium"
+                            android:includeFontPadding="false"
+                            android:lines="1"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+
+
+                    <TextView
+                        android:id="@+id/adBody"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/sinteca_regular"
+                        android:includeFontPadding="false"
+                        android:maxLines="2"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
 
         <com.google.android.gms.ads.nativead.MediaView
             android:id="@+id/ad_media"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="2dp"
             android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="2dp"
             android:layout_marginBottom="3dp" />
 
         <TextView

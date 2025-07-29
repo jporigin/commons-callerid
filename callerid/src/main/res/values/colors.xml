@@ -1,37 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Primary Colors -->
+    <color name="call_theme_primary">#0D9379</color>
+    <color name="call_theme_onPrimary">#FFFFFF</color>
 
-    <color name="ci_app_color">#0056FF</color>
-    <color name="ci_txt_app_color">#FFFFFF</color>
+    <!-- Surface -->
+    <color name="call_theme_surfaceContainerLowest">#FFFFFF</color>
+    <color name="call_theme_surfaceContainerLow">#F0F7F5</color>
+    <color name="call_theme_surfaceContainer">#E5F2EF</color>
+    <color name="call_theme_surfaceContainerHigh">#D9ECE8</color>
+    <color name="call_theme_surfaceContainerHighest">#CCE6E1</color>
+    <color name="call_theme_onSurface">#1A201E</color>
+    <color name="call_theme_onSurfaceVariant">#414B48</color>
 
-    <color name="ci_screen_bg">#FFFFFF</color>
-    <color name="ci_txt_color">#161616</color>
-
-    <color name="ci_ripple_color">#404040</color>
-    <color name="ci_grey">#8e8d8d</color>
-    <color name="ci_light_grey">#e8eaed</color>
-
-    <!--  bnr -->
-    <color name="b_shimmer_color">#B7B7B7</color>
-
-    <color name="b_bg_color">#EFEFEF</color>
-    <color name="b_text_color">#232127</color>
-
-    <color name="b_attribution_color">#999999</color>
-    <color name="b_attribution_text_color">#232127</color>
-
-    <color name="b_call_action_tv_color">#EFEFEF</color>
-
-    <!--  ntv -->
-    <color name="n_shimmer_color">#B7B7B7</color>
-
-    <color name="n_bg_color">#EFEFEF</color>
-    <color name="n_text_color">#232127</color>
-
-    <color name="n_attribution_color">#999999</color>
-    <color name="n_attribution_text_color">#232127</color>
-
-    <color name="n_call_action_tv_color">#EFEFEF</color>
-
-
+    <!-- Outline -->
+    <color name="call_theme_outline">#717B78</color>
+    <color name="call_theme_outlineVariant">#C1CCC8</color>
 </resources>

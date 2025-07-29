@@ -1,29 +1,16 @@
 <resources>
     <string name="app_name">OG Caller ID</string>
+    <string name="app_name_tag">#OG_Caller_ID</string>
+
 
     <string name="cancel">Cancel</string>
-    <string name="today_the_sun_rises_at_6_04_am_and_sets_at_6_25_pm">Today, the sun rises at 6:04 Am and sets at 6:25 PM</string>
-    <string name="after_call_setting">After call Setting</string>
-    <string name="call_features">Call Features Setting</string>
-    <string name="missed_call">Missed Call</string>
-    <string name="missed_call_description">Call information after a missed call with multiple options to handle contact information.</string>
-    <string name="complete_call">Complete Call</string>
-    <string name="complete_call_description">Call information after a call is completed with multiple options to handle contact information.</string>
-    <string name="no_answer">No Answer</string>
-    <string name="no_answer_description">Call information after unanswered call with multiple options to handle contact information.</string>
-    <string name="proceed_dialog_description">This great feature will show you information on a caller not in your contact list. You will also have many options to easily handle the contact inforamtion.\n\nDismissing this great feature will stop you from seeing this useful information.</string>
     <string name="keep_it">Keep it</string>
     <string name="proceed">Proceed</string>
-    <string name="confirm_dialog_title">Are you sure?\nYou will not be able to see any to see any call information</string>
-    <string name="confirm_dialog_description">This great feature give you information on anybody who calls and helps you avoid spam callers.</string>
-    <string name="good_afternoon">Good Afternoon!</string>
-    <string name="good_evening">Good Evening!</string>
-    <string name="good_night">good Night!</string>
     <string name="open_setting">Open Setting</string>
     <string name="open_setting_desc">Please provide required permission to use application with hassle free.</string>
     <string name="required_permission">Required Permission</string>
     <string name="required_permission_desc">Permission is required please allow all permission.</string>
     <string name="allow_permission">Allow Permission</string>
-    <string name="reminder_title">Reminder Title</string>
+
 
 </resources>

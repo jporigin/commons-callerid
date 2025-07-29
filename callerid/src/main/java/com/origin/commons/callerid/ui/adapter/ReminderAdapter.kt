@@ -33,11 +33,9 @@ class ReminderAdapter(private val onItemClick: (reminder: ReminderEntity) -> Uni
                 root.setOnClickListener {
                     onItemClick.invoke(data)
                 }
-
                 ivDelete.setOnClickListener {
                     onDeleteClick.invoke(data)
                 }
-
             }
         }
     }
@@ -47,7 +45,6 @@ class ReminderAdapter(private val onItemClick: (reminder: ReminderEntity) -> Uni
             override fun areItemsTheSame(oldItem: ReminderEntity, newItem: ReminderEntity): Boolean {
                 return oldItem.id == newItem.id
             }
-
             override fun areContentsTheSame(oldItem: ReminderEntity, newItem: ReminderEntity): Boolean {
                 return oldItem == newItem
             }

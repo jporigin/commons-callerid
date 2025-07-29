@@ -7,13 +7,13 @@ import android.content.Intent
 import com.origin.commons.callerid.db.dao.ReminderDao
 import com.origin.commons.callerid.db.entity.ReminderEntity
 import com.origin.commons.callerid.helpers.Utils.isNotificationPermissionGranted
-import com.origin.commons.callerid.receiver.OgCallerIdReminderReceiver
+import com.origin.commons.callerid.receivers.OgCallerIdReminderReceiver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -45,11 +45,8 @@ class ReminderRepositoryImpl(private val context: Context, private var alarmMana
         return reminderDao.getReminderById(id).firstOrNull()
     }
 
-    private fun setReminderNotification(reminder: ReminderEntity) {
-        val alarmIntent = Intent(context, OgCallerIdReminderReceiver::class.java)
-        alarmIntent.putExtra("reminderId", reminder.id.toString())
+    private suspend fun setReminderNotification(reminder: ReminderEntity) = withContext(Dispatchers.Default) {
         val rightNow = Calendar.getInstance()
-
         val dateVal = reminder.date
         val hourVal = reminder.hours
         val minuteVal = reminder.minutes
@@ -59,7 +56,7 @@ class ReminderRepositoryImpl(private val context: Context, private var alarmMana
             datetimeToAlarm.set(Calendar.DAY_OF_MONTH, rightNow.get(Calendar.DAY_OF_MONTH))
             datetimeToAlarm.set(Calendar.MONTH, rightNow.get(Calendar.MONTH))
         } else {
-            val df = SimpleDateFormat("EEE, MMM dd")
+            val df = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
             val readDate = dateVal?.let { it1 -> df.parse(it1) }
             val cal = Calendar.getInstance()
             if (readDate != null) {
@@ -78,10 +75,14 @@ class ReminderRepositoryImpl(private val context: Context, private var alarmMana
         calendar.timeInMillis = timeInMilliSeconds
 
         if (!isNotificationPermissionGranted(context)) {
-            return
+            return@withContext
         }
-        val pendingIntent = PendingIntent.getBroadcast(context, reminder.id!!.toInt(), alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+        withContext(Dispatchers.Main) {
+            val alarmIntent = Intent(context, OgCallerIdReminderReceiver::class.java)
+            alarmIntent.putExtra("reminderId", reminder.id.toString())
+            val pendingIntent = PendingIntent.getBroadcast(context, reminder.id!!.toInt(), alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+        }
     }
 
     override suspend fun scheduleAllReminderNotifications() {

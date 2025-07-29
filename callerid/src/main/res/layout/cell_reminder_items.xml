@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="5dp"
-    android:background="@drawable/ci_boarder_light_gray_8"
+    android:background="@drawable/ci_surface_container_low_12"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingHorizontal="5dp"
@@ -13,18 +12,18 @@
 
     <ImageView
         android:id="@+id/ivReminderImage"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginStart="5dp"
         android:contentDescription="@null"
-        android:src="@drawable/ci_reminder_img" />
+        android:src="@drawable/ci_notificaion_bell" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_weight="1"
         android:layout_marginEnd="5dp"
+        android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
@@ -33,15 +32,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
+            android:fontFamily="@font/sinteca_medium"
             android:includeFontPadding="false"
             android:maxLines="2"
-            android:textColor="?attr/ciTxtColor"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            tools:text="Reminder" />
+            android:textColor="@color/call_theme_onSurface"
+            android:textSize="14sp" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:gravity="center_vertical"
@@ -58,9 +56,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
+                android:fontFamily="@font/sinteca_regular"
                 android:includeFontPadding="false"
-                android:textSize="12sp"
-                tools:text="11:15" />
+                android:textColor="@color/call_theme_onSurfaceVariant"
+                android:textSize="12sp" />
 
             <ImageView
                 android:layout_width="12dp"
@@ -74,9 +73,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
+                android:fontFamily="@font/sinteca_regular"
                 android:includeFontPadding="false"
-                android:textSize="12sp"
-                tools:text="Today" />
+                android:textColor="@color/call_theme_onSurfaceVariant"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -86,10 +86,10 @@
         android:id="@+id/ivDelete"
         android:layout_width="38dp"
         android:layout_height="38dp"
-        android:padding="8dp"
+        android:layout_marginEnd="2dp"
         android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="@null"
-        android:layout_marginEnd="2dp"
+        android:padding="6dp"
         android:src="@drawable/ci_delete" />
 
 </LinearLayout>

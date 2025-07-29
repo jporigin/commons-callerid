@@ -12,6 +12,10 @@ import androidx.fragment.app.Fragment
 import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.databinding.FragmentHomeBinding
+import com.origin.commons.callerid.extensions.emailIntent
+import com.origin.commons.callerid.extensions.getAppName
+import com.origin.commons.callerid.extensions.openContact
+import com.origin.commons.callerid.utils.canSkipLeaveHint
 import java.util.Calendar
 
 class HomeFragment : Fragment() {
@@ -55,10 +59,12 @@ class HomeFragment : Fragment() {
 
     private fun clickEvents() {
         _binding.btnAddEmail.setOnClickListener {
-            openContact(requireContext())
+            context?.let { mCtx ->
+                mCtx.emailIntent(mCtx.getAppName())
+            }
         }
         _binding.btnSendNumber.setOnClickListener {
-            emailIntent(requireContext(), "")
+            context?.openContact()
         }
     }
 
@@ -73,31 +79,4 @@ class HomeFragment : Fragment() {
             else -> getString(R.string.good_morning)
         }
     }
-
-    private fun openContact(context: Context) {
-        try {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.setType("vnd.android.cursor.dir/contact")
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            context.startActivity(intent)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            val intent2 = Intent()
-            intent2.setAction(Intent.ACTION_VIEW)
-            intent2.setType("vnd.android.cursor.dir/contact")
-            startActivity(intent2)
-        }
-    }
-
-    private fun emailIntent(context: Context, subject: String) {
-        val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "", null)).apply {
-            putExtra(Intent.EXTRA_SUBJECT, subject)
-        }
-        try {
-            context.startActivity(Intent.createChooser(intent, null))
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
 }

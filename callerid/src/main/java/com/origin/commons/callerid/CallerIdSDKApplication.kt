@@ -1,7 +1,7 @@
 package com.origin.commons.callerid
 
 import android.app.Application
-import android.content.IntentFilter
+import android.content.Context
 import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.Firebase
@@ -9,23 +9,79 @@ import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.helpers.Utils
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.analytics
-import com.origin.commons.callerid.ads.AdFormat
+import com.google.gson.Gson
 import com.origin.commons.callerid.extensions.logEventE
-import com.origin.commons.callerid.helpers.SharedPreferencesHelper
-import com.origin.commons.callerid.receiver.OgCallerIdCallReceiver
+import com.origin.commons.callerid.extensions.registerCallReceiver
 
 open class CallerIdSDKApplication : Application() {
 
-    var mSharedPreferencesHelper: SharedPreferencesHelper? = null
+    fun setUpAdsIDs(nativeBigIds: List<String> = emptyList(), nativeSmallIds: List<String> = emptyList(), bannerIds: List<String> = emptyList()) {
+        val newAdsRefreshType = buildString {
+            if (nativeBigIds.isNotEmpty()) append("1")
+            if (nativeSmallIds.isNotEmpty()) append("2")
+            if (bannerIds.isNotEmpty()) append("3")
+        }
+        prefsHelper.apply {
+            if (this.adsRefreshType != newAdsRefreshType) {
+                this.adsRefreshIndex = -1
+                this.adsRefreshType = newAdsRefreshType
+            }
+            if (nativeBigIds.isNotEmpty()) {
+                this.nativeBigIDsList = Gson().toJson(nativeBigIds)
+            }
+            if (nativeSmallIds.isNotEmpty()) {
+                this.nativeSmallIDsList = Gson().toJson(nativeSmallIds)
+            }
+            if (bannerIds.isNotEmpty()) {
+                this.bannerIDsList = Gson().toJson(bannerIds)
+            }
+        }
+    }
 
-    var openSettingClass: (() -> Class<*>)? = null
+    fun setUpAdsIDs(adsRefreshType: String = "123", nativeBigIds: List<String> = emptyList(), nativeSmallIds: List<String> = emptyList(), bannerIds: List<String> = emptyList()) {
+        prefsHelper.apply {
+            if (this.adsRefreshType != adsRefreshType) {
+                this.adsRefreshIndex = -1
+                this.adsRefreshType = adsRefreshType
+            }
+            if (nativeBigIds.isNotEmpty()) {
+                this.nativeBigIDsList = Gson().toJson(nativeBigIds)
+            }
+            if (nativeSmallIds.isNotEmpty()) {
+                this.nativeSmallIDsList = Gson().toJson(nativeSmallIds)
+            }
+            if (bannerIds.isNotEmpty()) {
+                this.bannerIDsList = Gson().toJson(bannerIds)
+            }
+        }
+    }
+
+    fun setUpPurchase(isPurchased: Boolean = false, skipCallerScreen: Boolean = false) {
+        prefsHelper.apply {
+            this.isPurchased = isPurchased
+            this.isSkipCallerScreen = skipCallerScreen
+        }
+    }
+
+    fun setUp(logo: Int, logoIcon: Int) {
+        appLogo = logo
+        appLogoIcon = logoIcon
+    }
+
+    var appLogo: Int? = null
+    var appLogoIcon: Int? = null
 
     var openClass1: (() -> Class<*>)? = null
     var openClass2High: (() -> Class<*>)? = null
 
     var customHomeFragment: (() -> Fragment)? = null
 
-    fun initSDK(): Boolean {
+    override fun onCreate() {
+        super.onCreate()
+        initSDK()
+    }
+
+    fun initSDK() {
         try {
             Thread {
                 MobileAds.initialize(this)
@@ -34,71 +90,54 @@ open class CallerIdSDKApplication : Application() {
         }
         registerCallReceiver()
         mFirebaseAnalytics = Firebase.analytics
-        prefsHelper.apply {
-            mSharedPreferencesHelper = this
-            if (this.isMissedCallFeatureEnable || this.isCompleteCallFeatureEnable || this.isNoAnswerFeatureEnable) {
-                if (!Utils.isPhoneStatePermissionGranted(applicationContext) && !Utils.isScreenOverlayEnabled(applicationContext)) {
-                    return false
-                }
-            } else {
-                return false
-            }
-        }
         logEventE("Initialized_OGCallerIdSDK")
-        return true
+        return
     }
 
 
-    private var mOgCallerIdCallReceiver: OgCallerIdCallReceiver? = null
-    private fun registerCallReceiver() {
-        try {
-            if (mOgCallerIdCallReceiver == null) {
-                mOgCallerIdCallReceiver = OgCallerIdCallReceiver()
-                registerReceiver(mOgCallerIdCallReceiver, IntentFilter("android.intent.action.PHONE_STATE"))
-            }
-        } catch (_: Exception) {
+    fun Context.isCIDPermissionAllowed(): Boolean {
+        return Utils.isPhoneStatePermissionGranted(this) && Utils.isScreenOverlayEnabled(this)
+    }
+
+    fun Context.isCallerIDEnabled(): Boolean {
+        if (!prefsHelper.isMissedCallFeatureEnable && !prefsHelper.isCompleteCallFeatureEnable && !prefsHelper.isNoAnswerFeatureEnable) {
+            return false
         }
+        return isCIDPermissionAllowed()
     }
 
-    fun initSDKAds(adFormat: AdFormat, adUnitId: String, isShowAdsShimmerView: Boolean = true) {
-        prefsHelper.apply {
-            this.mAdFormat = adFormat.name
-            this.mAdUnitId = adUnitId
-            this.mIsShowAdsShimmerView = isShowAdsShimmerView
-        }
-    }
 
     /*
     *
     * */
-    fun getMissedCallFeatureEnable(): Boolean? {
-        return mSharedPreferencesHelper?.isMissedCallFeatureEnable
+    fun getMissedCallFeatureEnable(): Boolean {
+        return prefsHelper.isMissedCallFeatureEnable
     }
 
     fun setMissedCallFeatureEnable(value: Boolean) {
-        mSharedPreferencesHelper?.isMissedCallFeatureEnable = value
+        prefsHelper.isMissedCallFeatureEnable = value
     }
 
     /*
     *
     * */
-    fun getCompleteCallFeatureEnable(): Boolean? {
-        return mSharedPreferencesHelper?.isCompleteCallFeatureEnable
+    fun getCompleteCallFeatureEnable(): Boolean {
+        return prefsHelper.isCompleteCallFeatureEnable
     }
 
     fun setCompleteCallFeatureEnable(value: Boolean) {
-        mSharedPreferencesHelper?.isCompleteCallFeatureEnable = value
+        prefsHelper.isCompleteCallFeatureEnable = value
     }
 
     /*
     *
     * */
-    fun getNoAnswerFeatureEnable(): Boolean? {
-        return mSharedPreferencesHelper?.isNoAnswerFeatureEnable
+    fun getNoAnswerFeatureEnable(): Boolean {
+        return prefsHelper.isNoAnswerFeatureEnable
     }
 
     fun setNoAnswerFeatureEnable(value: Boolean) {
-        mSharedPreferencesHelper?.isNoAnswerFeatureEnable = value
+        prefsHelper.isNoAnswerFeatureEnable = value
     }
     /*
     *

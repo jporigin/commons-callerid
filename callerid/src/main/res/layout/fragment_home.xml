@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
                     android:text="@string/good_morning"
-                    android:textColor="?attr/ciTxtColor"
+                    android:textColor="@color/call_theme_onSurface"
                     android:textSize="11sp"
                     android:textStyle="bold" />
 
@@ -73,7 +73,7 @@
                     android:layout_marginTop="2dp"
                     android:includeFontPadding="false"
                     android:text="@string/today_the_sun_rises_at_6_04_am_and_sets_at_6_25_pm"
-                    android:textColor="?attr/ciTxtColor"
+                    android:textColor="@color/call_theme_onSurface"
                     android:textSize="10sp"
                     android:textStyle="normal" />
 
@@ -101,7 +101,8 @@
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:contentDescription="@null"
-                    android:src="@drawable/ci_email" />
+                    android:src="@drawable/ci_add_contact"
+                    app:tint="@color/call_theme_primary" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -110,7 +111,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="@string/add_email_to_contact"
-                    android:textColor="?attr/ciTxtColor"
+                    android:textColor="@color/call_theme_onSurface"
                     android:textSize="10sp"
                     android:textStyle="bold" />
 
@@ -130,7 +131,7 @@
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:contentDescription="@null"
-                    android:src="@drawable/ci_direct_message" />
+                    android:src="@drawable/ci_send_primary" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -139,7 +140,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="@string/send_number_to_email"
-                    android:textColor="?attr/ciTxtColor"
+                    android:textColor="@color/call_theme_onSurface"
                     android:textSize="10sp"
                     android:textStyle="bold" />
 

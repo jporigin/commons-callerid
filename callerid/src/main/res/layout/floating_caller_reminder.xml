@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llWicMain"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="end"
+    android:background="@color/call_theme_surfaceContainerLow"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/ivCollapse"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:padding="6dp"
+        android:src="@drawable/ci_arrow_collapse"
+        android:tint="@color/call_theme_onSurface" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:orientation="vertical"
+        android:paddingVertical="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clReminderView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/llCreateNew1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/ci_primary_12"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ci_add" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sinteca_medium"
+                    android:gravity="center"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="12dp"
+                    android:text="@string/create_a_new_reminder"
+                    android:textColor="@color/call_theme_onPrimary"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/call_theme_primary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvReminder"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/ivCreateNew2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/llCreateNew1"
+                tools:listitem="@layout/cell_reminder_items" />
+
+            <ImageView
+                android:id="@+id/ivCreateNew2"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="25dp"
+                android:adjustViewBounds="true"
+                android:foreground="@drawable/bg_ripple_round"
+                android:src="@drawable/ci_create_new"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsvAddReminderView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:visibility="invisible">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="15dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/reminder_title"
+                    app:boxStrokeColor="@color/ci_text_input_layout_stroke_color"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="30"
+                    app:counterTextAppearance="@style/CounterTextAppearance"
+                    app:counterTextColor="@color/call_theme_onSurfaceVariant"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:startIconDrawable="@drawable/ci_edit_">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/teTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sinteca_medium"
+                        android:maxLength="30"
+                        android:singleLine="true"
+                        android:textColor="@color/call_theme_onSurface"
+                        android:textColorHint="@color/call_theme_onSurfaceVariant"
+                        android:textCursorDrawable="@null"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/reminder_message"
+                    app:boxStrokeColor="@color/ci_text_input_layout_stroke_color"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="60"
+                    app:counterTextAppearance="@style/CounterTextAppearance"
+                    app:counterTextColor="@color/call_theme_onSurfaceVariant"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tlTitle"
+                    app:startIconDrawable="@drawable/ci_edit_">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/teMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sinteca_medium"
+                        android:imeOptions="actionDone"
+                        android:maxLength="60"
+                        android:singleLine="true"
+                        android:textColor="@color/call_theme_onSurface"
+                        android:textColorHint="@color/call_theme_onSurfaceVariant"
+                        android:textCursorDrawable="@null"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.origin.commons.callerid.timepicker.SingleDateAndTimePicker
+                    android:id="@+id/dateTimePicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tlMessage"
+                    app:picker_textSize="18sp"
+                    app:picker_visibleItemCount="4" />
+
+                <LinearLayout
+                    android:id="@+id/llButtons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dateTimePicker">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btnCancel"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ci_surface_container_12">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/sinteca_medium"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:text="@string/cancel"
+                            android:textColor="@color/call_theme_onSurface"
+                            android:textSize="16sp" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btnSave"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ci_primary_12">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/sinteca_medium"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:text="@string/save"
+                            android:textColor="@color/call_theme_onPrimary"
+                            android:textSize="16sp" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

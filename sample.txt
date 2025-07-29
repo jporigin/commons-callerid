@@ -12,3 +12,11 @@ Showed_OGCallerScreen_c_n:   Showed OG Caller Screen From Complete Call and No A
 Showed_OGCallerScreen_m_c_n: Showed OG Caller Screen From Missed Call, Complete Call and No Answer
 Showed_OGCallerAds_B:        Showed OG Caller Ads Banner
 Showed_OGCallerAds_N:        Showed OG Caller Ads Native
+
+
+35 and 35+  = ForegroundService
+other       = LegacyForegroundService
+
+35 and 35+  = CIdForegroundService
+other       = CIdLegacyForegroundService
+

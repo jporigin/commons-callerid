@@ -11,4 +11,5 @@ data class ReminderEntity(
     @ColumnInfo("date") val date: String? = null,
     @ColumnInfo("hours")val hours: String? = null,
     @ColumnInfo("minutes")val minutes: String? = null,
+    @ColumnInfo("message") val message: String? = null // ✅ New column
 )

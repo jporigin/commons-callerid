@@ -22,29 +22,29 @@
             android:foreground="?selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="7dp"
-            android:paddingVertical="6dp">
+            android:paddingVertical="4dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="16dp">
 
             <ImageView
                 android:id="@+id/ivRadio1"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:contentDescription="@null"
                 android:padding="7dp"
-                android:src="@drawable/ic_unselected" />
+                android:src="@drawable/ci_radio_unselected" />
 
             <TextView
                 android:id="@+id/tvMsg1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/sinteca_medium"
                 android:includeFontPadding="false"
+                android:maxLines="1"
                 android:paddingHorizontal="10dp"
                 android:text="@string/sorry_i_can_t_talk_right_now"
-                android:textColor="?attr/ciTxtColor"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
+                android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/ivSend1"
@@ -52,8 +52,8 @@
                 android:layout_height="34dp"
                 android:contentDescription="@null"
                 android:foreground="@drawable/bg_ripple_round"
-                android:padding="8dp"
-                android:src="@drawable/ic_send"
+                android:padding="4dp"
+                android:src="@drawable/ci_send_primary"
                 android:visibility="visible" />
 
         </LinearLayout>
@@ -65,28 +65,30 @@
             android:foreground="?selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="7dp"
-            android:paddingVertical="6dp">
+            android:paddingVertical="4dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="16dp">
 
             <ImageView
                 android:id="@+id/ivRadio2"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:contentDescription="@null"
                 android:padding="7dp"
-                android:src="@drawable/ic_unselected" />
+                android:src="@drawable/ci_radio_unselected" />
 
             <TextView
                 android:id="@+id/tvMsg2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/sinteca_medium"
                 android:includeFontPadding="false"
+                android:maxLines="1"
                 android:paddingHorizontal="10dp"
                 android:text="@string/can_i_call_you_later"
-                android:textColor="?attr/ciTxtColor"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="14sp" />
+
 
             <ImageView
                 android:id="@+id/ivSend2"
@@ -94,8 +96,8 @@
                 android:layout_height="34dp"
                 android:contentDescription="@null"
                 android:foreground="@drawable/bg_ripple_round"
-                android:padding="8dp"
-                android:src="@drawable/ic_send"
+                android:padding="4dp"
+                android:src="@drawable/ci_send_primary"
                 android:visibility="gone" />
 
 
@@ -108,8 +110,9 @@
             android:foreground="?selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="7dp"
-            android:paddingVertical="6dp">
+            android:paddingVertical="4dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="16dp">
 
             <ImageView
                 android:id="@+id/ivRadio3"
@@ -117,19 +120,20 @@
                 android:layout_height="34dp"
                 android:contentDescription="@null"
                 android:padding="7dp"
-                android:src="@drawable/ic_unselected" />
+                android:src="@drawable/ci_radio_unselected" />
 
             <TextView
                 android:id="@+id/tvMsg3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/sinteca_medium"
                 android:includeFontPadding="false"
+                android:maxLines="1"
                 android:paddingHorizontal="10dp"
                 android:text="@string/i_m_on_my_way"
-                android:textColor="?attr/ciTxtColor"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="14sp" />
+
 
             <ImageView
                 android:id="@+id/ivSend3"
@@ -137,71 +141,58 @@
                 android:layout_height="34dp"
                 android:contentDescription="@null"
                 android:foreground="@drawable/bg_ripple_round"
-                android:padding="8dp"
-                android:src="@drawable/ic_send"
+                android:padding="4dp"
+                android:src="@drawable/ci_send_primary"
                 android:visibility="gone" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llMsg4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center_vertical"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/ci_surface_container_low_15_2"
+            android:orientation="horizontal"
+            android:padding="8dp">
 
-            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/ivEdit"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="top"
+                android:padding="6dp"
+                android:foreground="@drawable/bg_ripple_round"
+                android:src="@drawable/ci_edit_" />
 
-            <LinearLayout
-                android:id="@+id/llMsg4"
+            <EditText
+                android:id="@+id/etMsg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/ci_boarder_light_gray_8"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingVertical="10dp"
-                android:paddingStart="7dp"
-                android:paddingEnd="7dp">
-
-                <ImageView
-                    android:id="@+id/ivEdit"
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:clickable="false"
-                    android:contentDescription="@null"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_edit_unselected" />
-
-                <EditText
-                    android:id="@+id/etMsg"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints="all"
-                    android:background="@null"
-                    android:hint="@string/write_personal_message"
-                    android:imeOptions="actionDone"
-                    android:includeFontPadding="false"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:paddingHorizontal="10dp"
-                    android:textColor="?attr/ciTxtColor"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
+                android:autofillHints="all"
+                android:background="@null"
+                android:fontFamily="@font/sinteca_medium"
+                android:gravity="start"
+                android:hint="@string/write_personal_message"
+                android:imeOptions="actionSend"
+                android:includeFontPadding="false"
+                android:maxLines="5"
+                android:minHeight="80dp"
+                android:paddingTop="4dp"
+                android:textColor="@color/call_theme_onSurface"
+                android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/ivSend4"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
-                android:layout_marginHorizontal="6dp"
                 android:contentDescription="@null"
                 android:foreground="@drawable/bg_ripple_round"
-                android:padding="8dp"
-                android:src="@drawable/ic_send"
-                android:visibility="visible" />
+                android:padding="4dp"
+                android:src="@drawable/ci_send_primary"
+                android:visibility="gone" />
 
         </LinearLayout>
 

@@ -15,6 +15,7 @@ fun View.beGoneIf(beGone: Boolean) = beVisibleIf(!beGone)
 fun View.beInvisible() {
     visibility = View.INVISIBLE
 }
+
 fun View.beVisible() {
     this.visibility = View.VISIBLE
 }
@@ -27,7 +28,7 @@ fun View.beGone() {
 fun View.showKeyboard() {
     try {
         val imm = ContextCompat.getSystemService(context, InputMethodManager::class.java)
-        imm?.showSoftInput(this, InputMethodManager.SHOW_FORCED)
+        imm?.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
     } catch (e: Exception) {
         Log.e("ViewExtensions", "Error showing keyboard", e)
     }
@@ -39,5 +40,27 @@ fun View.hideKeyboard() {
         imm?.hideSoftInputFromWindow(this.windowToken, 0)
     } catch (e: Exception) {
         Log.e("ViewExtensions", "Error hiding keyboard", e)
+    }
+}
+
+fun View.etRequestFocus() {
+    try {
+        this.postDelayed({
+            if (this.isAttachedToWindow && this.isShown) {
+                this.requestFocus()
+            }
+        }, 250)
+    } catch (_: Exception) {
+    }
+}
+
+fun View.etClearFocus() {
+    try {
+        this.postDelayed({
+            if (this.isAttachedToWindow && this.isShown) {
+                this.clearFocus()
+            }
+        }, 100)
+    } catch (_: Exception) {
     }
 }

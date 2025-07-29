@@ -1,55 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="CiTheme.Light" parent="Theme.Material3.Light.NoActionBar">
-
-        <item name="ciAppColor">@color/ci_app_color</item>
-        <item name="ciTxtAppColor">@color/ci_txt_app_color</item>
-
-        <item name="ciScreenBg">@color/ci_screen_bg</item>
-        <item name="ciTxtColor">@color/ci_txt_color</item>
-
-        <item name="ciRippleColor">@color/ci_ripple_color</item>
-        <item name="ciGrey">@color/ci_grey</item>
-        <item name="ciLightGrey">@color/ci_light_grey</item>
-
-        <!-- bnr -->
-        <item name="bAdsShimmerColor">@color/n_shimmer_color</item>
-
-        <item name="bAdsBackground">@color/n_bg_color</item>
-        <item name="bAdsTextColor">@color/n_text_color</item>
-
-        <item name="bAdsAttributionBg">@drawable/ads_native_attribution_bg</item>
-        <item name="bAdsAttributionTvColor">@color/n_attribution_text_color</item>
-
-        <item name="bAdsCallActionBg">@drawable/banner_call_action_bg</item>
-        <item name="bAdsCallActionFg">@drawable/ads_call_action_ripple</item>
-        <item name="bAdsCallActionTvColor">@color/n_call_action_tv_color</item>
-
-        <!-- ntv -->
-        <item name="nAdsShimmerColor">@color/n_shimmer_color</item>
-
-        <item name="nAdsBackground">@color/n_bg_color</item>
-        <item name="nAdsTextColor">@color/n_text_color</item>
-
-        <item name="nAdsAttributionBg">@drawable/ads_native_attribution_bg</item>
-        <item name="nAdsAttributionTvColor">@color/n_attribution_text_color</item>
-
-        <item name="nAdsCallActionBg">@drawable/native_call_action_bg</item>
-        <item name="nAdsCallActionFg">@drawable/ads_call_action_ripple</item>
-        <item name="nAdsCallActionTvColor">@color/n_call_action_tv_color</item>
+    <style name="Caller.Main.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/call_theme_primary</item>
+        <item name="colorOnPrimary">@color/call_theme_onPrimary</item>
+        <item name="colorSurface">@color/call_theme_surfaceContainerLowest</item>
+        <item name="colorOnSurface">@color/call_theme_onSurface</item>
     </style>
 
-    <style name="CustomTabStyle" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">10sp</item>
+
+    <style name="CounterTextAppearance" parent="TextAppearance.AppCompat.Small">
+        <item name="android:fontFamily">@font/sinteca_regular</item>
+        <item name="counterTextColor">@color/call_theme_onSurfaceVariant</item>
+        <item name="android:textSize">11sp</item>
     </style>
 
-    <style name="NumberPicker">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColorPrimary">@color/ci_grey</item>
-        <item name="android:textColor">@color/ci_app_color</item>
-        <item name="colorControlNormal">@color/ci_grey</item>
-        <item name="android:dividerHeight">2dp</item>
+    <style name="SettingItemTitleTextStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:textColor">@color/call_theme_onSurface</item>
+        <item name="android:fontFamily">@font/sinteca_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:clickable">false</item>
     </style>
+
+    <style name="SettingItemDesTextStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:textColor">@color/call_theme_onSurface</item>
+        <item name="android:fontFamily">@font/sinteca_regular</item>
+        <item name="android:textSize">12sp</item>
+
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginEnd">12dp</item>
+        <item name="android:clickable">false</item>
+    </style>
+
+    <style name="SettingItemSwitchStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">32dp</item>
+
+        <item name="android:scaleX">0.72</item>
+        <item name="android:scaleY">0.72</item>
+        <item name="android:clickable">false</item>
+    </style>
+
 
 </resources>

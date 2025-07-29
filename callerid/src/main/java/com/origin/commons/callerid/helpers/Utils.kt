@@ -2,9 +2,11 @@ package com.origin.commons.callerid.helpers
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.provider.Settings
+import android.telephony.TelephonyManager
 import androidx.core.content.ContextCompat
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -12,11 +14,7 @@ import java.util.Locale
 object Utils {
 
     fun isPhoneStatePermissionGranted(context: Context): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
-        } else {
-            ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
-        }
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
     }
 
     fun isNotificationPermissionGranted(context: Context): Boolean {
@@ -28,7 +26,11 @@ object Utils {
     }
 
     fun isScreenOverlayEnabled(context: Context): Boolean {
-        return Settings.canDrawOverlays(context)
+        return try {
+            Settings.canDrawOverlays(context)
+        } catch (e: Exception) {
+            false
+        }
     }
 
     fun formatTimeToString(millies: Long): String {
@@ -46,6 +48,22 @@ object Utils {
 
         // Format the duration
         return String.format("%02d:%02d:%02d", hours, minutes, seconds)
+    }
+
+    fun getPhoneState(intent: Intent): Int {
+        if (intent.extras != null && intent.extras!!.getString("state") != null) {
+            val string = intent.extras!!.getString("state")
+            if (TelephonyManager.EXTRA_STATE_IDLE == string) {
+                return 0
+            }
+            if (TelephonyManager.EXTRA_STATE_OFFHOOK == string) {
+                return 2
+            }
+            if (TelephonyManager.EXTRA_STATE_RINGING == string) {
+                return 1
+            }
+        }
+        return 0
     }
 
 }

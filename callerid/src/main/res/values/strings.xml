@@ -2,13 +2,13 @@
 <resources>
     <string name="ci_duration">Duration</string>
 
+    <string name="time_format" translatable="false">%1s:%2s</string>
     <string name="add_email_to_contact">Add Email to\nContact</string>
     <string name="send_number_to_email">Send number to\nemail</string>
     <string name="write_personal_message">Write Personal message</string>
-    <string name="create_a_new_reminder">Create a new reminder</string>
+    <string name="create_a_new_reminder">Create New Reminder</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
-    <string name="add_caller_to_your_contacts">Add caller to your contacts</string>
     <string name="message">Messages</string>
     <string name="send_mail">Send Mail</string>
     <string name="calendar">Calendar</string>
@@ -16,31 +16,43 @@
     <string name="good_morning">Good Morning!</string>
     <string name="today_the_sun_rises_at_6_04_am_and_sets_at_6_25_pm">Today, the sun rises at 6:04 Am and sets at 6:25 PM</string>
     <string name="after_call_setting">After call Setting</string>
-    <string name="call_features">Call Features Setting</string>
-    <string name="missed_call">Missed Call</string>
-    <string name="missed_call_description">Call information after a missed call with multiple options to handle contact information.</string>
-    <string name="complete_call">Complete Call</string>
-    <string name="complete_call_description">Call information after a call is completed with multiple options to handle contact information.</string>
-    <string name="no_answer">No Answer</string>
-    <string name="no_answer_description">Call information after unanswered call with multiple options to handle contact information.</string>
-    <string name="proceed_dialog_description">This great feature will show you information on a caller not in your contact list. You will also have many options to easily handle the contact inforamtion.\n\nDismissing this great feature will stop you from seeing this useful information.</string>
-    <string name="keep_it">Keep it</string>
-    <string name="proceed">Proceed</string>
-    <string name="confirm_dialog_title">Are you sure?\nYou will not be able to see any to see any call information</string>
-    <string name="confirm_dialog_description">This great feature give you information on anybody who calls and helps you avoid spam callers.</string>
+
+
     <string name="good_afternoon">Good Afternoon!</string>
     <string name="good_evening">Good Evening!</string>
     <string name="good_night">Good Night!</string>
-    <string name="required_permission_desc">Permission is required please allow all permission.</string>
     <string name="reminder_title">Reminder Title</string>
+    <string name="reminder_message">Reminder Message(optional)</string>
     <string name="i_m_on_my_way">I\'m on my way</string>
     <string name="sorry_i_can_t_talk_right_now">Sorry, I can\'t talk right now</string>
     <string name="can_i_call_you_later">Can I call you later?</string>
-    <string name="private_number">Private Number</string>
 
     <string name="ad_content_description" translatable="false">none</string>
     <string name="ad_attribution_text" translatable="false">Ad</string>
 
     <string name="space_for_ads">Space For Ads</string>
+    <string name="select_date">Select Date</string>
+    <string name="select_time">Select Time</string>
 
+
+    <string name="caller_toggle_agree_message_1">Dismissing this feature means you won’t see caller info or spam alerts. It helps identify unknown callers and manage their details easily.</string>
+    <string name="proceed">Proceed</string>
+    <string name="keep_it">Keep it</string>
+    <string name="caller_toggle_agree_title_1">Are you certain to disable this?</string>
+    <string name="caller_toggle_agree_title_2">You won’t be able to see any %s information.</string>
+    <string name="private_number">Private Number</string>
+
+    <string name="settings">Settings</string>
+    <string name="appearance">Appearance</string>
+    <string name="system_mode">System mode</string>
+    <string name="system_mode_des">Automatically follow the system theme (dark/light) on the call information screen.</string>
+    <string name="force_dark">Force Dark</string>
+    <string name="force_dark_des">Manually switch between dark and light modes on the call information screen.</string>
+    <string name="call_settings">Call Settings</string>
+    <string name="missed_call">Missed Call</string>
+    <string name="missed_call_des">Call information after a missed call with multiple options to handle contact information.</string>
+    <string name="complete_call">Complete Call</string>
+    <string name="complete_call_des">Call information after a call is completed with multiple options to handle contact information.</string>
+    <string name="no_answer">No Answer</string>
+    <string name="no_answer_des">Call information after unanswered call with multiple options to handle contact information.</string>
 </resources>

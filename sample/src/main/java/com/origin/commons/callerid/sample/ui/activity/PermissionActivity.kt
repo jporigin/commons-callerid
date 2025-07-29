@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -21,12 +22,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.loukwn.stagestepbar.StageStepBar
+import com.origin.commons.callerid.extensions.logEventE
 import com.origin.commons.callerid.helpers.Utils.isNotificationPermissionGranted
 import com.origin.commons.callerid.helpers.Utils.isPhoneStatePermissionGranted
 import com.origin.commons.callerid.helpers.Utils.isScreenOverlayEnabled
@@ -45,6 +48,7 @@ import com.origin.commons.callerid.sample.viewmodel.PermissionUiState
 import com.origin.commons.callerid.sample.viewmodel.PermissionViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import androidx.core.net.toUri
 
 class PermissionActivity : AppCompatActivity() {
 
@@ -70,6 +74,7 @@ class PermissionActivity : AppCompatActivity() {
         setUpClickEvents()
         viewModel.checkPermissions()
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+        logEventE("Perm_Act_onCreate")
     }
 
     private fun setUpObservers() {
@@ -85,6 +90,7 @@ class PermissionActivity : AppCompatActivity() {
 
     private fun setUpClickEvents() {
         _binding.btnAskPermission.setOnClickListener {
+            logEventE("Perm_Act_Allow_btnClk")
             when (viewModel.uiState.value.permissionState) {
                 PermissionState.REGULAR_PERMISSION -> {
                     if (!isPhoneStatePermissionGranted(this)) {
@@ -115,6 +121,7 @@ class PermissionActivity : AppCompatActivity() {
     private val requestPhonePermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
         val granted = permissions.entries.all { it.value }
         if (granted) {
+            this@PermissionActivity.logEventE("Allowed_Ph_Calls_Permission")
             if (isPhoneStatePermissionGranted(this) && isNotificationPermissionGranted(this)) {
                 setPermissionGranted(true)
                 viewModel.updatePermissionStatus(this)
@@ -138,24 +145,21 @@ class PermissionActivity : AppCompatActivity() {
                     }
                 })
             } else {
-                openSettingDialog(
-                    this, R.string.open_setting, R.string.open_setting_desc, onNegativeClick = {},
-                    onPositiveClick = {
-                        requestOpenSetting.launch(
-                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                                data = Uri.fromParts("package", packageName, null)
-                            }
-                        )
-                    }
-                )
+                openSettingDialog(this, R.string.open_setting, R.string.open_setting_desc, onNegativeClick = {}, onPositiveClick = {
+                    requestOpenSetting.launch(
+                        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                            data = Uri.fromParts("package", packageName, null)
+                        }
+                    )
+                })
             }
-
         }
     }
 
     private val requestNotificationPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
         val granted = permissions.entries.all { it.value }
         if (granted) {
+            this@PermissionActivity.logEventE("Allowed_Notif_Permission")
             if (isPhoneStatePermissionGranted(this) && isNotificationPermissionGranted(this)) {
                 setPermissionGranted(true)
                 viewModel.updatePermissionStatus(this)
@@ -197,12 +201,16 @@ class PermissionActivity : AppCompatActivity() {
     }
 
     private fun requestPhonePermission() {
-        requestPhonePermission.launch(arrayOf(Manifest.permission.READ_PHONE_STATE))
+        if (ContextCompat.checkSelfPermission(this@PermissionActivity, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            requestPhonePermission.launch(arrayOf(Manifest.permission.READ_PHONE_STATE))
+            this@PermissionActivity.logEventE("Request_Ph_Calls_Permission")
+        }
     }
 
     private fun requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestNotificationPermission.launch(arrayOf(Manifest.permission.POST_NOTIFICATIONS))
+            this@PermissionActivity.logEventE("Request_Notif_Permission")
         }
     }
 
@@ -212,13 +220,17 @@ class PermissionActivity : AppCompatActivity() {
             viewModel.updatePermissionStatus(this)
         }
     }
-
     private val checkOverlayPermissionRunnable = object : Runnable {
         override fun run() {
             if (isScreenOverlayEnabled(this@PermissionActivity)) {
                 overlayPermissionHandler.removeCallbacks(this)
-                val flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                startIntentWithFlags(PermissionActivity::class.java, flags)
+                if (isPhoneStatePermissionGranted(this@PermissionActivity) && isNotificationPermissionGranted(this@PermissionActivity)) {
+                    this@PermissionActivity.logEventE("Allowed_Sc_Overlay_Permission")
+                    proceedToMainActivity()
+                } else {
+                    val flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startIntentWithFlags(PermissionActivity::class.java, flags)
+                }
             } else {
                 overlayPermissionHandler.postDelayed(this, overlayPermissionCheckInterval)
             }
@@ -226,14 +238,18 @@ class PermissionActivity : AppCompatActivity() {
     }
 
     private fun requestScreenOverlayPermission() {
-        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${packageName}"))
+        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, "package:${packageName}".toUri())
         requestScreenOverlayPermission.launch(intent)
         overlayPermissionHandler.post(checkOverlayPermissionRunnable)
+        this@PermissionActivity.logEventE("Request_Sc_Overlay_Permission")
     }
 
     private fun proceedToMainActivity() {
-        startIntent(MainActivity::class.java)
-        finish()
+        val flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startIntentWithFlags(MainActivity::class.java, flags)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            this@PermissionActivity.finish()
+        }
     }
 
     private fun updateUI(uiState: PermissionUiState) {
@@ -261,13 +277,7 @@ class PermissionActivity : AppCompatActivity() {
         }
     }
 
-    private fun requiredPermissionDialog(
-        context: Context,
-        @StringRes title: Int,
-        @StringRes description: Int,
-        onNegativeClick: () -> Unit,
-        onPositiveClick: () -> Unit
-    ) {
+    private fun requiredPermissionDialog(context: Context, @StringRes title: Int, @StringRes description: Int, onNegativeClick: () -> Unit, onPositiveClick: () -> Unit) {
         val dialog = Dialog(context, R.style.CustomDialog)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -310,28 +320,24 @@ class PermissionActivity : AppCompatActivity() {
         val btnCancel = layout.findViewById<TextView>(R.id.tvProcessed)
         val btnOpenSetting = layout.findViewById<TextView>(R.id.tvKeepIt)
         dialog.setContentView(layout)
-
         tvTitle.setText(title)
         tvDescription.setText(description)
-
         btnCancel.setText(R.string.cancel)
         btnOpenSetting.setText(R.string.open_setting)
-
         btnCancel.setOnClickListener {
             dialog.dismiss()
             onNegativeClick.invoke()
         }
-
         btnOpenSetting.setOnClickListener {
             onPositiveClick.invoke()
             dialog.dismiss()
         }
-
         dialog.show()
     }
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
+            logEventE("Perm_Act_onBackPress")
             finishAffinity()
         }
     }

@@ -27,21 +27,38 @@ class SplashActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
 
+    private fun startRunning() {
         runOnUiThread {
             _binding.root.postDelayed({
-                when {
+                val mIntent = when {
                     !isPhoneStatePermissionGranted(this@SplashActivity) || !isScreenOverlayEnabled(this@SplashActivity) -> {
-                        startActivity(Intent(this@SplashActivity, PermissionActivity::class.java))
+                        Intent(this@SplashActivity, PermissionActivity::class.java)
                     }
 
                     else -> {
-                        startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                        Intent(this@SplashActivity, MainActivity::class.java)
                     }
                 }
-                finish()
+                if (mIsActivityRunning) {
+                    this@SplashActivity.startActivity(mIntent)
+                    finish()
+                }
             }, 2000)
         }
-
     }
+
+    private var mIsActivityRunning: Boolean = false
+    override fun onResume() {
+        super.onResume()
+        mIsActivityRunning = true
+        startRunning()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mIsActivityRunning = false
+    }
+
 }

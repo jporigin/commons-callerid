@@ -1,5 +1,6 @@
 package com.origin.commons.callerid.states
 
+import androidx.room.ColumnInfo
 import com.origin.commons.callerid.db.entity.ReminderEntity
 
 

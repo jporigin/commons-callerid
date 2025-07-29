@@ -3,18 +3,17 @@ package com.origin.commons.callerid.ads.bannerads
 import android.app.Activity
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.origin.commons.callerid.R
-import com.origin.commons.callerid.databinding.ShimmerBannerLayoutBinding
+import com.origin.commons.callerid.databinding.ShimmerAdaptiveBannerLayoutBinding
 import com.origin.commons.callerid.extensions.dpToPx
-import com.origin.commons.callerid.extensions.getColorFromAttr
-import com.origin.commons.callerid.extensions.setBackgroundFromAttr
 
 fun Activity.updateUIMainLayout(rlMainGoogleBanner: RelativeLayout, tvSpaceAds: TextView) {
     rlMainGoogleBanner.apply {
-        this@updateUIMainLayout.setBackgroundFromAttr(this@apply, R.attr.bAdsBackground, R.color.b_bg_color)
+        this@apply.setBackgroundColor(ContextCompat.getColor(this@updateUIMainLayout, R.color.call_theme_surfaceContainer))
     }
     tvSpaceAds.apply {
-        setTextColor(this@updateUIMainLayout.getColorFromAttr(R.attr.bAdsTextColor, R.color.b_text_color))
+        setTextColor(ContextCompat.getColor(this@updateUIMainLayout, R.color.call_theme_onSurfaceVariant))
     }
 }
 
@@ -22,13 +21,11 @@ fun Activity.updateUIMainLayout(rlMainGoogleBanner: RelativeLayout, tvSpaceAds: 
  * Banner Ad
  */
 val defaultBannerHeightPx: Int = 60.dpToPx
-fun Activity.updateUIShimmerLayout(shimmerBannerLayoutBinding: ShimmerBannerLayoutBinding) {
+fun Activity.updateUIShimmerLayout(shimmerBannerLayoutBinding: ShimmerAdaptiveBannerLayoutBinding) {
     shimmerBannerLayoutBinding.apply {
-        val views = listOf(tv1, tv2, tv3, tv4, iv1)
+        val views = listOf(tv1, iv1)
         views.forEach { view ->
-            this@updateUIShimmerLayout.setBackgroundFromAttr(view, R.attr.bAdsShimmerColor, R.color.b_shimmer_color)
+            view.setBackgroundColor(ContextCompat.getColor(this@updateUIShimmerLayout, R.color.call_theme_surfaceContainerHighest))
         }
     }
 }
-
-

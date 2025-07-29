@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
     <!-- Device Internet Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -9,7 +8,7 @@
     <!-- Call State Permissions -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" />
+    <!-- <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" /> -->
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
     <!-- Post Notification(FOR ANDROID API 33 or PLUS) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -17,8 +16,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- Screen Overlay -->
     <uses-permission android:name="android.permission.ACTION_MANAGE_OVERLAY_PERMISSION" />
+    <!-- <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" /> -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
     <!-- Device Foreground Service -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <!-- Device AD_ID -->
@@ -31,7 +30,6 @@
     <queries>
         <package android:name="com.google.android.apps.messaging" />
     </queries>
-
     <queries>
         <package android:name="com.google.android.gm" />
     </queries>
@@ -39,20 +37,29 @@
     <application>
 
         <activity
-            android:name=".ui.activity.OgCallerIdActivity"
-            android:configChanges="uiMode"
-            android:exported="false"
-            android:launchMode="singleTop"
+            android:name=".ui.activity.CallerSettingActivity"
+            android:allowEmbedded="true"
+            android:allowTaskReparenting="true"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:noHistory="true"
             android:screenOrientation="nosensor"
-            android:theme="@style/CiTheme.Light"
-            android:windowSoftInputMode="adjustNothing|adjustPan" />
+            android:theme="@style/Caller.Main.Theme" />
+
+        <activity
+            android:name=".ui.activity.CallerIdActivity"
+            android:theme="@style/Caller.Main.Theme"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:allowTaskReparenting="true"
+            android:windowSoftInputMode="adjustPan"
+            android:resizeableActivity="false"/>
 
         <receiver
-            android:name=".receiver.OgCallerIdReminderReceiver"
+            android:name=".receivers.OgCallerIdReminderReceiver"
             android:enabled="true" />
-
         <receiver
-            android:name=".receiver.OgCallerIdBootReceiver"
+            android:name=".receivers.OgCallerIdBootReceiver"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
@@ -67,9 +74,8 @@
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
             </intent-filter>
         </receiver>
-
         <receiver
-            android:name=".receiver.OgCallerIdCallReceiver"
+            android:name=".receivers.OgCallerIdCallReceiver"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.READ_PHONE_STATE">
@@ -77,6 +83,17 @@
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name=".receivers.CIdForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="phoneCall"
+            android:theme="@style/Caller.Main.Theme" />
+        <service
+            android:name=".receivers.CIdLegacyForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="phoneCall"
+            android:theme="@style/Caller.Main.Theme" />
 
     </application>
 

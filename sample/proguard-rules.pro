@@ -1,21 +1,33 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
 #
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+-keep class androidx.appcompat.widget.** { *; }
+-keep class com.google.android.** { *; }
+-ignorewarnings
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
+#-assumenosideeffects class android.util.Log {
+#    public static boolean isLoggable(java.lang.String, int);
+#    public static *** d(...);
+#    public static *** w(...);
+#    public static *** v(...);
+#    public static *** i(...);
+#    public static *** e(...);
 #}
+#-keepattributes LineNumberTable
+-keep public class com.google.android.gms.ads.**{
+   public *;
+}
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# My Customize
+-keep class com.origin.commons.callerid.helpers.** { *; }
+-keep class com.origin.commons.callerid.model.** { *; }
+-keep class com.origin.commons.callerid.ads.** { *; }
+-keep class com.origin.commons.callerid.db.** { *; }
+-keep class com.origin.commons.callerid.db.entity.** { *; }
+-keep class com.origin.commons.callerid.timepicker.** { *; }
+
+-obfuscationdictionary "D:\Android\Sdk\class_encode_dictionary.txt"
+-classobfuscationdictionary "D:\Android\Sdk\class_encode_dictionary.txt"
+-packageobfuscationdictionary "D:\Android\Sdk\class_encode_dictionary.txt"
+
+-mergeinterfacesaggressively
+-repackageclasses "com.origin.commons.callerid.sample"
