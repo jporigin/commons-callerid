@@ -43,24 +43,20 @@ class MyApplication : CallerIdSDKApplication() {
 
     // initialize caller id sdk
     private fun initCallerSDK() {
-        setUpAdsUIDs()
-        setUp(R.drawable.app_logo_, R.drawable.app_logo_icon)
+        val isInitialized = initSDK()
+        if (isInitialized) {
+            initSDKAds(adFormat = AdFormat.NATIVE_BIG, adUnitId = nativeAds)
+        }
+        openSettingClass = { SettingActivity::class.java }
         openClass1 = { MainActivity::class.java }
         openClass2High = { SplashActivity::class.java }
         customHomeFragment = { CIHomeScreenFragment() }
     }
-
-    private fun setUpAdsUIDs() {
-       setUpAdsIDs(
-          nativeBigIds = listOf(Utils.nativeBigId1, Utils.nativeBigId2, Utils.nativeBigId3),
-          nativeSmallIds = listOf(Utils.nativeSmallId1, Utils.nativeSmallId2),
-          bannerIds = listOf(Utils.bannerId1, Utils.bannerId2)
-       )
-    }
 }
 ```
 > [!NOTE]
->* please provide appropriate ads IDs `nativeBigIds`, `nativeSmallIds`, `bannerIds`.
+>* To change the Caller ID ad format, use the `AdFormat` class with one of the following options: `NONE`, `BANNER`, `NATIVE_SMALL`, or `NATIVE_BIG`.
+>* Please provide the correct `adUnitId` based on the selected `AdFormat`.
 >* If you want to open the Caller ID settings activity directly, set `openSettingClass`.
 >* To open the app from the Caller ID screen, define `openClass1` and `openClass2High`:
    >   - If the app is already open, it will launch `openClass1`.
