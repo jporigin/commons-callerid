@@ -82,7 +82,7 @@ fun populateNativeXLAdView(nativeAd: NativeAd, unifiedAdBinding: AdUnifiedNative
         unifiedAdBinding.adCallToAction.text = nativeAd.callToAction
     }
 
-    if (nativeAd.icon == null) {
+    if (nativeAd.icon == null && nativeAd.icon?.drawable == null) {
         unifiedAdBinding.adAppIcon.beGone()
     } else {
         unifiedAdBinding.adAppIcon.setImageDrawable(nativeAd.icon?.drawable)
@@ -178,7 +178,7 @@ fun Activity.populateNativeXXLAdView(nativeAd: NativeAd, unifiedAdBinding: AdUni
         unifiedAdBinding.adCallToAction.text = nativeAd.callToAction
     }
 
-    if (nativeAd.icon == null) {
+    if (nativeAd.icon == null && nativeAd.icon?.drawable == null) {
         unifiedAdBinding.adAppIcon.beGone()
     } else {
         unifiedAdBinding.adAppIcon.setImageDrawable(nativeAd.icon?.drawable)
