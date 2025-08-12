@@ -5,7 +5,6 @@ import com.origin.commons.callerid.sample.helpers.Utils
 import com.origin.commons.callerid.sample.ui.activity.MainActivity
 import com.origin.commons.callerid.sample.ui.activity.SplashActivity
 import com.origin.commons.callerid.sample.ui.fragment.CIHomeScreenFragment
-
 class MyApplication : CallerIdSDKApplication() {
     override fun onCreate() {
         super.onCreate()

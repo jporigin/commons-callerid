@@ -37,7 +37,6 @@ open class CallerIdSDKApplication : Application() {
             }
         }
     }
-
     fun setUpAdsIDs(adsRefreshType: String = "123", nativeBigIds: List<String> = emptyList(), nativeSmallIds: List<String> = emptyList(), bannerIds: List<String> = emptyList()) {
         prefsHelper.apply {
             if (this.adsRefreshType != adsRefreshType) {
@@ -142,7 +141,6 @@ open class CallerIdSDKApplication : Application() {
     /*
     *
     * */
-
 
     companion object {
         @Volatile

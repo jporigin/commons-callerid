@@ -15,6 +15,7 @@ import com.google.gson.reflect.TypeToken
 import com.origin.commons.callerid.ads.utils.getBannerAdSize
 import com.origin.commons.callerid.extensions.getCurrentAdsType
 import com.origin.commons.callerid.extensions.logE
+import com.origin.commons.callerid.extensions.logEventE
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.extensions.refreshCurrentAdsType
 
@@ -52,7 +53,7 @@ object CallerIdAds {
             val type = object : TypeToken<List<String>>() {}.type
             val idList: List<String>? = gson.fromJson(valueId, type)
             idList ?: emptyList()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             emptyList()
         }
     }
@@ -114,6 +115,7 @@ object CallerIdAds {
                 override fun onAdImpression() {
                     super.onAdImpression()
                     onCallerAdsImpression()
+                    context.logEventE("Showed_OGCallerAds_B")
                     logE("callerAds::glBannerAds::adShowed")
                 }
             }
@@ -182,6 +184,14 @@ object CallerIdAds {
             override fun onAdImpression() {
                 super.onAdImpression()
                 onCallerAdsImpression()
+                context.logEventE(buildString {
+                    append("Showed_OGCallerAds_")
+                    if (adsType == 1) {
+                        append("N")
+                    } else {
+                        append("NB")
+                    }
+                })
                 logE("callerAds::glNativeAds::adShowed")
             }
         }).build().loadAd(adRequest)

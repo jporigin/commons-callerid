@@ -46,7 +46,6 @@ fun Context.getOpenAppIntent(): Intent? {
             Intent(this@getOpenAppIntent, mClass2High.invoke())
         }
 
-
         else -> null
     }
 }
@@ -111,11 +110,15 @@ fun Context.getAppName(): String {
 val Context.prefsHelper: SharedPreferencesHelper get() = SharedPreferencesHelper.newInstance(this)
 fun Context.getCurrentAdsType(): Int {
     this.prefsHelper.let { pref ->
+        //
         if (pref.adsRefreshType.isEmpty()) return 0
+        //
         if (pref.isPurchased) return 0
-            if (pref.adsRefreshIndex < 0 || pref.adsRefreshIndex >= pref.adsRefreshType.length) {
-                return 0
-            }
+        //
+        if (pref.adsRefreshIndex < 0 || pref.adsRefreshIndex >= pref.adsRefreshType.length) {
+            return 0
+        }
+        //
         val currentChar = pref.adsRefreshType[pref.adsRefreshIndex]
         logE("check:getCurrentAdsType:${pref.adsRefreshType}:::${currentChar}")
         return when (currentChar) {

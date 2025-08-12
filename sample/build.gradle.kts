@@ -14,8 +14,8 @@ android {
         applicationId = "com.origin.commons.callerid.sample"
         minSdk = 24
         targetSdk = 35
-        versionCode = 9
-        versionName = "1.0.9"
+        versionCode = 13
+        versionName = "1.1.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
