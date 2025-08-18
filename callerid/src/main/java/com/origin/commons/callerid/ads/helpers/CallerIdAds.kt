@@ -167,7 +167,7 @@ object CallerIdAds {
             isWaterfallRunning = false
             mNativeAd = ad
             onCallerNativeAdsLoaded(ad)
-            logE("callerAds::glNativeAds::adLoaded")
+            logE("callerAds::glNativeAds::adLoaded::$currentAdUnitId")
         }.withAdListener(object : AdListener() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 logE("callerAds::glNativeAds::adFailedToLoad:code:${adError.code} - message:${adError.message}")

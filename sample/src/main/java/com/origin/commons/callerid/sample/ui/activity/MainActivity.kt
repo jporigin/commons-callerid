@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var countClickIconSplash: Int = 0
-    private val MAX_CLICK_ICON_SPLASH: Int = 6
+    private val MAX_CLICK_ICON_SPLASH: Int = 4
     private fun enableMessageTesterByClick() {
         countClickIconSplash++
         if (countClickIconSplash >= MAX_CLICK_ICON_SPLASH) {

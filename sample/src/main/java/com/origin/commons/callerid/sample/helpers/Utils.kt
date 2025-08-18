@@ -8,8 +8,8 @@ object Utils {
     val nativeBigId2 = "/21775744923/example/native-video"
     val nativeBigId3 = "ca-app-pub-3940256099942544/2247696110"
 
-    val nativeSmallId1 = "/21775744923/example/native"
-    val nativeSmallId2 = "ca-app-pub-3940256099942544/2247696110"
+    val nativeSmallId1 = "ca-app-pub-3940256099942544/2247696110"
+    val nativeSmallId2 = "/21775744923/example/native"
 
     // test_banner_ids
     val bannerId1 = "/21775744923/example/adaptive-banner"

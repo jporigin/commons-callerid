@@ -2,15 +2,11 @@ package com.origin.commons.callerid.ui.activity
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
@@ -20,11 +16,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.ads.AdView
@@ -46,16 +37,14 @@ import com.origin.commons.callerid.extensions.hideSysNavigationBar
 import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.logEventE
 import com.origin.commons.callerid.extensions.prefsHelper
-import com.origin.commons.callerid.helpers.Utils
 import com.origin.commons.callerid.ui.fragment.HomeFragment
 import com.origin.commons.callerid.ui.fragment.MessageFragment
 import com.origin.commons.callerid.ui.fragment.MoreFragment
 import com.origin.commons.callerid.ui.fragment.NotificationFragment
-import com.origin.commons.callerid.utils.canSkipLeaveHint
-import kotlinx.coroutines.Runnable
+import com.origin.commons.callerid.helpers.HomeKeyWatcher
 
 
-class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener {
+class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener, HomeKeyWatcher.OnHomeAndRecentsListener {
     private val _binding by lazy {
         ActivityCallerIdBinding.inflate(layoutInflater)
     }
@@ -65,6 +54,7 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener {
     private val duration by lazy { intent.getStringExtra("duration") }
     private val callType by lazy { intent.getStringExtra("callType") }
 
+    var watcher: HomeKeyWatcher? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +67,7 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener {
         }
 
         this@CallerIdActivity.hideSysNavigationBar()
-        canSkipLeaveHint = true
+//        canSkipLeaveHint = true
         try {
             _binding.tvCallComingTime.text = time
         } catch (_: Exception) {
@@ -106,7 +96,7 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener {
             if (customAppLogoResId != null && customAppLogoResId != 0) {
                 try {
                     _binding.ivLogo.setImageResource(customAppLogoResId)
-                } catch (e: Resources.NotFoundException) {
+                } catch (_: Resources.NotFoundException) {
                     getDefaultAppIcon()?.let {
                         _binding.ivLogo.setImageDrawable(it)
                     }
@@ -120,6 +110,14 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener {
         }
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+
+        if (watcher == null) {
+            watcher = HomeKeyWatcher(this@CallerIdActivity).apply {
+                setListener(this@CallerIdActivity)
+                startWatching()
+            }
+        }
+
 
         val defEvent = "Showed_OGCallerScreen"
         this@CallerIdActivity.logEventE(defEvent)
@@ -139,7 +137,6 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener {
         Handler(Looper.getMainLooper()).post {
             if (!isFinishing && intent?.component != null) {
                 try {
-                    logE("check:::finishMyActNRemoveTask")
                     finishAndRemoveTask()
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -151,24 +148,23 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener {
         }
     }
 
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onUserLeaveHint() {
-        super.onUserLeaveHint()
-        logE("check:::onUserLeaveHint")
-        if (canSkipLeaveHint) {
-            canSkipLeaveHint = false
-            return
-        }
+    override fun onHomePressed() {
         finishMyActNRemoveTask()
     }
+
+    override fun onRecentsPressed() {
+        finishMyActNRemoveTask()
+    }
+
+//    override fun onUserLeaveHint() {
+//        super.onUserLeaveHint()
+//        logE("check:::onUserLeaveHint")
+//        if (canSkipLeaveHint) {
+//            canSkipLeaveHint = false
+//            return
+//        }
+//        finishMyActNRemoveTask()
+//    }
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -189,6 +185,8 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener {
         CallerIdAds.unregisterCallerAdsListener(this@CallerIdActivity)
         CallerIdAds.clearBannerAdView()
         CallerIdAds.clearNativeAdView()
+        watcher?.stopWatching()
+        watcher = null
         super.onDestroy()
     }
 
@@ -378,5 +376,7 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener {
         mGoogleNativeAds?.onFailedToLoadXlAd()
         mGoogleNativeAds?.onFailedToLoadXxlAd()
     }
+
+
 }
 

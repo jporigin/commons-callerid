@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
+    id("maven-publish")
 }
 
 android {
@@ -10,7 +11,6 @@ android {
 
     defaultConfig {
         minSdk = 24
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -24,6 +24,26 @@ android {
     }
     buildFeatures {
         viewBinding = true
+    }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+}
+
+version = "1.1.4"
+publishing {
+    publications {
+        create<MavenPublication>("release") {
+            groupId = "com.github.jporigin"
+            artifactId = "commons-callerid"
+            version = project.version.toString()
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
     }
 }
 

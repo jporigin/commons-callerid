@@ -1,11 +1,6 @@
 package com.origin.commons.callerid.ui.fragment
 
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings.Global
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +14,6 @@ import com.origin.commons.callerid.extensions.openMessage
 import com.origin.commons.callerid.extensions.showCustomToast
 import com.origin.commons.callerid.extensions.showKeyboard
 import com.origin.commons.callerid.extensions.value
-import com.origin.commons.callerid.utils.canSkipLeaveHint
 
 
 class MessageFragment : Fragment() {

@@ -13,13 +13,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.hardware.display.DisplayManagerCompat
 import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.ui.activity.CallerSettingActivity
-import com.origin.commons.callerid.utils.canSkipLeaveHint
 
 fun Activity.openCallerIDSetting() {
     val intent = Intent(this, CallerSettingActivity::class.java)
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
     this.startActivity(intent)
-    canSkipLeaveHint = true
+//    canSkipLeaveHint = true
 }
 
 fun Activity.getOpenAppIntent(): Intent? {

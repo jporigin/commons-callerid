@@ -11,7 +11,6 @@ import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.databinding.ActivityCallerSettingBinding
 import com.origin.commons.callerid.extensions.dpToPx
-import com.origin.commons.callerid.extensions.hideSysNavigationBar
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.helpers.DARK_THEME
 import com.origin.commons.callerid.helpers.LIGHT_THEME
@@ -68,7 +67,7 @@ class CallerSettingActivity : CallerBaseActivity() {
             }
             this@CallerSettingActivity.prefsHelper.selectedAppTheme = newTheme
             refreshThemeSwitches()
-            refreshTheme(true)
+            refreshTheme("clSystemMode", true)
         }
 
         _binding.clForceDark.setOnClickListener {
@@ -79,7 +78,7 @@ class CallerSettingActivity : CallerBaseActivity() {
             }
             this@CallerSettingActivity.prefsHelper.selectedAppTheme = newTheme
             refreshThemeSwitches()
-            refreshTheme(true)
+            refreshTheme("clForceDark", true)
         }
     }
 

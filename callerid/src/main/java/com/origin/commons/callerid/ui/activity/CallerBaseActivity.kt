@@ -4,28 +4,29 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.helpers.DARK_THEME
 import com.origin.commons.callerid.helpers.LIGHT_THEME
 
 abstract class CallerBaseActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        refreshTheme()
+        refreshTheme("onCreate")
     }
 
     override fun onResume() {
         super.onResume()
-        refreshTheme()
+//        refreshTheme()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        refreshTheme()
+        refreshTheme("onConfigurationChanged")
     }
 
-    fun refreshTheme(forceRefresh: Boolean = false) {
+    fun refreshTheme(tag: String = "", forceRefresh: Boolean = false) {
+        logE("refreshTheme: $tag")
         val theme = prefsHelper.selectedAppTheme
         val mode = when (theme) {
             DARK_THEME -> AppCompatDelegate.MODE_NIGHT_YES

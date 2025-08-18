@@ -1,8 +1,5 @@
 package com.origin.commons.callerid.ui.fragment
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +12,6 @@ import com.origin.commons.callerid.databinding.FragmentHomeBinding
 import com.origin.commons.callerid.extensions.emailIntent
 import com.origin.commons.callerid.extensions.getAppName
 import com.origin.commons.callerid.extensions.openContact
-import com.origin.commons.callerid.utils.canSkipLeaveHint
 import java.util.Calendar
 
 class HomeFragment : Fragment() {
