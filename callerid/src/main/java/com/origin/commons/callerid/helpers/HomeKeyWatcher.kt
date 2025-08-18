@@ -11,7 +11,6 @@ class HomeKeyWatcher(private val context: Context) {
         fun onHomePressed()
         fun onRecentsPressed()
     }
-
     private val intentFilter = IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
     private var listener: OnHomeAndRecentsListener? = null
     private var lastRecentsPressTime: Long = 0
