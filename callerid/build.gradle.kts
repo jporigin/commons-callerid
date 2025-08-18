@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
-    id("maven-publish")
+//    id("maven-publish")
 }
 
 android {
@@ -33,19 +33,19 @@ android {
     }
 }
 
-version = "1.1.4"
-publishing {
-    publications {
-        create<MavenPublication>("release") {
-            groupId = "com.github.jporigin"
-            artifactId = "commons-callerid"
-            version = project.version.toString()
-            afterEvaluate {
-                from(components["release"])
-            }
-        }
-    }
-}
+//version = "1.1.4"
+//publishing {
+//    publications {
+//        create<MavenPublication>("release") {
+//            groupId = "com.github.jporigin"
+//            artifactId = "commons-callerid"
+//            version = project.version.toString()
+//            afterEvaluate {
+//                from(components["release"])
+//            }
+//        }
+//    }
+//}
 
 dependencies {
     implementation(libs.androidx.core.ktx)
