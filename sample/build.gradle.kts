@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.google.service)
-    alias(libs.plugins.firebase.crashlytics)
+//    alias(libs.plugins.google.service)
+//    alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.ksp)
 }
 android {
@@ -40,7 +40,10 @@ android {
         checkReleaseBuilds = false
     }
 }
-
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+    apply(plugin = "com.google.firebase.crashlytics")
+}
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

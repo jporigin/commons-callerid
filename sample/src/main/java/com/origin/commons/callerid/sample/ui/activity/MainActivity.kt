@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
 //        if (XiaomiPermissionHelper.isXiaomiDevice()) {
 //            XiaomiPermissionHelper.guideUserForXiaomiOptimizations(this)
 //        }
-
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 logEventE("Main_Act_onBackPress")
