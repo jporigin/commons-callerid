@@ -27,10 +27,9 @@
         android:name="android.hardware.telephony"
         android:required="false" />
 
+    <!-- used to send text msg/open default msg app -->
     <queries>
         <package android:name="com.google.android.apps.messaging" />
-    </queries>
-    <queries>
         <package android:name="com.google.android.gm" />
     </queries>
 
