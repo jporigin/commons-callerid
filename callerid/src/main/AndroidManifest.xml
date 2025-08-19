@@ -7,9 +7,9 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <!-- Call State Permissions -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-<!--    <uses-permission android:name="android.permission.CALL_PHONE" />-->
+    <!--    <uses-permission android:name="android.permission.CALL_PHONE" />-->
     <!-- <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" /> -->
-<!--    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />-->
+    <!--    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />-->
     <!-- Post Notification(FOR ANDROID API 33 or PLUS) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Android Boot -->
@@ -48,12 +48,12 @@
 
         <activity
             android:name=".ui.activity.CallerIdActivity"
-            android:theme="@style/Caller.Main.Theme"
-            android:exported="true"
-            android:screenOrientation="portrait"
             android:allowTaskReparenting="true"
-            android:windowSoftInputMode="adjustPan"
-            android:resizeableActivity="false"/>
+            android:exported="true"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Caller.Main.Theme"
+            android:windowSoftInputMode="adjustPan" />
 
         <receiver
             android:name=".receivers.OgCallerIdReminderReceiver"
