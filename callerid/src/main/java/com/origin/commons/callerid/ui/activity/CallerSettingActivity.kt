@@ -13,14 +13,17 @@ import com.origin.commons.callerid.databinding.ActivityCallerSettingBinding
 import com.origin.commons.callerid.extensions.dpToPx
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.helpers.DARK_THEME
+import com.origin.commons.callerid.helpers.HomeKeyWatcher
 import com.origin.commons.callerid.helpers.LIGHT_THEME
 import com.origin.commons.callerid.helpers.SYSTEM_THEME
 import com.origin.commons.callerid.ui.dialog.ConfirmationDialog
 
-class CallerSettingActivity : CallerBaseActivity() {
+class CallerSettingActivity : CallerBaseActivity(),HomeKeyWatcher.OnHomeAndRecentsListener {
     private val _binding by lazy {
         ActivityCallerSettingBinding.inflate(layoutInflater)
     }
+    var watcher: HomeKeyWatcher? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +40,12 @@ class CallerSettingActivity : CallerBaseActivity() {
         _binding.ivBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+        if (watcher == null) {
+            watcher = HomeKeyWatcher(this@CallerSettingActivity).apply {
+                setListener(this@CallerSettingActivity)
+                startWatching()
+            }
+        }
     }
 
     override fun onResume() {
@@ -45,6 +54,20 @@ class CallerSettingActivity : CallerBaseActivity() {
         setUpMissCalls()
         setUpCompCalls()
         setUpUnAnsCall()
+    }
+
+    override fun onDestroy() {
+        watcher?.stopWatching()
+        watcher = null
+        super.onDestroy()
+    }
+
+    override fun onHomePressed() {
+        onBackPressedDispatcher.onBackPressed()
+    }
+
+    override fun onRecentsPressed() {
+        onBackPressedDispatcher.onBackPressed()
     }
 
     private fun refreshThemeSwitches() = with(_binding) {

@@ -179,7 +179,6 @@ fun Context.openContact() {
             // Optionally show toast or fallback
         }
     }
-//    canSkipLeaveHint = true
 }
 
 fun Context.openMessage(message: String = "") {
@@ -206,7 +205,6 @@ fun Context.openMessage(message: String = "") {
             // Optionally show toast or fallback
         }
     }
-//    canSkipLeaveHint = true
 }
 
 fun Context.openCalendar() {
@@ -221,7 +219,6 @@ fun Context.openCalendar() {
             this.showCustomToast("Failed to open calendar app")
         }
     }
-//    canSkipLeaveHint = true
 }
 
 
@@ -243,7 +240,6 @@ fun Context.openWebBrowser(url: String) {
             }
         }
     }
-//    canSkipLeaveHint = true
 }
 
 fun Context.emailIntent(subject: String) {
@@ -257,5 +253,4 @@ fun Context.emailIntent(subject: String) {
     } catch (e: Exception) {
         e.printStackTrace()
     }
-//    canSkipLeaveHint = true
 }

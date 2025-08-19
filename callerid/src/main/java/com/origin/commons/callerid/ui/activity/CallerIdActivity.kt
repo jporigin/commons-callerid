@@ -67,7 +67,6 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener, Ho
         }
 
         this@CallerIdActivity.hideSysNavigationBar()
-//        canSkipLeaveHint = true
         try {
             _binding.tvCallComingTime.text = time
         } catch (_: Exception) {
@@ -135,7 +134,8 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener, Ho
 
     private fun finishMyActNRemoveTask() {
         Handler(Looper.getMainLooper()).post {
-            if (!isFinishing && intent?.component != null) {
+            val comp = intent?.component
+            if (!isFinishing && comp != null) {
                 try {
                     finishAndRemoveTask()
                 } catch (e: Exception) {
@@ -155,17 +155,6 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener, Ho
     override fun onRecentsPressed() {
         finishMyActNRemoveTask()
     }
-
-//    override fun onUserLeaveHint() {
-//        super.onUserLeaveHint()
-//        logE("check:::onUserLeaveHint")
-//        if (canSkipLeaveHint) {
-//            canSkipLeaveHint = false
-//            return
-//        }
-//        finishMyActNRemoveTask()
-//    }
-
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             logEventE("OGCallerScreen_back")

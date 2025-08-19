@@ -16,11 +16,6 @@ abstract class CallerBaseActivity : AppCompatActivity() {
         refreshTheme("onCreate")
     }
 
-    override fun onResume() {
-        super.onResume()
-//        refreshTheme()
-    }
-
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         refreshTheme("onConfigurationChanged")
