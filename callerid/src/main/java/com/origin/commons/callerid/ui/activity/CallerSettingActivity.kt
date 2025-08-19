@@ -47,13 +47,35 @@ class CallerSettingActivity : CallerBaseActivity() {
         setUpUnAnsCall()
     }
 
-    private fun refreshThemeSwitches() {
-        val theme = prefsHelper.selectedAppTheme
-        _binding.sSystemMode.isEnabled = theme == SYSTEM_THEME
-        _binding.sSystemMode.isChecked = theme == SYSTEM_THEME
+    private fun refreshThemeSwitches() = with(_binding) {
+        when (prefsHelper.selectedAppTheme) {
+            SYSTEM_THEME -> {
+                sSystemMode.isChecked = true
+                sForceDark.apply {
+                    isChecked = false
+                    isEnabled = false
+                }
+            }
 
-        _binding.sForceDark.isEnabled = theme != SYSTEM_THEME
-        _binding.sForceDark.isChecked = theme == DARK_THEME
+            DARK_THEME -> {
+                sForceDark.isChecked = true
+                sSystemMode.apply {
+                    isChecked = false
+                    isEnabled = false
+                }
+            }
+
+            else -> {
+                sSystemMode.apply {
+                    isChecked = false
+                    isEnabled = true
+                }
+                sForceDark.apply {
+                    isChecked = false
+                    isEnabled = true
+                }
+            }
+        }
     }
 
 
@@ -61,9 +83,9 @@ class CallerSettingActivity : CallerBaseActivity() {
         refreshThemeSwitches()
         _binding.clSystemMode.setOnClickListener {
             val newTheme = if (_binding.sSystemMode.isChecked) {
-                2
+                LIGHT_THEME
             } else {
-                0
+                SYSTEM_THEME
             }
             this@CallerSettingActivity.prefsHelper.selectedAppTheme = newTheme
             refreshThemeSwitches()
@@ -99,16 +121,15 @@ class CallerSettingActivity : CallerBaseActivity() {
             } else {
                 runOnUiThread {
                     if (!isDestroyed && !isFinishing) {
-                        val msgBuilder = StringBuilder()
-                            .append("• ")
-                            .append(String.format(this.getString(R.string.caller_toggle_agree_title_2), getString(R.string.missed_call)))
-                            .append("\n")
-                            .append("\n")
-                            .append("• ")
-                            .append(this.getString(R.string.caller_toggle_agree_message_1))
-
+                        val msgBuilder =
+                            StringBuilder().append("• ").append(String.format(this.getString(R.string.caller_toggle_agree_title_2), getString(R.string.missed_call))).append("\n").append("\n")
+                                .append("• ").append(this.getString(R.string.caller_toggle_agree_message_1))
                         ConfirmationDialog(
-                            activity = this, titleId = R.string.caller_toggle_agree_title_1, message = msgBuilder.toString(), positive = R.string.keep_it, negative = R.string.proceed,
+                            activity = this,
+                            titleId = R.string.caller_toggle_agree_title_1,
+                            message = msgBuilder.toString(),
+                            positive = R.string.keep_it,
+                            negative = R.string.proceed,
                             cancelOnTouchOutside = false
                         ) { success ->
                             if (!success) {

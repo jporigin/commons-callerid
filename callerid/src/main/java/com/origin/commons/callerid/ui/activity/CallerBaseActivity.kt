@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.helpers.DARK_THEME
@@ -35,6 +36,12 @@ abstract class CallerBaseActivity : AppCompatActivity() {
         }
         AppCompatDelegate.setDefaultNightMode(mode)
         if (forceRefresh) {
+            val mCallerIdSDKApplication: CallerIdSDKApplication? = try {
+                this.application as CallerIdSDKApplication
+            } catch (_: Exception) {
+                null
+            }
+            mCallerIdSDKApplication?.onCallerThemeChanged(theme)
             recreate()
         }
     }

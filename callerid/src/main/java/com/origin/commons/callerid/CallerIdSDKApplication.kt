@@ -5,15 +5,21 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.Firebase
-import com.origin.commons.callerid.extensions.prefsHelper
-import com.origin.commons.callerid.helpers.Utils
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.analytics
 import com.google.gson.Gson
 import com.origin.commons.callerid.extensions.logEventE
+import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.extensions.registerCallReceiver
+import com.origin.commons.callerid.helpers.Utils
 
-open class CallerIdSDKApplication : Application() {
+abstract class CallerIdSDKApplication : Application() {
+
+    abstract fun onCallerThemeChanged(newTheme: Int)
+
+    fun changeCallerTheme(newTheme: Int) {
+        prefsHelper.selectedAppTheme = newTheme
+    }
 
     fun setUpAdsIDs(nativeBigIds: List<String> = emptyList(), nativeSmallIds: List<String> = emptyList(), bannerIds: List<String> = emptyList()) {
         val newAdsRefreshType = buildString {
@@ -37,6 +43,7 @@ open class CallerIdSDKApplication : Application() {
             }
         }
     }
+
     fun setUpAdsIDs(adsRefreshType: String = "123", nativeBigIds: List<String> = emptyList(), nativeSmallIds: List<String> = emptyList(), bannerIds: List<String> = emptyList()) {
         prefsHelper.apply {
             if (this.adsRefreshType != adsRefreshType) {

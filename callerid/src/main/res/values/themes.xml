@@ -45,6 +45,7 @@
         <item name="android:scaleX">0.72</item>
         <item name="android:scaleY">0.72</item>
         <item name="android:clickable">false</item>
+        <item name="thumbTint">@color/ci_thumb_tint_switch</item>
     </style>
 
 
