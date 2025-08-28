@@ -12,7 +12,7 @@ import android.os.Bundle
 import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.extensions.getOpenAppIntent
-import com.origin.commons.callerid.helpers.Utils.isNotificationPermissionGranted
+import com.origin.commons.callerid.helpers.CallerIdUtils.isNotificationPermissionGranted
 import com.origin.commons.callerid.model.NotificationInfo
 
 class NotificationService(private val context: Context) {

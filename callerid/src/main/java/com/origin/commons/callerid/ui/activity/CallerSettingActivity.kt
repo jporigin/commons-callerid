@@ -7,34 +7,37 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.origin.commons.callerid.CallerIdSDKApplication
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.databinding.ActivityCallerSettingBinding
-import com.origin.commons.callerid.extensions.dpToPx
 import com.origin.commons.callerid.extensions.prefsHelper
-import com.origin.commons.callerid.helpers.DARK_THEME
 import com.origin.commons.callerid.helpers.HomeKeyWatcher
-import com.origin.commons.callerid.helpers.LIGHT_THEME
-import com.origin.commons.callerid.helpers.SYSTEM_THEME
+import com.origin.commons.callerid.model.PopViewType
+import com.origin.commons.callerid.model.ThemeConfig
+import com.origin.commons.callerid.ui.dialog.ChoosePopupDialog
 import com.origin.commons.callerid.ui.dialog.ConfirmationDialog
+import kotlinx.coroutines.launch
 
-class CallerSettingActivity : CallerBaseActivity(),HomeKeyWatcher.OnHomeAndRecentsListener {
+class CallerSettingActivity : CallerBaseActivity(), HomeKeyWatcher.OnHomeAndRecentsListener {
     private val _binding by lazy {
         ActivityCallerSettingBinding.inflate(layoutInflater)
     }
     var watcher: HomeKeyWatcher? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.enableEdgeToEdge(SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT), SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT))
+        this.enableEdgeToEdge(
+            SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
+            SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
+        )
         if (Build.VERSION.SDK_INT >= 29) {
             window.isNavigationBarContrastEnforced = false
         }
         setContentView(_binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(_binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 5.dpToPx)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
         _binding.ivBack.setOnClickListener {
@@ -51,9 +54,12 @@ class CallerSettingActivity : CallerBaseActivity(),HomeKeyWatcher.OnHomeAndRecen
     override fun onResume() {
         super.onResume()
         setUpThemes()
+        setUpAppearanceVisibility()
+        setUpPopupSettings()
         setUpMissCalls()
         setUpCompCalls()
         setUpUnAnsCall()
+        setupStandardPopup()
     }
 
     override fun onDestroy() {
@@ -71,8 +77,8 @@ class CallerSettingActivity : CallerBaseActivity(),HomeKeyWatcher.OnHomeAndRecen
     }
 
     private fun refreshThemeSwitches() = with(_binding) {
-        when (prefsHelper.selectedAppTheme) {
-            SYSTEM_THEME -> {
+        when (prefsHelper.themeConfig) {
+            ThemeConfig.SYSTEM_THEME -> {
                 sSystemMode.isChecked = true
                 sForceDark.apply {
                     isChecked = false
@@ -80,15 +86,7 @@ class CallerSettingActivity : CallerBaseActivity(),HomeKeyWatcher.OnHomeAndRecen
                 }
             }
 
-            DARK_THEME -> {
-                sForceDark.isChecked = true
-                sSystemMode.apply {
-                    isChecked = false
-                    isEnabled = false
-                }
-            }
-
-            else -> {
+            ThemeConfig.LIGHT_THEME -> {
                 sSystemMode.apply {
                     isChecked = false
                     isEnabled = true
@@ -98,55 +96,98 @@ class CallerSettingActivity : CallerBaseActivity(),HomeKeyWatcher.OnHomeAndRecen
                     isEnabled = true
                 }
             }
+
+            ThemeConfig.DARK_THEME -> {
+                sForceDark.isChecked = true
+                sSystemMode.apply {
+                    isChecked = false
+                    isEnabled = false
+                }
+            }
+
         }
     }
-
 
     private fun setUpThemes() {
         refreshThemeSwitches()
         _binding.clSystemMode.setOnClickListener {
             val newTheme = if (_binding.sSystemMode.isChecked) {
-                LIGHT_THEME
+                ThemeConfig.LIGHT_THEME
             } else {
-                SYSTEM_THEME
+                ThemeConfig.SYSTEM_THEME
             }
-            this@CallerSettingActivity.prefsHelper.selectedAppTheme = newTheme
+            this@CallerSettingActivity.prefsHelper.themeConfig = newTheme
             refreshThemeSwitches()
             refreshTheme("clSystemMode", true)
         }
 
         _binding.clForceDark.setOnClickListener {
-            val newTheme = if (prefsHelper.selectedAppTheme == DARK_THEME) {
-                LIGHT_THEME
+            val newTheme = if (prefsHelper.themeConfig == ThemeConfig.DARK_THEME) {
+                ThemeConfig.LIGHT_THEME
             } else {
-                DARK_THEME
+                ThemeConfig.DARK_THEME
             }
-            this@CallerSettingActivity.prefsHelper.selectedAppTheme = newTheme
+            this@CallerSettingActivity.prefsHelper.themeConfig = newTheme
             refreshThemeSwitches()
             refreshTheme("clForceDark", true)
         }
     }
 
+    private fun setUpAppearanceVisibility() {
+        prefsHelper.showThemeSettings.let { isVisible ->
+            _binding.tvAppearance.isVisible = isVisible
+            _binding.clSystemMode.isVisible = isVisible
+            _binding.clForceDark.isVisible = isVisible
+        }
+    }
+
+    private fun setUpPopupSettings() {
+        prefsHelper.showOnlyCallerIdScreen.let { show ->
+            _binding.tvGeneral.isVisible = !show
+            _binding.clPopupSetting.isVisible = !show
+            _binding.clStandardViewOption.isVisible = !show && prefsHelper.popViewType == PopViewType.CLASSIC
+        }
+        _binding.clStandardViewOption.isVisible = prefsHelper.popViewType == PopViewType.CLASSIC
+        val title = when(prefsHelper.popViewType) {
+            PopViewType.CLASSIC -> "Classic"
+            PopViewType.STANDARD -> "Standard"
+        }
+        _binding.tvPopupDescription.text = title
+        lifecycleScope.launch {
+            prefsHelper.keyChangesFlow(lifecycleScope).collect { changedKey ->
+                if (changedKey == "popViewType") {
+                    val newTitle = when(prefsHelper.popViewType) {
+                        PopViewType.CLASSIC -> "Classic"
+                        PopViewType.STANDARD -> "Standard"
+                    }
+                    _binding.tvPopupDescription.text = newTitle
+                    _binding.clStandardViewOption.isVisible = prefsHelper.popViewType == PopViewType.CLASSIC && !prefsHelper.showOnlyCallerIdScreen
+                }
+            }
+        }
+
+        _binding.clPopupSetting.setOnClickListener {
+            ChoosePopupDialog(this)
+        }
+    }
 
     private fun setUpMissCalls() {
-        val mCallerIdSDKApplication: CallerIdSDKApplication? = try {
-            this.application as CallerIdSDKApplication
-        } catch (_: Exception) {
-            null
-        }
-        mCallerIdSDKApplication?.let { mApplication ->
-            val mIsChecked = mApplication.getMissedCallFeatureEnable()
-            _binding.switchMissCall.isChecked = mIsChecked
-        }
+        _binding.switchMissCall.isChecked = prefsHelper.isMissedCallFeatureEnable
         _binding.clMissCall.setOnClickListener {
             if (!_binding.switchMissCall.isChecked) {
-                toggleMiscalls(mCallerIdSDKApplication)
+                toggleMiscalls()
             } else {
                 runOnUiThread {
                     if (!isDestroyed && !isFinishing) {
                         val msgBuilder =
-                            StringBuilder().append("• ").append(String.format(this.getString(R.string.caller_toggle_agree_title_2), getString(R.string.missed_call))).append("\n").append("\n")
-                                .append("• ").append(this.getString(R.string.caller_toggle_agree_message_1))
+                            StringBuilder().append("• ").append(
+                                String.format(
+                                    this.getString(R.string.caller_toggle_agree_title_2),
+                                    getString(R.string.missed_call)
+                                )
+                            ).append("\n").append("\n")
+                                .append("• ")
+                                .append(this.getString(R.string.caller_toggle_agree_message_1))
                         ConfirmationDialog(
                             activity = this,
                             titleId = R.string.caller_toggle_agree_title_1,
@@ -156,7 +197,7 @@ class CallerSettingActivity : CallerBaseActivity(),HomeKeyWatcher.OnHomeAndRecen
                             cancelOnTouchOutside = false
                         ) { success ->
                             if (!success) {
-                                toggleMiscalls(mCallerIdSDKApplication)
+                                toggleMiscalls()
                             }
                         }
                     }
@@ -165,27 +206,17 @@ class CallerSettingActivity : CallerBaseActivity(),HomeKeyWatcher.OnHomeAndRecen
         }
     }
 
-    private fun toggleMiscalls(mCallerIdSDKApplication: CallerIdSDKApplication?) {
-        mCallerIdSDKApplication?.let { mApplication ->
-            val mIsChecked = mApplication.getMissedCallFeatureEnable()
-            mApplication.setMissedCallFeatureEnable(!mIsChecked)
-            _binding.switchMissCall.isChecked = !mIsChecked
-        }
+    private fun toggleMiscalls() {
+        val mIsChecked = prefsHelper.isMissedCallFeatureEnable
+        prefsHelper.isMissedCallFeatureEnable = !mIsChecked
+        _binding.switchMissCall.isChecked = !mIsChecked
     }
 
     private fun setUpCompCalls() {
-        val mCallerIdSDKApplication: CallerIdSDKApplication? = try {
-            this.application as CallerIdSDKApplication
-        } catch (_: Exception) {
-            null
-        }
-        mCallerIdSDKApplication?.let { mApplication ->
-            val mIsChecked = mApplication.getCompleteCallFeatureEnable()
-            _binding.switchCompleteCall.isChecked = mIsChecked
-        }
+        _binding.switchCompleteCall.isChecked = prefsHelper.isCompleteCallFeatureEnable
         _binding.clCompleteCall.setOnClickListener {
             if (!_binding.switchCompleteCall.isChecked) {
-                toggleCompCalls(mCallerIdSDKApplication)
+                toggleCompCalls()
             } else {
                 runOnUiThread {
                     if (!isDestroyed && !isFinishing) {
@@ -198,14 +229,16 @@ class CallerSettingActivity : CallerBaseActivity(),HomeKeyWatcher.OnHomeAndRecen
                             .append(this.getString(R.string.caller_toggle_agree_message_1))
 
                         ConfirmationDialog(
-                            activity = this, titleId = R.string.caller_toggle_agree_title_1, message = msgBuilder.toString(), positive = R.string.keep_it,
-                            negative = R.string.proceed, cancelOnTouchOutside = false
+                            activity = this,
+                            titleId = R.string.caller_toggle_agree_title_1,
+                            message = msgBuilder.toString(),
+                            positive = R.string.keep_it,
+                            negative = R.string.proceed,
+                            cancelOnTouchOutside = false
                         ) { success ->
-
                             if (!success) {
-                                toggleCompCalls(mCallerIdSDKApplication)
+                                toggleCompCalls()
                             }
-
                         }
                     }
                 }
@@ -213,41 +246,39 @@ class CallerSettingActivity : CallerBaseActivity(),HomeKeyWatcher.OnHomeAndRecen
         }
     }
 
-    private fun toggleCompCalls(mCallerIdSDKApplication: CallerIdSDKApplication?) {
-        mCallerIdSDKApplication?.let { mApplication ->
-            val mIsChecked = mApplication.getCompleteCallFeatureEnable()
-            mApplication.setCompleteCallFeatureEnable(!mIsChecked)
-            _binding.switchCompleteCall.isChecked = !mIsChecked
-        }
+    private fun toggleCompCalls() {
+        val mIsChecked = prefsHelper.isCompleteCallFeatureEnable
+        prefsHelper.isCompleteCallFeatureEnable = !mIsChecked
+        _binding.switchCompleteCall.isChecked = !mIsChecked
     }
 
-
     private fun setUpUnAnsCall() {
-        val mCallerIdSDKApplication: CallerIdSDKApplication? = try {
-            this.application as CallerIdSDKApplication
-        } catch (_: Exception) {
-            null
-        }
-        mCallerIdSDKApplication?.let { mApplication ->
-            val mIsChecked = mApplication.getNoAnswerFeatureEnable()
-            _binding.switchNoAnswer.isChecked = mIsChecked
-        }
+        _binding.switchNoAnswer.isChecked = prefsHelper.isNoAnswerFeatureEnable
         _binding.clNoAnswer.setOnClickListener {
             if (!_binding.switchNoAnswer.isChecked) {
-                toggleUnAnsCall(mCallerIdSDKApplication)
+                toggleUnAnsCall()
             } else {
                 runOnUiThread {
                     if (!isDestroyed && !isFinishing) {
                         val msgBuilder =
-                            StringBuilder().append("• ").append(String.format(this.getString(R.string.caller_toggle_agree_title_2), getString(R.string.no_answer))).append("\n").append("\n")
+                            StringBuilder().append("• ").append(
+                                String.format(
+                                    this.getString(R.string.caller_toggle_agree_title_2),
+                                    getString(R.string.no_answer)
+                                )
+                            ).append("\n").append("\n")
                                 .append("• ")
                                 .append(this.getString(R.string.caller_toggle_agree_message_1))
                         ConfirmationDialog(
-                            activity = this, titleId = R.string.caller_toggle_agree_title_1, message = msgBuilder.toString(), positive = R.string.keep_it,
-                            negative = R.string.proceed, cancelOnTouchOutside = false
+                            activity = this,
+                            titleId = R.string.caller_toggle_agree_title_1,
+                            message = msgBuilder.toString(),
+                            positive = R.string.keep_it,
+                            negative = R.string.proceed,
+                            cancelOnTouchOutside = false
                         ) { success ->
                             if (!success) {
-                                toggleUnAnsCall(mCallerIdSDKApplication)
+                                toggleUnAnsCall()
                             }
                         }
                     }
@@ -256,11 +287,22 @@ class CallerSettingActivity : CallerBaseActivity(),HomeKeyWatcher.OnHomeAndRecen
         }
     }
 
-    private fun toggleUnAnsCall(mCallerIdSDKApplication: CallerIdSDKApplication?) {
-        mCallerIdSDKApplication?.let { mApplication ->
-            val mIsChecked = mApplication.getNoAnswerFeatureEnable()
-            mApplication.setNoAnswerFeatureEnable(!mIsChecked)
-            _binding.switchNoAnswer.isChecked = !mIsChecked
+    private fun toggleUnAnsCall() {
+        val mIsChecked = prefsHelper.isNoAnswerFeatureEnable
+        prefsHelper.isNoAnswerFeatureEnable = !mIsChecked
+        _binding.switchNoAnswer.isChecked = !mIsChecked
+    }
+
+    private fun setupStandardPopup() {
+        _binding.sStandardView.isChecked = prefsHelper.showStandardPopupOnClassicClose
+        _binding.clStandardViewOption.setOnClickListener {
+            toggleShowStandardPopupOnClassicClose()
         }
+    }
+
+    private fun toggleShowStandardPopupOnClassicClose() {
+        val mIsChecked = prefsHelper.showStandardPopupOnClassicClose
+        prefsHelper.showStandardPopupOnClassicClose = !mIsChecked
+        _binding.sStandardView.isChecked = !mIsChecked
     }
 }

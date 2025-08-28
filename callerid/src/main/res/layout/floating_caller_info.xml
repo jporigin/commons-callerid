@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/llWicMain"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -62,6 +63,19 @@
                 android:textColor="@color/call_theme_onSurface"
                 android:textSize="14sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCallType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/sinteca_regular"
+                android:includeFontPadding="false"
+                android:visibility="gone"
+                android:textAlignment="textStart"
+                android:textColor="@color/call_theme_onPrimary"
+                android:textSize="12sp"
+                tools:text="Incoming" />
 
             <TextView
                 android:id="@+id/tvCallDuration"

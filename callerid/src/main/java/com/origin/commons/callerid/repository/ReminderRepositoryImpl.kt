@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import com.origin.commons.callerid.db.dao.ReminderDao
 import com.origin.commons.callerid.db.entity.ReminderEntity
-import com.origin.commons.callerid.helpers.Utils.isNotificationPermissionGranted
+import com.origin.commons.callerid.helpers.CallerIdUtils.isNotificationPermissionGranted
 import com.origin.commons.callerid.receivers.OgCallerIdReminderReceiver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

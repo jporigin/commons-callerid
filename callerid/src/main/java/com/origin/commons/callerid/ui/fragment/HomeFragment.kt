@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
         if (fragmentProvider != null) {
             _binding.llCiDefault.visibility = View.GONE
             _binding.flCiCustom.visibility = View.VISIBLE
-            childFragmentManager.beginTransaction().replace(_binding.flCiCustom.id, fragmentProvider.invoke()).commitAllowingStateLoss()
+            childFragmentManager.beginTransaction().replace(_binding.flCiCustom.id, fragmentProvider.provide()).commitAllowingStateLoss()
         } else {
             _binding.flCiCustom.visibility = View.GONE
             _binding.llCiDefault.visibility = View.VISIBLE

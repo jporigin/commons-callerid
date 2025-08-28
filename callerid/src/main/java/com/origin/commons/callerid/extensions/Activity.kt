@@ -15,9 +15,21 @@ import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.ui.activity.CallerSettingActivity
 
 fun Activity.openCallerIDSetting() {
-    val intent = Intent(this, CallerSettingActivity::class.java)
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-    this.startActivity(intent)
+    val callerIdSDKApplication = try {
+        this.application as? CallerIdSDKApplication
+    } catch (_: Exception) {
+        null
+    }
+    val customCallerSetting = callerIdSDKApplication?.customCallerSetting?.provide()
+    if (customCallerSetting != null) {
+        val intent = Intent(this, customCallerSetting)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        this.startActivity(intent)
+    } else {
+        val intent = Intent(this, CallerSettingActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        this.startActivity(intent)
+    }
 }
 
 fun Activity.getOpenAppIntent(): Intent? {
@@ -26,8 +38,8 @@ fun Activity.getOpenAppIntent(): Intent? {
     } catch (_: Exception) {
         null
     }
-    val mClass1 = callerIdSDKApplication?.openClass1?.invoke()
-    val mClass2High = callerIdSDKApplication?.openClass2High?.invoke()
+    val mClass1 = callerIdSDKApplication?.openClass1?.provide()
+    val mClass2High = callerIdSDKApplication?.openClass2High?.provide()
     return when {
         mClass1 != null && isActivityRunning(mClass1) -> {
             Intent(this@getOpenAppIntent, mClass1)

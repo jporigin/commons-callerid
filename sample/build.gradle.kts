@@ -7,7 +7,7 @@ plugins {
 }
 android {
     namespace = "com.origin.commons.callerid.sample"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.origin.commons.callerid.sample"

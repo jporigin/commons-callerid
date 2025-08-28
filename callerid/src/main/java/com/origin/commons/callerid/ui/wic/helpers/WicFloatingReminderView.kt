@@ -26,10 +26,10 @@ import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.showCustomToast
 import com.origin.commons.callerid.extensions.showKeyboard
 import com.origin.commons.callerid.extensions.value
-import com.origin.commons.callerid.helpers.Utils.isNotificationPermissionGranted
+import com.origin.commons.callerid.helpers.CallerIdUtils.isNotificationPermissionGranted
 import com.origin.commons.callerid.states.ReminderState
 import com.origin.commons.callerid.ui.adapter.ReminderAdapter
-import com.origin.commons.callerid.viewmodel.NotificationFragmentViewModel
+import com.origin.commons.callerid.viewmodel.ReminderFragmentViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -54,8 +54,8 @@ class WicFloatingReminderView(
 
     // ✅ Correct, non-null scope
     private val viewScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
-    private val viewModel: NotificationFragmentViewModel by lazy {
-        NotificationFragmentViewModel(appProvider.reminderRepository)
+    private val viewModel: ReminderFragmentViewModel by lazy {
+        ReminderFragmentViewModel(appProvider.reminderRepository)
     }
 
     private val _binding: FloatingCallerReminderBinding

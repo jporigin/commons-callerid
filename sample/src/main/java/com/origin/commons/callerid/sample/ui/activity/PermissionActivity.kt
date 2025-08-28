@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -23,6 +22,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
@@ -30,9 +31,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.loukwn.stagestepbar.StageStepBar
 import com.origin.commons.callerid.extensions.logEventE
-import com.origin.commons.callerid.helpers.Utils.isNotificationPermissionGranted
-import com.origin.commons.callerid.helpers.Utils.isPhoneStatePermissionGranted
-import com.origin.commons.callerid.helpers.Utils.isScreenOverlayEnabled
+import com.origin.commons.callerid.helpers.CallerIdUtils.isNotificationPermissionGranted
+import com.origin.commons.callerid.helpers.CallerIdUtils.isPhoneStatePermissionGranted
+import com.origin.commons.callerid.helpers.CallerIdUtils.isScreenOverlayEnabled
 import com.origin.commons.callerid.sample.R
 import com.origin.commons.callerid.sample.databinding.ActivityPermissionBinding
 import com.origin.commons.callerid.sample.extensions.isNotiPermissionReqAsked
@@ -41,14 +42,12 @@ import com.origin.commons.callerid.sample.extensions.setNotiPermissionReqAsked
 import com.origin.commons.callerid.sample.extensions.setPermissionGranted
 import com.origin.commons.callerid.sample.extensions.setPermissionRequestAsked
 import com.origin.commons.callerid.sample.extensions.setScreenOverlayEnabled
-import com.origin.commons.callerid.sample.extensions.startIntent
 import com.origin.commons.callerid.sample.extensions.startIntentWithFlags
 import com.origin.commons.callerid.sample.viewmodel.PermissionState
 import com.origin.commons.callerid.sample.viewmodel.PermissionUiState
 import com.origin.commons.callerid.sample.viewmodel.PermissionViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import androidx.core.net.toUri
 
 class PermissionActivity : AppCompatActivity() {
 
@@ -56,7 +55,7 @@ class PermissionActivity : AppCompatActivity() {
         ActivityPermissionBinding.inflate(layoutInflater)
     }
 
-    private val viewModel by lazy { PermissionViewModel(this) }
+    private val viewModel by lazy { PermissionViewModel() }
 
     private val overlayPermissionHandler = Handler(Looper.getMainLooper())
     private val overlayPermissionCheckInterval = 1000L
@@ -72,7 +71,7 @@ class PermissionActivity : AppCompatActivity() {
         }
         setUpObservers()
         setUpClickEvents()
-        viewModel.checkPermissions()
+        viewModel.checkPermissions(this)
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         logEventE("Perm_Act_onCreate")
     }
@@ -279,7 +278,7 @@ class PermissionActivity : AppCompatActivity() {
 
     private fun requiredPermissionDialog(context: Context, @StringRes title: Int, @StringRes description: Int, onNegativeClick: () -> Unit, onPositiveClick: () -> Unit) {
         val dialog = Dialog(context, R.style.CustomDialog)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         dialog.setCancelable(false)
         dialog.setCanceledOnTouchOutside(false)
@@ -310,7 +309,7 @@ class PermissionActivity : AppCompatActivity() {
 
     private fun openSettingDialog(context: Context, @StringRes title: Int, @StringRes description: Int, onNegativeClick: () -> Unit = {}, onPositiveClick: () -> Unit) {
         val dialog = Dialog(context, R.style.CustomDialog)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         dialog.setCancelable(false)
         dialog.setCanceledOnTouchOutside(false)

@@ -12,13 +12,14 @@ import android.net.Uri
 import android.os.IBinder
 import android.text.TextUtils
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.net.toUri
 import com.origin.commons.callerid.CallerIdSDKApplication
+import com.origin.commons.callerid.helpers.CallerIdSDK
+import com.origin.commons.callerid.helpers.CallerIdUtils
+import com.origin.commons.callerid.helpers.CallerIdUtils.isScreenOverlayEnabled
 import com.origin.commons.callerid.helpers.SharedPreferencesHelper
-import com.origin.commons.callerid.helpers.Utils
-import com.origin.commons.callerid.helpers.Utils.isScreenOverlayEnabled
 import com.origin.commons.callerid.receivers.CIdLegacyForegroundService
 import com.origin.commons.callerid.receivers.OgCallerIdCallReceiver
-import androidx.core.net.toUri
 
 fun Context.getScreenWidthPx(): Int {
     return resources.displayMetrics.widthPixels
@@ -37,12 +38,12 @@ fun Context.getOpenAppIntent(): Intent? {
     val mClass1 = callerIdSDKApplication?.openClass1
     val mClass2High = callerIdSDKApplication?.openClass2High
     return when {
-        mClass1 != null && isActivityRunning(mClass1.invoke()) -> {
-            Intent(this@getOpenAppIntent, mClass1.invoke())
+        mClass1 != null && isActivityRunning(mClass1.provide()) -> {
+            Intent(this@getOpenAppIntent, mClass1.provide())
         }
 
         mClass2High != null -> {
-            Intent(this@getOpenAppIntent, mClass2High.invoke())
+            Intent(this@getOpenAppIntent, mClass2High.provide())
         }
 
         else -> null
@@ -51,7 +52,7 @@ fun Context.getOpenAppIntent(): Intent? {
 
 fun Context.registerCallReceiver() {
     try {
-        if (Utils.isPhoneStatePermissionGranted(this)) {
+        if (CallerIdUtils.isPhoneStatePermissionGranted(this)) {
             this.registerReceiver(OgCallerIdCallReceiver(), IntentFilter("android.intent.action.PHONE_STATE"))
         }
     } catch (e: Exception) {
@@ -106,7 +107,7 @@ fun Context.getAppName(): String {
     }
 }
 
-val Context.prefsHelper: SharedPreferencesHelper get() = SharedPreferencesHelper.newInstance(this)
+internal val Context.prefsHelper: SharedPreferencesHelper get() = SharedPreferencesHelper.newInstance(this)
 fun Context.getCurrentAdsType(): Int {
     this.prefsHelper.let { pref ->
         //
@@ -182,14 +183,44 @@ fun Context.openContact() {
 }
 
 fun Context.openMessage(message: String = "") {
+    val callerIdSDKApplication = try {
+        this.applicationContext as? CallerIdSDKApplication
+    } catch (_: Exception) {
+        null
+    }
     try {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            type = "vnd.android-dir/mms-sms"
+        if (CallerIdSDK.isHostDefaultSmsApp()) {
+            val openClassForDefaultApp = callerIdSDKApplication?.openClassForDefaultApp
+            when {
+                openClassForDefaultApp != null -> {
+                    Intent(this@openMessage, openClassForDefaultApp.provide()).apply {
+                        if (message.isNotEmpty()) {
+                            putExtra("sms_body", message)
+                            putExtra(Intent.EXTRA_TEXT, message)
+                        }
+                        putExtra("isFromCallerId", true)
+                        startActivity(this)
+                    }
+                }
+                else -> {
+                    val intent = Intent(Intent.ACTION_MAIN).apply {
+                        addCategory(Intent.CATEGORY_APP_MESSAGING)
+                    }
+                    if (message.isNotEmpty()) {
+                        intent.putExtra("sms_body", message)
+                    }
+                    startActivity(intent)
+                }
+            }
+        } else {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                type = "vnd.android-dir/mms-sms"
+            }
+            if (message.isNotEmpty()) {
+                intent.putExtra("sms_body", message)
+            }
+            startActivity(intent)
         }
-        if (message.isNotEmpty()) {
-            intent.putExtra("sms_body", message)
-        }
-        startActivity(intent)
     } catch (e: Exception) {
         e.printStackTrace()
         try {
@@ -253,4 +284,15 @@ fun Context.emailIntent(subject: String) {
     } catch (e: Exception) {
         e.printStackTrace()
     }
+}
+
+fun Context.isCIDPermissionAllowed(): Boolean {
+    return CallerIdUtils.isPhoneStatePermissionGranted(this) && isScreenOverlayEnabled(this)
+}
+
+fun Context.isCallerIDEnabled(): Boolean {
+    if (!prefsHelper.isMissedCallFeatureEnable && !prefsHelper.isCompleteCallFeatureEnable && !prefsHelper.isNoAnswerFeatureEnable) {
+        return false
+    }
+    return isCIDPermissionAllowed()
 }

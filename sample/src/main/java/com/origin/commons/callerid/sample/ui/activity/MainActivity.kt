@@ -13,8 +13,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.origin.commons.callerid.extensions.logEventE
 import com.origin.commons.callerid.extensions.openCallerIDSetting
 import com.origin.commons.callerid.extensions.refreshCurrentAdsType
-import com.origin.commons.callerid.helpers.Utils.calculateDuration
-import com.origin.commons.callerid.helpers.Utils.formatTimeToString
+import com.origin.commons.callerid.helpers.CallerIdUtils.calculateDuration
+import com.origin.commons.callerid.helpers.CallerIdUtils.formatTimeToString
 import com.origin.commons.callerid.sample.R
 import com.origin.commons.callerid.sample.databinding.ActivityMainBinding
 import com.origin.commons.callerid.ui.activity.CallerIdActivity

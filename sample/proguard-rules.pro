@@ -25,9 +25,9 @@
 -keep class com.origin.commons.callerid.db.entity.** { *; }
 -keep class com.origin.commons.callerid.timepicker.** { *; }
 
--obfuscationdictionary "D:\Android\Sdk\class_encode_dictionary.txt"
--classobfuscationdictionary "D:\Android\Sdk\class_encode_dictionary.txt"
--packageobfuscationdictionary "D:\Android\Sdk\class_encode_dictionary.txt"
+-obfuscationdictionary "D:\ProgramFiles\AndroidStudio\Sdk\class_encode_dictionary.txt"
+-classobfuscationdictionary "D:\ProgramFiles\AndroidStudio\Sdk\class_encode_dictionary.txt"
+-packageobfuscationdictionary "D:\ProgramFiles\AndroidStudio\Sdk\class_encode_dictionary.txt"
 
 -mergeinterfacesaggressively
 -repackageclasses "com.origin.commons.callerid.sample"

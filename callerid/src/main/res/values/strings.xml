@@ -55,4 +55,12 @@
     <string name="complete_call_des">Call information after a call is completed with multiple options to handle contact information.</string>
     <string name="no_answer">No Answer</string>
     <string name="no_answer_des">Call information after unanswered call with multiple options to handle contact information.</string>
+    <string name="invalid_past_date">Selected date must be in future</string>
+    <string name="invalid_past_time">Selected time must be in future</string>
+    <string name="popup_settings">Popup Setting</string>
+    <string name="standard_view_des">By Allowing this you can access standard popup on cancel of classic popup.</string>
+    <string name="classic_popup">Classic Popup</string>
+    <string name="standard_popup">Standard Popup</string>
+    <string name="choose_popup">Choose Popup</string>
+    <string name="apply">Apply</string>
 </resources>

@@ -8,7 +8,6 @@
         <item name="colorOnSurface">@color/call_theme_onSurface</item>
     </style>
 
-
     <style name="CounterTextAppearance" parent="TextAppearance.AppCompat.Small">
         <item name="android:fontFamily">@font/sinteca_regular</item>
         <item name="counterTextColor">@color/call_theme_onSurfaceVariant</item>

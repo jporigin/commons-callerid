@@ -12,18 +12,27 @@ object WICController {
      */
 
     private var isOverlayVisible = false
+//    var isManuallyClosed = false
 
     fun showPopup(context: Context,state: Int) {
-        if (!isOverlayVisible) {
+        if (!isOverlayVisible /*&& !isManuallyClosed*/) {
             isOverlayVisible = true
             WICOverlayViewManager.show(context ,state)
         }
     }
 
     fun destroyPopup(context: Context, callback: () -> Unit) {
-        if (isOverlayVisible) {
+        if (isOverlayVisible /*&& !isManuallyClosed*/) {
             isOverlayVisible = false
+//            isManuallyClosed = false
+            WICOverlayViewManager.popViewType = null
             WICOverlayViewManager.hide(context, callback)
         }
+//        else {
+//            isManuallyClosed = false
+//            isOverlayVisible = false
+//            WICOverlayViewManager.popViewType = null
+//            callback.invoke()
+//        }
     }
 }

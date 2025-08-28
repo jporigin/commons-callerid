@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-object Utils {
+object CallerIdUtils {
 
     fun isPhoneStatePermissionGranted(context: Context): Boolean {
         return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
@@ -47,7 +47,7 @@ object Utils {
         val seconds = durationMillis % (1000 * 60) / 1000
 
         // Format the duration
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
+        return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds)
     }
 
     fun getPhoneState(intent: Intent): Int {
@@ -64,6 +64,10 @@ object Utils {
             }
         }
         return 0
+    }
+
+    fun isCIDPermissionAllowed(context: Context): Boolean {
+        return isPhoneStatePermissionGranted(context) && isScreenOverlayEnabled(context)
     }
 
 }

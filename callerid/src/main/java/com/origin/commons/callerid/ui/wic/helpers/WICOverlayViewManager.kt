@@ -5,12 +5,14 @@ import android.content.Context
 import android.graphics.PixelFormat
 import android.os.Build
 import android.view.Gravity
+import android.view.View
 import android.view.WindowManager
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.OvershootInterpolator
 import com.origin.commons.callerid.ads.helpers.CallerIdAds
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.extensions.refreshCurrentAdsType
+import com.origin.commons.callerid.model.PopViewType
 
 
 @SuppressLint("StaticFieldLeak")
@@ -19,11 +21,17 @@ object WICOverlayViewManager {
     private var mWindowManager: WindowManager? = null
     private var mFloatingCallerView: WicFloatingCallerView? = null
 
-    /*
-   • 0. IDLE: No call activity.
-   • 1. RINGING: Incoming call is ringing.
-   • 2. OFFHOOK: A call is in progress (dialing, active, or on hold) and no other calls are ringing or waiting.
-   */
+    private var mFloatingMessageView: WicFloatingMessageView? = null
+
+    private var mFloatingReminderView: WicFloatingReminderView? = null
+
+    var popViewType: PopViewType? = null
+
+    /**
+    • 0. IDLE: No call activity.
+    • 1. RINGING: Incoming call is ringing.
+    • 2. OFFHOOK: A call is in progress (dialing, active, or on hold) and no other calls are ringing or waiting.
+     */
     fun show(context: Context, state: Int) {
         if (mWindowManager == null) {
             mWindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -31,9 +39,14 @@ object WICOverlayViewManager {
         if (mFloatingCallerView != null) {
             hide(context) {}
         }
-        val layoutParams = getLayoutParams(context)
+        val popViewType = popViewType ?: context.prefsHelper.popViewType
+        val layoutParams = when (popViewType) {
+            PopViewType.CLASSIC -> getClassicLayoutParams(context)
+            PopViewType.STANDARD -> getStandardLayoutParams(context)
+        }
         currentState = state
-        val view = WicFloatingCallerView(context, state, mWindowManager!!, layoutParams)
+        val view =
+            WicFloatingCallerView(context, state, popViewType, mWindowManager!!, layoutParams)
         mFloatingCallerView = view
         mWindowManager?.addView(view, layoutParams)
         view.animate()
@@ -46,7 +59,7 @@ object WICOverlayViewManager {
         CallerIdAds.loadCallerIdAds(context)
     }
 
-    private fun getLayoutParams(context: Context): WindowManager.LayoutParams {
+    private fun getStandardLayoutParams(context: Context): WindowManager.LayoutParams {
         val flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
@@ -61,7 +74,29 @@ object WICOverlayViewManager {
         ).apply {
             gravity = Gravity.END or Gravity.TOP
             x = 16
-            y = context.prefsHelper.wicPosition
+            y = context.prefsHelper.wicStandardPosition
+        }
+    }
+
+    private fun getClassicLayoutParams(context: Context): WindowManager.LayoutParams {
+        val flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED // ← No effect on overlays
+
+        return WindowManager.LayoutParams(
+            WindowManager.LayoutParams.MATCH_PARENT, // Classic is wide
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+            else
+                WindowManager.LayoutParams.TYPE_PHONE,
+            flags,
+            PixelFormat.TRANSLUCENT
+        ).apply {
+            gravity = Gravity.CENTER
+            x = 10
+            y = context.prefsHelper.wicClassicPosition
         }
     }
 
@@ -128,6 +163,12 @@ object WICOverlayViewManager {
         }
     }
 
+    fun hideTemporary() {
+        mFloatingCallerView?.let { view ->
+            view.visibility = View.INVISIBLE
+        }
+    }
+
     private fun getLayoutParamsMatch(context: Context): WindowManager.LayoutParams {
         val flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
@@ -143,12 +184,10 @@ object WICOverlayViewManager {
         ).apply {
             gravity = Gravity.END or Gravity.TOP
             x = 16
-            y = context.prefsHelper.wicPosition
+            y = context.prefsHelper.wicStandardPosition
         }
     }
 
-
-    private var mFloatingMessageView: WicFloatingMessageView? = null
     fun showMessagePopup(context: Context) {
         hide(context) {
             val layoutParams = getLayoutParamsMatch(context)
@@ -161,7 +200,6 @@ object WICOverlayViewManager {
         }
     }
 
-    private var mFloatingReminderView: WicFloatingReminderView? = null
     fun showReminderPopup(context: Context) {
         hide(context) {
             val layoutParams = getLayoutParamsMatch(context)

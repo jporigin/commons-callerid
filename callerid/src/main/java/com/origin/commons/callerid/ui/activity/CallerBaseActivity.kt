@@ -1,33 +1,23 @@
 package com.origin.commons.callerid.ui.activity
 
-import android.content.res.Configuration
-import android.os.Bundle
+import android.content.Context
+import android.content.ContextWrapper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.prefsHelper
-import com.origin.commons.callerid.helpers.DARK_THEME
-import com.origin.commons.callerid.helpers.LIGHT_THEME
+import com.origin.commons.callerid.model.ThemeConfig
 
 abstract class CallerBaseActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        refreshTheme("onCreate")
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        refreshTheme("onConfigurationChanged")
-    }
-
     fun refreshTheme(tag: String = "", forceRefresh: Boolean = false) {
         logE("refreshTheme: $tag")
-        val theme = prefsHelper.selectedAppTheme
+        val theme = prefsHelper.themeConfig
+        logE("theme: $theme")
         val mode = when (theme) {
-            DARK_THEME -> AppCompatDelegate.MODE_NIGHT_YES
-            LIGHT_THEME -> AppCompatDelegate.MODE_NIGHT_NO
-            else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            ThemeConfig.LIGHT_THEME -> AppCompatDelegate.MODE_NIGHT_NO
+            ThemeConfig.DARK_THEME -> AppCompatDelegate.MODE_NIGHT_YES
+            ThemeConfig.SYSTEM_THEME -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
         }
         AppCompatDelegate.setDefaultNightMode(mode)
         if (forceRefresh) {
@@ -40,4 +30,16 @@ abstract class CallerBaseActivity : AppCompatActivity() {
             recreate()
         }
     }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase?.let {
+            when(it.prefsHelper.themeConfig) {
+                ThemeConfig.SYSTEM_THEME -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                ThemeConfig.LIGHT_THEME -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                ThemeConfig.DARK_THEME -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            ContextWrapper(it)
+        })
+    }
+
 }

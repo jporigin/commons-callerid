@@ -40,7 +40,7 @@ import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.ui.fragment.HomeFragment
 import com.origin.commons.callerid.ui.fragment.MessageFragment
 import com.origin.commons.callerid.ui.fragment.MoreFragment
-import com.origin.commons.callerid.ui.fragment.NotificationFragment
+import com.origin.commons.callerid.ui.fragment.ReminderFragment
 import com.origin.commons.callerid.helpers.HomeKeyWatcher
 
 
@@ -169,7 +169,7 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener, Ho
     override fun onDestroy() {
         mHomeFragment = null
         mMessageFragment = null
-        mNotificationFragment = null
+        mReminderFragment = null
         mMoreFragment = null
         CallerIdAds.unregisterCallerAdsListener(this@CallerIdActivity)
         CallerIdAds.clearBannerAdView()
@@ -278,7 +278,7 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener, Ho
 
     private var mHomeFragment: HomeFragment? = null
     private var mMessageFragment: MessageFragment? = null
-    private var mNotificationFragment: NotificationFragment? = null
+    private var mReminderFragment: ReminderFragment? = null
     private var mMoreFragment: MoreFragment? = null
 
     inner class TabPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
@@ -296,7 +296,7 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener, Ho
                 }
 
                 2 -> {
-                    mNotificationFragment ?: NotificationFragment().apply { mNotificationFragment = this }
+                    mReminderFragment ?: ReminderFragment().apply { mReminderFragment = this }
                 }
 
                 3 -> {

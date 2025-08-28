@@ -1,6 +1,7 @@
 package com.origin.commons.callerid.helpers
 
 import android.os.Looper
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 class Stopwatch(private val onTick: (String) -> Unit) {
@@ -51,9 +52,9 @@ class Stopwatch(private val onTick: (String) -> Unit) {
         val seconds = TimeUnit.MILLISECONDS.toSeconds(millis) % 60
 
         return if (hours > 0) {
-            String.format("%02d:%02d:%02d", hours, minutes, seconds) // HH:MM:SS
+            String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds) // HH:MM:SS
         } else {
-            String.format("%02d:%02d", minutes, seconds) // MM:SS
+            String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds) // MM:SS
         }
     }
 }

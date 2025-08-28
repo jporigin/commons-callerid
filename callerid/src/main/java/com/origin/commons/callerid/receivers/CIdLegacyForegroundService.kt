@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
@@ -12,19 +13,22 @@ import android.os.IBinder
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyCallback
 import android.telephony.TelephonyManager
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.prefsHelper
-import com.origin.commons.callerid.helpers.Utils.calculateDuration
-import com.origin.commons.callerid.helpers.Utils.formatTimeToString
-import com.origin.commons.callerid.helpers.Utils.isScreenOverlayEnabled
+import com.origin.commons.callerid.helpers.CallerIdUtils.calculateDuration
+import com.origin.commons.callerid.helpers.CallerIdUtils.formatTimeToString
+import com.origin.commons.callerid.helpers.CallerIdUtils.isScreenOverlayEnabled
+import com.origin.commons.callerid.model.ThemeConfig
 import com.origin.commons.callerid.ui.activity.CallerIdActivity
 import com.origin.commons.callerid.ui.wic.WICController
+import com.origin.commons.callerid.utils.callPhoneNumber
+import com.origin.commons.callerid.utils.callStartTime
+import com.origin.commons.callerid.utils.callType
 import java.util.Date
-import com.origin.commons.callerid.utils.*
-
 
 class CIdLegacyForegroundService : Service() {
 
@@ -53,6 +57,10 @@ class CIdLegacyForegroundService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        if (prefsHelper.showOnlyCallerIdScreen) {
+            return
+        }
+
         setTheme(R.style.Caller_Main_Theme)
         val telephonyManager = getSystemService(TELEPHONY_SERVICE) as TelephonyManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -197,6 +205,17 @@ class CIdLegacyForegroundService : Service() {
         } else {
             startForeground(notificationId, notification)
         }
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase?.let {
+            when(it.prefsHelper.themeConfig) {
+                ThemeConfig.SYSTEM_THEME -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                ThemeConfig.LIGHT_THEME -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                ThemeConfig.DARK_THEME -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            ContextWrapper(it)
+        })
     }
 
 }

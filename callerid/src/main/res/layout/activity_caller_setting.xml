@@ -280,11 +280,72 @@
                 android:layout_marginTop="12dp"
                 android:padding="8dp"
                 android:text="General"
-                android:visibility="gone"
                 android:textColor="@color/call_theme_primary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/clNoAnswer" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clPopupSetting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvGeneral">
+
+                <TextView
+                    android:id="@+id/tvPopupTitle"
+                    style="@style/SettingItemTitleTextStyle"
+                    android:text="@string/popup_settings"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvPopupDescription"
+                    style="@style/SettingItemDesTextStyle"
+                    tools:text="Standard"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPopupTitle" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clStandardViewOption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/clPopupSetting">
+
+                <TextView
+                    android:id="@+id/tvShowStandardView"
+                    style="@style/SettingItemTitleTextStyle"
+                    android:text="@string/standard_popup"
+                    app:layout_constraintEnd_toStartOf="@+id/sStandardView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    style="@style/SettingItemDesTextStyle"
+                    android:text="@string/standard_view_des"
+                    app:layout_constraintEnd_toStartOf="@+id/sStandardView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvShowStandardView" />
+
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/sStandardView"
+                    style="@style/SettingItemSwitchStyle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvShowStandardView"
+                    app:rippleColor="@android:color/transparent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clHelp"
@@ -295,7 +356,7 @@
                 android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvGeneral">
+                app:layout_constraintTop_toBottomOf="@+id/clStandardViewOption">
 
                 <TextView
                     android:id="@+id/tvHelpTitle"
