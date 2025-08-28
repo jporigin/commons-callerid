@@ -31,6 +31,8 @@ dependencies {
 Check out the latest release version from our [Release notes](https://sites.google.com/view/og-caller-id-release-notes)
 
 Simply extend the `CallerIdSDKApplication` class in your main application like this:
+
+`Kotlin`
 ```kotlin
 import com.origin.commons.callerid.CallerIdSDKApplication
 
@@ -44,10 +46,11 @@ class MyApplication : CallerIdSDKApplication() {
     private fun initCallerSDK() {
         setUpAdsUIDs()
         setUp(R.drawable.app_logo_, R.drawable.app_logo_icon)
-        openClass1 = { MainActivity::class.java }
-        openClass2High = { SplashActivity::class.java }
-        customHomeFragment = { CIHomeScreenFragment() }
-    }	
+        openClass1 = ActivityClassProvider { MainActivity::class.java }
+        openClass2High = ActivityClassProvider { SplashActivity::class.java }
+        customHomeFragment = FragmentClassProvider { CIHomeScreenFragment() }
+    }
+
     private fun setUpAdsUIDs() {
        setUpAdsIDs(
           nativeBigIds = listOf(Utils.nativeBigId1, Utils.nativeBigId2, Utils.nativeBigId3),
@@ -55,6 +58,42 @@ class MyApplication : CallerIdSDKApplication() {
           bannerIds = listOf(Utils.bannerId1, Utils.bannerId2)
        )
     }
+
+    override fun onCallerThemeChanged(themeConfig: ThemeConfig) {}
+}
+```
+`Java`
+```Java
+import com.origin.commons.callerid.CallerIdSDKApplication;
+
+public class MyApplication extends CallerIdSDKApplication {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        initCallerSDK();
+    }
+
+  	// initialize caller id sdk
+    private void initCallerSDK() {
+        CallerIdSDK.INSTANCE.init(this);
+        setUpAdsUIDs();
+        setUp(R.drawable.app_logo_, R.drawable.app_logo_icon);
+        setOpenClass1(() -> MainActivity.class);
+        setOpenClass2High(() -> SplashActivity.class);
+        setCustomHomeFragment(CIHomeScreenFragment::new);
+    }
+    
+    private void setUpAdsUIDs() {
+        setUpAdsIDs(
+                Arrays.asList(Utils.INSTANCE.getNativeBigId1(), Utils.INSTANCE.getNativeBigId2(), Utils.INSTANCE.getNativeBigId3()),
+                Arrays.asList(Utils.INSTANCE.getNativeSmallId1(), Utils.INSTANCE.getNativeSmallId2()),
+                Arrays.asList(Utils.INSTANCE.getBannerId1(), Utils.INSTANCE.getBannerId2())
+        );
+    }
+
+    @Override
+    public void onCallerThemeChanged(@NotNull ThemeConfig themeConfig) {}
 }
 ```
 > [!NOTE]
