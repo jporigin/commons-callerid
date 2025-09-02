@@ -1,21 +1,22 @@
 package com.origin.commons.callerid.ui.wic.helpers
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.databinding.FloatingCallerMessageBinding
 import com.origin.commons.callerid.extensions.hideKeyboard
 import com.origin.commons.callerid.extensions.showCustomToast
 import com.origin.commons.callerid.extensions.showKeyboard
 import com.origin.commons.callerid.extensions.value
+import com.origin.commons.callerid.helpers.CallerIdSDK
 
 @SuppressLint("ViewConstructor")
 class WicFloatingMessageView(
@@ -262,30 +263,69 @@ class WicFloatingMessageView(
     /*** Replace Above Function With This Function ***/
     private fun openMessage(context: Context, message: String) {
         dismiss()
-        val packageManager = context.packageManager
-        val googleMessagesPackage = "com.google.android.apps.messaging"
+        val callerIdSDKApplication = try {
+            this.context.applicationContext as? CallerIdSDKApplication
+        } catch (_: Exception) {
+            null
+        }
         try {
-            packageManager.getPackageInfo(googleMessagesPackage, PackageManager.GET_ACTIVITIES)
-            val intent = Intent(Intent.ACTION_SENDTO)
-            intent.data = Uri.parse("smsto:")
-            intent.putExtra("sms_body", message)
-            intent.setPackage(googleMessagesPackage)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            context.startActivity(intent)
-        } catch (e: PackageManager.NameNotFoundException) {
+            if (CallerIdSDK.isHostDefaultSmsApp()) {
+                val openClassForDefaultApp = callerIdSDKApplication?.openClassForDefaultApp
+                when {
+                    openClassForDefaultApp != null -> {
+                        Intent(context, openClassForDefaultApp.provide()).apply {
+                            if (message.isNotEmpty()) {
+                                putExtra("sms_body", message)
+                                putExtra(Intent.EXTRA_TEXT, message)
+                            }
+                            putExtra("isFromCallerId", true)
+                            context.startActivity(this)
+                        }
+                    }
+                    else -> {
+                        val intent = Intent(Intent.ACTION_MAIN).apply {
+                            addCategory(Intent.CATEGORY_APP_MESSAGING)
+                        }
+                        if (message.isNotEmpty()) {
+                            intent.putExtra("sms_body", message)
+                        }
+                        context.startActivity(intent)
+                    }
+                }
+            } else {
+                val intent = Intent(Intent.ACTION_VIEW).apply {
+                    type = "vnd.android-dir/mms-sms"
+                }
+                if (message.isNotEmpty()) {
+                    intent.putExtra("sms_body", message)
+                }
+                context.startActivity(intent)
+            }
+        } catch (e: ActivityNotFoundException) {
             try {
-                val defaultIntent = Intent(Intent.ACTION_VIEW)
-                defaultIntent.type = "vnd.android-dir/mms-sms"
-                defaultIntent.putExtra("sms_body", message)
-                defaultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                context.startActivity(defaultIntent)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                val fallbackIntent = Intent(Intent.ACTION_MAIN)
-                fallbackIntent.addCategory(Intent.CATEGORY_APP_MESSAGING)
-                fallbackIntent.addCategory(Intent.CATEGORY_DEFAULT)
-                fallbackIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                context.startActivity(fallbackIntent)
+                val intent = Intent(Intent.ACTION_MAIN).apply {
+                    addCategory(Intent.CATEGORY_APP_MESSAGING)
+                }
+                if (message.isNotEmpty()) {
+                    intent.putExtra("sms_body", message)
+                }
+                context.startActivity(intent)
+            } catch (inner: Exception) {
+                inner.printStackTrace()
+                // Optionally show toast or fallback
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            try {
+                val intent = Intent(Intent.ACTION_MAIN).apply {
+                    addCategory(Intent.CATEGORY_APP_MESSAGING)
+                }
+                if (message.isNotEmpty()) {
+                    intent.putExtra("sms_body", message)
+                }
+                context.startActivity(intent)
+            } catch (inner: Exception) {
+                inner.printStackTrace()
             }
         }
     }

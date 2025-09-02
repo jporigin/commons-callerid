@@ -10,8 +10,10 @@ import android.view.WindowManager
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.OvershootInterpolator
 import com.origin.commons.callerid.ads.helpers.CallerIdAds
+import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.extensions.refreshCurrentAdsType
+import com.origin.commons.callerid.helpers.CallerIdUtils
 import com.origin.commons.callerid.model.PopViewType
 
 
@@ -33,6 +35,9 @@ object WICOverlayViewManager {
     • 2. OFFHOOK: A call is in progress (dialing, active, or on hold) and no other calls are ringing or waiting.
      */
     fun show(context: Context, state: Int) {
+        if (!CallerIdUtils.isScreenOverlayEnabled(context)) {
+            return
+        }
         if (mWindowManager == null) {
             mWindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         }
@@ -48,7 +53,11 @@ object WICOverlayViewManager {
         val view =
             WicFloatingCallerView(context, state, popViewType, mWindowManager!!, layoutParams)
         mFloatingCallerView = view
-        mWindowManager?.addView(view, layoutParams)
+        try {
+            mWindowManager?.addView(view, layoutParams)
+        } catch (e: WindowManager.BadTokenException) {
+            logE("Unable to add overlay view $e")
+        }
         view.animate()
             .alpha(1f)
             .translationX(0f)
@@ -189,26 +198,47 @@ object WICOverlayViewManager {
     }
 
     fun showMessagePopup(context: Context) {
+        if (!CallerIdUtils.isScreenOverlayEnabled(context)) {
+            return
+        }
         hide(context) {
+            if (mWindowManager == null) {
+                mWindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            }
             val layoutParams = getLayoutParamsMatch(context)
             val messageView = WicFloatingMessageView(context, mWindowManager!!, layoutParams) {
                 // On dismiss of message popup, re-show caller overlay
                 show(context, currentState)
             }
             mFloatingMessageView = messageView
-            mWindowManager?.addView(messageView, layoutParams)
+            try {
+                mWindowManager?.addView(messageView, layoutParams)
+            }  catch (e: WindowManager.BadTokenException) {
+                logE("Unable to add overlay message view $e")
+            }
         }
     }
 
     fun showReminderPopup(context: Context) {
+        if (!CallerIdUtils.isScreenOverlayEnabled(context)) {
+            return
+        }
         hide(context) {
+            if (mWindowManager == null) {
+                mWindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            }
             val layoutParams = getLayoutParamsMatch(context)
-            val messageView = WicFloatingReminderView(context, mWindowManager!!, layoutParams) {
+            val reminderView = WicFloatingReminderView(context, mWindowManager!!, layoutParams) {
                 // On dismiss of message popup, re-show caller overlay
                 show(context, currentState)
             }
-            mFloatingReminderView = messageView
-            mWindowManager?.addView(messageView, layoutParams)
+            mFloatingReminderView = reminderView
+            try {
+                mWindowManager?.addView(reminderView, layoutParams)
+            }  catch (e: WindowManager.BadTokenException) {
+                logE("Unable to add overlay reminder view $e")
+            }
+
         }
     }
 

@@ -1,6 +1,7 @@
 package com.origin.commons.callerid.extensions
 
 import android.app.ActivityManager
+import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
 import android.content.Context.ACTIVITY_SERVICE
@@ -220,6 +221,19 @@ fun Context.openMessage(message: String = "") {
                 intent.putExtra("sms_body", message)
             }
             startActivity(intent)
+        }
+    } catch (e: ActivityNotFoundException) {
+        try {
+            val intent = Intent(Intent.ACTION_MAIN).apply {
+                addCategory(Intent.CATEGORY_APP_MESSAGING)
+            }
+            if (message.isNotEmpty()) {
+                intent.putExtra("sms_body", message)
+            }
+            startActivity(intent)
+        } catch (inner: Exception) {
+            inner.printStackTrace()
+            // Optionally show toast or fallback
         }
     } catch (e: Exception) {
         e.printStackTrace()

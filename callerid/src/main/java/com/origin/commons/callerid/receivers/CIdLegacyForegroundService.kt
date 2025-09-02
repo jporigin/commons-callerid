@@ -19,6 +19,7 @@ import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.prefsHelper
+import com.origin.commons.callerid.helpers.CallerIdUtils
 import com.origin.commons.callerid.helpers.CallerIdUtils.calculateDuration
 import com.origin.commons.callerid.helpers.CallerIdUtils.formatTimeToString
 import com.origin.commons.callerid.helpers.CallerIdUtils.isScreenOverlayEnabled
@@ -49,7 +50,7 @@ class CIdLegacyForegroundService : Service() {
         return START_STICKY
     }
 
-    /*
+    /**
      • 0. IDLE: No call activity.
      • 1. RINGING: Incoming call is ringing.
      • 2. OFFHOOK: A call is in progress (dialing, active, or on hold) and no other calls are ringing or waiting.
@@ -57,7 +58,7 @@ class CIdLegacyForegroundService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        if (prefsHelper.showOnlyCallerIdScreen) {
+        if (!CallerIdUtils.isPhoneStatePermissionGranted(this) || prefsHelper.showOnlyCallerIdScreen) {
             return
         }
 

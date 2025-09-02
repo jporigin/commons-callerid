@@ -119,7 +119,7 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener, Ho
 
 
         val defEvent = "Showed_OGCallerScreen"
-        this@CallerIdActivity.logEventE(defEvent)
+        logEventE(defEvent)
         this@CallerIdActivity.prefsHelper.apply {
             val eventName = buildString {
                 append(defEvent)
@@ -127,7 +127,7 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener, Ho
                 if (isCompleteCallFeatureEnable) append("_c")
                 if (isNoAnswerFeatureEnable) append("_n")
             }
-            this@CallerIdActivity.logEventE(eventName)
+            logEventE(eventName)
         }
     }
 

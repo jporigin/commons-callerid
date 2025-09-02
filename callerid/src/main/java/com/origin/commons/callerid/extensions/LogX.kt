@@ -5,7 +5,6 @@
 package com.origin.commons.callerid.extensions
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
@@ -36,7 +35,7 @@ fun logE(tagString: String?, mMessageString: String?) {
     }
 }
 
-fun Context.logEventE(msg: String) {
+fun logEventE(msg: String) {
     logE("FA-SVC", "name = ${msg.normalizeText()}")
     try {
         getFirebaseAnalytics().logEvent(msg.normalizeText(), Bundle())

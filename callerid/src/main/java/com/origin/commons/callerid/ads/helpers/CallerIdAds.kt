@@ -115,7 +115,7 @@ object CallerIdAds {
                 override fun onAdImpression() {
                     super.onAdImpression()
                     onCallerAdsImpression()
-                    context.logEventE("Showed_OGCallerAds_B")
+                    logEventE("Showed_OGCallerAds_B")
                     logE("callerAds::glBannerAds::adShowed")
                 }
             }
@@ -184,7 +184,7 @@ object CallerIdAds {
             override fun onAdImpression() {
                 super.onAdImpression()
                 onCallerAdsImpression()
-                context.logEventE(buildString {
+                logEventE(buildString {
                     append("Showed_OGCallerAds_")
                     if (adsType == 1) {
                         append("N")

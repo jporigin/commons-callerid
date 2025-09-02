@@ -120,7 +120,7 @@ class PermissionActivity : AppCompatActivity() {
     private val requestPhonePermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
         val granted = permissions.entries.all { it.value }
         if (granted) {
-            this@PermissionActivity.logEventE("Allowed_Ph_Calls_Permission")
+            logEventE("Allowed_Ph_Calls_Permission")
             if (isPhoneStatePermissionGranted(this) && isNotificationPermissionGranted(this)) {
                 setPermissionGranted(true)
                 viewModel.updatePermissionStatus(this)
@@ -158,7 +158,7 @@ class PermissionActivity : AppCompatActivity() {
     private val requestNotificationPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
         val granted = permissions.entries.all { it.value }
         if (granted) {
-            this@PermissionActivity.logEventE("Allowed_Notif_Permission")
+            logEventE("Allowed_Notif_Permission")
             if (isPhoneStatePermissionGranted(this) && isNotificationPermissionGranted(this)) {
                 setPermissionGranted(true)
                 viewModel.updatePermissionStatus(this)
@@ -202,14 +202,14 @@ class PermissionActivity : AppCompatActivity() {
     private fun requestPhonePermission() {
         if (ContextCompat.checkSelfPermission(this@PermissionActivity, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             requestPhonePermission.launch(arrayOf(Manifest.permission.READ_PHONE_STATE))
-            this@PermissionActivity.logEventE("Request_Ph_Calls_Permission")
+            logEventE("Request_Ph_Calls_Permission")
         }
     }
 
     private fun requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestNotificationPermission.launch(arrayOf(Manifest.permission.POST_NOTIFICATIONS))
-            this@PermissionActivity.logEventE("Request_Notif_Permission")
+            logEventE("Request_Notif_Permission")
         }
     }
 
@@ -224,7 +224,7 @@ class PermissionActivity : AppCompatActivity() {
             if (isScreenOverlayEnabled(this@PermissionActivity)) {
                 overlayPermissionHandler.removeCallbacks(this)
                 if (isPhoneStatePermissionGranted(this@PermissionActivity) && isNotificationPermissionGranted(this@PermissionActivity)) {
-                    this@PermissionActivity.logEventE("Allowed_Sc_Overlay_Permission")
+                    logEventE("Allowed_Sc_Overlay_Permission")
                     proceedToMainActivity()
                 } else {
                     val flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -240,7 +240,7 @@ class PermissionActivity : AppCompatActivity() {
         val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, "package:${packageName}".toUri())
         requestScreenOverlayPermission.launch(intent)
         overlayPermissionHandler.post(checkOverlayPermissionRunnable)
-        this@PermissionActivity.logEventE("Request_Sc_Overlay_Permission")
+        logEventE("Request_Sc_Overlay_Permission")
     }
 
     private fun proceedToMainActivity() {

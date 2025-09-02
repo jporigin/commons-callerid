@@ -11,7 +11,9 @@ import com.origin.commons.callerid.extensions.startLegacyForegroundService
 import com.origin.commons.callerid.helpers.CallerIdUtils.calculateDuration
 import com.origin.commons.callerid.helpers.CallerIdUtils.formatTimeToString
 import com.origin.commons.callerid.helpers.CallerIdUtils.getPhoneState
+import com.origin.commons.callerid.helpers.CallerIdUtils.isNotificationPermissionGranted
 import com.origin.commons.callerid.helpers.CallerIdUtils.isScreenOverlayEnabled
+import com.origin.commons.callerid.services.NotificationService
 import com.origin.commons.callerid.ui.activity.CallerIdActivity
 import com.origin.commons.callerid.utils.callPhoneNumber
 import java.util.Date
@@ -39,17 +41,23 @@ class OgCallerIdCallReceiver : BroadcastReceiver() {
 
         if (isMissedCallFeatureEnable || isCompleteCallFeatureEnable || isNoAnswerFeatureEnable) {
             if (intent.action == TelephonyManager.ACTION_PHONE_STATE_CHANGED) {
-                when(prefs.showOnlyCallerIdScreen) {
-                    true -> {
-                        prefs.callPhoneNumber = getPhoneNumber(intent)
-                        val extraState = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
-                        handleCallState(context, extraState)
+                if (isScreenOverlayEnabled(context)) {
+                    when(prefs.showOnlyCallerIdScreen) {
+                        true -> {
+                            prefs.callPhoneNumber = getPhoneNumber(intent)
+                            val extraState = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
+                            handleCallState(context, extraState)
+                        }
+                        false -> {
+                            callPhoneNumber = getPhoneNumber(intent)
+                            logE("OgCallerIdCallReceiver:onReceive: ${getPhoneState(intent)}")
+                            context.startLegacyForegroundService()
+                        }
                     }
-                    false -> {
-                        callPhoneNumber = getPhoneNumber(intent)
-                        logE("OgCallerIdCallReceiver:onReceive: ${getPhoneState(intent)}")
-                        context.startLegacyForegroundService()
-                    }
+                } else {
+                    prefs.callPhoneNumber = getPhoneNumber(intent)
+                    val extraState = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
+                    handleCallState(context, extraState)
                 }
             }
         }
@@ -131,6 +139,9 @@ class OgCallerIdCallReceiver : BroadcastReceiver() {
             intent.putExtra("callType", prefs.callType)
             resetPrefs(context)
             context.startActivity(intent)
+        } else if (isNotificationPermissionGranted(context) && prefs.notifyOverlayDenied) {
+            val service = NotificationService(context)
+            service.notifyOverlayDeniedNotification()
         }
     }
 

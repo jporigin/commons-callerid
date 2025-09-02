@@ -22,6 +22,10 @@ class SharedPreferencesHelper(private val context: Context) {
         get() = ThemeConfig.entries[getIntPref(context, SELECTED_APP_THEME, ThemeConfig.SYSTEM_THEME.value)]
         set(value) = setIntPref(context, SELECTED_APP_THEME, value.value)
 
+    var notifyOverlayDenied: Boolean
+        get() = getBooleanPref(context, "notifyOverlayDenied", false)
+        set(value) = setBooleanPref(context, "notifyOverlayDenied", value)
+
     // Ads
     var adsRefreshIndex: Int
         get() = sharedPreferences.getInt(ADS_REFRESH_INDEX, -1)

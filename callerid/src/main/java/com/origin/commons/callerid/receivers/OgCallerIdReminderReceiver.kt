@@ -33,7 +33,7 @@ class OgCallerIdReminderReceiver : BroadcastReceiver() {
                 val timeInMillis = provideTimeInMillis(item)
                 val notificationInfo = timeInMillis.let { item.toNotificationInfo(it) }
                 withContext(Dispatchers.Main){
-                    notificationInfo.let { service.showNotification(it) }
+                    notificationInfo.let { service.showReminderNotification(it) }
                 }
             }
         }

@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.origin.commons.callerid"
-    compileSdk = 36
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24

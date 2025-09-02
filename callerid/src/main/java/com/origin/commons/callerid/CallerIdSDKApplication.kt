@@ -11,6 +11,7 @@ import com.google.gson.Gson
 import com.origin.commons.callerid.extensions.logEventE
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.extensions.registerCallReceiver
+import com.origin.commons.callerid.helpers.NotificationConfig
 import com.origin.commons.callerid.model.ThemeConfig
 
 abstract class CallerIdSDKApplication : Application() {
@@ -62,6 +63,22 @@ abstract class CallerIdSDKApplication : Application() {
      */
     fun showOnlyCallerIdScreen(isVisible: Boolean) {
         prefsHelper.showOnlyCallerIdScreen = isVisible
+    }
+
+    /**
+     * Updates the preference indicating whether the overlay permission denied notification
+     * should be shown.
+     *
+     * This function is used to control the visibility of a notification or UI element that
+     * informs the user that the "Display over other apps" (overlay) permission has been denied,
+     * which is crucial for the Caller ID functionality.
+     *
+     * @param isVisible `true` to indicate that the "overlay denied" notification should be visible,
+     *                  `false` to hide it (e.g., after the user has granted the permission or
+     *                  dismissed the notification).
+     */
+    fun notifyOverlayDenied(isVisible: Boolean) {
+        prefsHelper.notifyOverlayDenied = isVisible
     }
 
     /**
@@ -155,6 +172,20 @@ abstract class CallerIdSDKApplication : Application() {
     fun setUp(logo: Int, logoIcon: Int) {
         appLogo = logo
         appLogoIcon = logoIcon
+    }
+
+    var notificationConfig: NotificationConfig? = null
+
+    /**
+     * Sets the notification configuration for the Caller ID SDK.
+     * This allows customization of how notifications related to incoming calls or other
+     * SDK events are presented to the user.
+     *
+     * @param notificationConfig The [NotificationConfig] object containing the desired
+     *                           notification settings (e.g., icons, channels, texts).
+     */
+    fun setUpNotificationConfig(notificationConfig: NotificationConfig) {
+        this.notificationConfig = notificationConfig
     }
 
     fun interface ActivityClassProvider {
