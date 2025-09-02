@@ -44,11 +44,16 @@ class MyApplication : CallerIdSDKApplication() {
 
     // initialize caller id sdk
     private fun initCallerSDK() {
-        setUpAdsUIDs()
-        setUp(R.drawable.app_logo_, R.drawable.app_logo_icon)
-        openClass1 = ActivityClassProvider { MainActivity::class.java }
-        openClass2High = ActivityClassProvider { SplashActivity::class.java }
-        customHomeFragment = FragmentClassProvider { CIHomeScreenFragment() }
+        CallerIdSDK.init(this) // Call this if you have some default app to check (e.g message)
+        openClassForDefaultApp = ActivityClassProvider { MainActivity::class.java } // ActivityClassProvider to open when user click on set as default app
+        setUpAdsUIDs()  // set up this to show ad on CallerIdScreen
+        setUp(R.drawable.app_logo_, R.drawable.app_logo_icon) // set up logo
+        notifyOverlayDenied(true) // notify if overlay permission is denied
+        setUpNotificationConfig(NotificationConfig(pendingClass = PermissionActivity::class.java)) // set up notification config for notify overlay permission is denied provide pendingClass which you want to open on click (default takes openClass1 ActivityClassProvider or openClass2High if provided)
+        openClass1 = ActivityClassProvider { MainActivity::class.java } // ActivityClassProvider to open when user click on notification or any click where host app interacts on first priority
+        openClass2High = ActivityClassProvider { SplashActivity::class.java } // ActivityClassProvider to open when user click on notification or any click where host app interacts on second priority
+        customHomeFragment = FragmentClassProvider { CIHomeScreenFragment() } // FragmentClassProvider to set up custom first fragment of caller screen
+        customCallerSetting = ActivityClassProvider { CallerSettingActivity::class.java } // ActivityClassProvider to set up custom caller setting screen
     }
 
     private fun setUpAdsUIDs() {
@@ -76,7 +81,6 @@ public class MyApplication extends CallerIdSDKApplication {
 
   	// initialize caller id sdk
     private void initCallerSDK() {
-        CallerIdSDK.INSTANCE.init(this);
         setUpAdsUIDs();
         setUp(R.drawable.app_logo_, R.drawable.app_logo_icon);
         setOpenClass1(() -> MainActivity.class);
