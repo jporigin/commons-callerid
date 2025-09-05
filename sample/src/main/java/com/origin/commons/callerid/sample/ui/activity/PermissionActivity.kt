@@ -292,7 +292,7 @@ class PermissionActivity : AppCompatActivity() {
         tvTitle.setText(title)
         tvDescription.setText(description)
 
-        btnCancel.setText(R.string.cancel)
+        btnCancel.setText(R.string.ci_cancel)
         btnAllowPermission.setText(R.string.allow_permission)
 
         btnCancel.setOnClickListener {
@@ -321,7 +321,7 @@ class PermissionActivity : AppCompatActivity() {
         dialog.setContentView(layout)
         tvTitle.setText(title)
         tvDescription.setText(description)
-        btnCancel.setText(R.string.cancel)
+        btnCancel.setText(R.string.ci_cancel)
         btnOpenSetting.setText(R.string.open_setting)
         btnCancel.setOnClickListener {
             dialog.dismiss()

@@ -1,6 +1,8 @@
 package com.origin.commons.callerid.ui.fragment
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +38,11 @@ class MoreFragment : Fragment() {
                 context?.openContact()
             }
             clMessage.setOnClickListener {
-                context?.openMessage()
+                context?.openMessage {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finishMyActNRemoveTask()
+                    },100)
+                }
             }
             clSendMail.setOnClickListener {
                 context?.let { mCtx ->
@@ -51,6 +57,24 @@ class MoreFragment : Fragment() {
             }
             clAppSetting.setOnClickListener {
                 activity?.openCallerIDSetting()
+            }
+        }
+    }
+
+    private fun finishMyActNRemoveTask() {
+        Handler(Looper.getMainLooper()).post {
+            if (isAdded) {
+                val comp = requireActivity().intent?.component
+                if (!requireActivity().isFinishing && comp != null) {
+                    try {
+                        requireActivity().finishAndRemoveTask()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        requireActivity().finish()
+                    }
+                } else {
+                    requireActivity().finish()
+                }
             }
         }
     }

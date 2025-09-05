@@ -8,6 +8,80 @@
         <item name="colorOnSurface">@color/call_theme_onSurface</item>
     </style>
 
+<!--    &lt;!&ndash; Light Theme &ndash;&gt;-->
+<!--    <style name="Caller.Main.Theme.Light" parent="Theme.Material3.Light.NoActionBar">-->
+<!--        <item name="colorPrimary">@color/call_theme_primary_light</item>-->
+<!--        <item name="colorOnPrimary">@color/call_theme_onPrimary_light</item>-->
+<!--        <item name="colorSurface">@color/call_theme_surfaceContainerLowest_light</item>-->
+<!--        <item name="colorOnSurface">@color/call_theme_onSurface_light</item>-->
+
+<!--        &lt;!&ndash; System bars &ndash;&gt;-->
+<!--        <item name="android:statusBarColor">@color/call_theme_surfaceContainerLowest_light</item>-->
+<!--        <item name="android:windowLightStatusBar">true</item>-->
+<!--        <item name="android:navigationBarColor">@color/call_theme_surfaceContainerLowest_light</item>-->
+<!--        <item name="android:windowLightNavigationBar">true</item>-->
+
+<!--        &lt;!&ndash; Primary Colors &ndash;&gt;-->
+<!--        <item name="callThemePrimary">@color/call_theme_primary_light</item>-->
+<!--        <item name="callThemeOnPrimary">@color/call_theme_onPrimary_light</item>-->
+
+<!--        &lt;!&ndash; Surface Colors &ndash;&gt;-->
+<!--        <item name="callThemeSurfaceContainerLowest">@color/call_theme_surfaceContainerLowest_light</item>-->
+<!--        <item name="callThemeSurfaceContainerLow">@color/call_theme_surfaceContainerLow_light</item>-->
+<!--        <item name="callThemeSurfaceContainerHighest">@color/call_theme_surfaceContainerHighest_light</item>-->
+<!--        <item name="callThemeOnSurface">@color/call_theme_onSurface_light</item>-->
+<!--        <item name="callThemeOnSurfaceVariant">@color/call_theme_onSurfaceVariant_light</item>-->
+
+<!--        &lt;!&ndash; Outline Color &ndash;&gt;-->
+<!--        <item name="callThemeOutline">@color/call_theme_outline_light</item>-->
+<!--        <item name="callThemeOutlineVariant">@color/call_theme_outlineVariant_light</item>-->
+
+<!--        &lt;!&ndash; Ads Color &ndash;&gt;-->
+<!--        <item name="callThemeAdsBgColor">@color/call_theme_adsBgColor_light</item>-->
+<!--        <item name="callThemeAdsBgColorHigh">@color/call_theme_adsBgColorHigh_light</item>-->
+<!--        <item name="callThemeAdsTextColor">@color/call_theme_adsTextColor_light</item>-->
+<!--        <item name="callThemeAdsTextColorVariant">@color/call_theme_adsTextColorVariant_light</item>-->
+<!--        <item name="callThemeAdsPrimary">@color/call_theme_adsPrimary_light</item>-->
+<!--        <item name="callThemeAdsOnPrimary">@color/call_theme_adsOnPrimary_light</item>-->
+<!--    </style>-->
+
+<!--    &lt;!&ndash; Dark Theme &ndash;&gt;-->
+<!--    <style name="Caller.Main.Theme.Dark" parent="Theme.Material3.Dark.NoActionBar">-->
+<!--        <item name="colorPrimary">@color/call_theme_primary_dark</item>-->
+<!--        <item name="colorOnPrimary">@color/call_theme_onPrimary_dark</item>-->
+<!--        <item name="colorSurface">@color/call_theme_surfaceContainerLowest_dark</item>-->
+<!--        <item name="colorOnSurface">@color/call_theme_onSurface_dark</item>-->
+
+<!--        &lt;!&ndash; System bars &ndash;&gt;-->
+<!--        <item name="android:statusBarColor">@color/call_theme_surfaceContainerLowest_dark</item>-->
+<!--        <item name="android:windowLightStatusBar">false</item>-->
+<!--        <item name="android:navigationBarColor">@color/call_theme_surfaceContainerLowest_dark</item>-->
+<!--        <item name="android:windowLightNavigationBar">false</item>-->
+
+<!--        &lt;!&ndash; Primary Colors &ndash;&gt;-->
+<!--        <item name="callThemePrimary">@color/call_theme_primary_dark</item>-->
+<!--        <item name="callThemeOnPrimary">@color/call_theme_onPrimary_dark</item>-->
+
+<!--        &lt;!&ndash; Surface Colors &ndash;&gt;-->
+<!--        <item name="callThemeSurfaceContainerLowest">@color/call_theme_surfaceContainerLowest_dark</item>-->
+<!--        <item name="callThemeSurfaceContainerLow">@color/call_theme_surfaceContainerLow_dark</item>-->
+<!--        <item name="callThemeSurfaceContainerHighest">@color/call_theme_surfaceContainerHighest_dark</item>-->
+<!--        <item name="callThemeOnSurface">@color/call_theme_onSurface_dark</item>-->
+<!--        <item name="callThemeOnSurfaceVariant">@color/call_theme_onSurfaceVariant_dark</item>-->
+
+<!--        &lt;!&ndash; Outline Color &ndash;&gt;-->
+<!--        <item name="callThemeOutline">@color/call_theme_outline_dark</item>-->
+<!--        <item name="callThemeOutlineVariant">@color/call_theme_outlineVariant_dark</item>-->
+
+<!--        &lt;!&ndash; Ads Color &ndash;&gt;-->
+<!--        <item name="callThemeAdsBgColor">@color/call_theme_adsBgColor_dark</item>-->
+<!--        <item name="callThemeAdsBgColorHigh">@color/call_theme_adsBgColorHigh_dark</item>-->
+<!--        <item name="callThemeAdsTextColor">@color/call_theme_adsTextColor_dark</item>-->
+<!--        <item name="callThemeAdsTextColorVariant">@color/call_theme_adsTextColorVariant_dark</item>-->
+<!--        <item name="callThemeAdsPrimary">@color/call_theme_adsPrimary_dark</item>-->
+<!--        <item name="callThemeAdsOnPrimary">@color/call_theme_adsOnPrimary_dark</item>-->
+<!--    </style>-->
+
     <!-- Custom Dialog -->
     <style name="CustomDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowMinWidthMajor">90%</item>

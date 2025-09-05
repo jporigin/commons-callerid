@@ -4,13 +4,12 @@ package com.origin.commons.callerid.timepicker.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import androidx.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import androidx.annotation.NonNull;
 
 
 public class WheelYearPicker extends WheelPicker<String> {

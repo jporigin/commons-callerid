@@ -1,17 +1,17 @@
 package com.origin.commons.callerid.timepicker.widget;
 
+import static com.origin.commons.callerid.timepicker.widget.SingleDateAndTimeConstants.MAX_MINUTES;
+import static com.origin.commons.callerid.timepicker.widget.SingleDateAndTimeConstants.MIN_MINUTES;
+
 import android.content.Context;
 import android.util.AttributeSet;
+
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-
-import static com.origin.commons.callerid.timepicker.widget.SingleDateAndTimeConstants.MAX_MINUTES;
-import static com.origin.commons.callerid.timepicker.widget.SingleDateAndTimeConstants.MIN_MINUTES;
 
 public class WheelMinutePicker extends WheelPicker<String> {
 

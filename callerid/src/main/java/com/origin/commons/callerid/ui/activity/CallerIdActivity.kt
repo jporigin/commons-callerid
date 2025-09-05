@@ -1,12 +1,12 @@
 package com.origin.commons.callerid.ui.activity
 
-import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.telephony.PhoneNumberUtils
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.ads.AdView
@@ -30,18 +31,21 @@ import com.origin.commons.callerid.databinding.ActivityCallerIdBinding
 import com.origin.commons.callerid.extensions.beGone
 import com.origin.commons.callerid.extensions.beInvisible
 import com.origin.commons.callerid.extensions.dpToPx
+import com.origin.commons.callerid.extensions.getContactNameFromNumber
 import com.origin.commons.callerid.extensions.getCurrentAdsType
 import com.origin.commons.callerid.extensions.getDefaultAppIcon
 import com.origin.commons.callerid.extensions.getOpenAppIntent
 import com.origin.commons.callerid.extensions.hideSysNavigationBar
 import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.logEventE
+import com.origin.commons.callerid.extensions.makePhoneCall
 import com.origin.commons.callerid.extensions.prefsHelper
+import com.origin.commons.callerid.helpers.HomeKeyWatcher
 import com.origin.commons.callerid.ui.fragment.HomeFragment
 import com.origin.commons.callerid.ui.fragment.MessageFragment
 import com.origin.commons.callerid.ui.fragment.MoreFragment
 import com.origin.commons.callerid.ui.fragment.ReminderFragment
-import com.origin.commons.callerid.helpers.HomeKeyWatcher
+import kotlinx.coroutines.launch
 
 
 class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener, HomeKeyWatcher.OnHomeAndRecentsListener {
@@ -87,6 +91,21 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener, Ho
         } catch (_: Exception) {
         }
 
+        try {
+            _binding.tvPrivateNumber.apply {
+                val phoneNumber = phoneNumber.takeIf { it != "Unknown" }
+                text = if (!phoneNumber.isNullOrEmpty()) {
+                    val normalizeNumber = PhoneNumberUtils.normalizeNumber(phoneNumber)
+                    normalizeNumber?.let { number ->
+                        getContactNameFromNumber(number) ?: getString(R.string.ci_private_number)
+                    } ?: getString(R.string.ci_private_number)
+                } else {
+                    getString(R.string.ci_private_number)
+                }
+            }
+        } catch (_: Exception) {
+        }
+
         setUpTabPagerAdapter()
         setUpAds()
 
@@ -128,6 +147,14 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener, Ho
                 if (isNoAnswerFeatureEnable) append("_n")
             }
             logEventE(eventName)
+        }
+
+        lifecycleScope.launch {
+            prefsHelper.keyChangesFlow(lifecycleScope).collect { changedKey ->
+                if (changedKey == "call_selected_theme") {
+                    recreate()
+                }
+            }
         }
     }
 
@@ -225,7 +252,6 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener, Ho
         CallerIdAds.registerCallerAdsListener(this@CallerIdActivity)
     }
 
-
     private fun setUpTabPagerAdapter() {
         _binding.vpTab.apply {
             this.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -259,21 +285,18 @@ class CallerIdActivity : CallerBaseActivity(), CallerIdAds.CallerAdsListener, Ho
             this@CallerIdActivity.getOpenAppIntent()?.let { intent ->
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 this@CallerIdActivity.startActivity(intent)
-                this@CallerIdActivity.finish()
+                finishMyActNRemoveTask()
             }
         }
 
         _binding.llCall.setOnClickListener {
             logEventE("OGCallerScreen_call_cl")
-            makePhoneCall(this)
+            makePhoneCall(phoneNumber.takeIf { it != "Unknown" }) {
+                Handler(mainLooper).postDelayed({
+                    finishMyActNRemoveTask()
+                },100)
+            }
         }
-    }
-
-
-    private fun makePhoneCall(context: Context) {
-        val intent = Intent(Intent.ACTION_DIAL)
-        context.startActivity(intent)
-        finishMyActNRemoveTask()
     }
 
     private var mHomeFragment: HomeFragment? = null

@@ -1,5 +1,7 @@
 package com.origin.commons.callerid.timepicker.widget;
 
+import static com.origin.commons.callerid.extensions.ContextKt.resolveThemeColor;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
@@ -22,17 +24,16 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Scroller;
 
-import com.origin.commons.callerid.timepicker.DateHelper;
+import androidx.annotation.NonNull;
+
 import com.origin.commons.callerid.R;
+import com.origin.commons.callerid.timepicker.DateHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 
 public abstract class WheelPicker<V> extends View {
 
@@ -150,7 +151,7 @@ public abstract class WheelPicker<V> extends View {
         hasSameWidth = a.getBoolean(R.styleable.WheelPicker_wheel_same_width, false);
         textMaxWidthPosition = a.getInt(R.styleable.WheelPicker_wheel_maximum_width_text_position, -1);
         maxWidthText = a.getString(R.styleable.WheelPicker_wheel_maximum_width_text);
-        mSelectedItemTextColor = a.getColor(R.styleable.WheelPicker_wheel_selected_item_text_color, ContextCompat.getColor(context, R.color.call_theme_primary));
+        mSelectedItemTextColor = a.getColor(R.styleable.WheelPicker_wheel_selected_item_text_color, resolveThemeColor(context, R.attr.callThemePrimary, 0));
         mItemTextColor = a.getColor(R.styleable.WheelPicker_wheel_item_text_color, 0xFF888888);
         mItemSpace = a.getDimensionPixelSize(R.styleable.WheelPicker_wheel_item_space, getResources().getDimensionPixelSize(R.dimen.WheelItemSpace)); // 12dp
         isCyclic = a.getBoolean(R.styleable.WheelPicker_wheel_cyclic, false);

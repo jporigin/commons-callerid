@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Primary Colors -->
+    <attr name="callThemePrimary" format="reference|color" />
+    <attr name="callThemeOnPrimary" format="reference|color" />
+
+    <!-- Surface -->
+    <attr name="callThemeSurfaceContainerLowest" format="reference|color" />
+    <attr name="callThemeSurfaceContainerLow" format="reference|color" />
+    <attr name="callThemeSurfaceContainerHighest" format="reference|color" />
+    <attr name="callThemeOnSurface" format="reference|color" />
+    <attr name="callThemeOnSurfaceVariant" format="reference|color" />
+
+    <!-- Outline -->
+    <attr name="callThemeOutline" format="reference|color" />
+    <attr name="callThemeOutlineVariant" format="reference|color" />
+
+    <!--  Ads  -->
+    <attr name="callThemeAdsBgColor" format="reference|color" />
+    <attr name="callThemeAdsBgColorHigh" format="reference|color" />
+    <attr name="callThemeAdsTextColor" format="reference|color" />
+    <attr name="callThemeAdsTextColorVariant" format="reference|color" />
+    <attr name="callThemeAdsPrimary" format="reference|color" />
+    <attr name="callThemeAdsOnPrimary" format="reference|color" />
+
+    <!-- WheelPicker View -->
     <declare-styleable name="WheelPicker">
         <attr name="wheel_data" format="reference"/>
         <attr name="wheel_selected_item_position" format="integer"/>
@@ -27,6 +51,7 @@
         </attr>
     </declare-styleable>
 
+    <!-- SingleDateAndTimePicker View -->
     <declare-styleable name="SingleDateAndTimePicker">
         <attr name="picker_todayText" format="string" />
         <attr name="picker_textColor" format="color" />

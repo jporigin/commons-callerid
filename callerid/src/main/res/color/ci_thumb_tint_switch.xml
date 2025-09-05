@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- State Disabled, Unchecked -->
-    <item android:alpha="0.38" android:color="@color/call_theme_onSurfaceVariant" android:state_checked="false" android:state_enabled="false" />
+    <item android:alpha="0.38" android:color="?attr/callThemeOnSurfaceVariant" android:state_checked="false" android:state_enabled="false" />
 
     <!-- State Disabled, Checked -->
-    <item android:alpha="1" android:color="@color/call_theme_onPrimary" android:state_checked="true" android:state_enabled="false" />
+    <item android:alpha="1" android:color="?attr/callThemeOnPrimary" android:state_checked="true" android:state_enabled="false" />
 
     <!-- State Checked, Pressed -->
-    <item android:color="@color/call_theme_onSurfaceVariant" android:state_checked="true" android:state_pressed="true" />
+    <item android:color="?attr/callThemeOnSurfaceVariant" android:state_checked="true" android:state_pressed="true" />
 
     <!-- State Checked -->
-    <item android:color="@color/call_theme_onPrimary" android:state_checked="true" />
+    <item android:color="?attr/callThemeOnPrimary" android:state_checked="true" />
 
     <!-- State Unchecked, Pressed -->
-    <item android:color="@color/call_theme_onSurfaceVariant" android:state_pressed="true" />
+    <item android:color="?attr/callThemeOnSurfaceVariant" android:state_pressed="true" />
 
     <!-- State Unchecked -->
-    <item android:color="@color/call_theme_onSurfaceVariant" />
+    <item android:color="?attr/callThemeOnSurfaceVariant" />
 </selector>
 

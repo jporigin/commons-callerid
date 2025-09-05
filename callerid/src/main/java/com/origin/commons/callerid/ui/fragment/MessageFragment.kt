@@ -1,20 +1,21 @@
 package com.origin.commons.callerid.ui.fragment
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.databinding.FragmentMessageBinding
 import com.origin.commons.callerid.extensions.hideKeyboard
 import com.origin.commons.callerid.extensions.openMessage
+import com.origin.commons.callerid.extensions.resolveThemeColor
 import com.origin.commons.callerid.extensions.showCustomToast
 import com.origin.commons.callerid.extensions.showKeyboard
 import com.origin.commons.callerid.extensions.value
-
 
 class MessageFragment : Fragment() {
 
@@ -22,7 +23,11 @@ class MessageFragment : Fragment() {
         FragmentMessageBinding.inflate(layoutInflater)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         init()
         return _binding.root
     }
@@ -38,8 +43,8 @@ class MessageFragment : Fragment() {
 
     private fun clickEvents() {
         with(_binding) {
-            val ciAppColor = ContextCompat.getColor(requireContext(), R.color.call_theme_primary)
-            val ciTxtColor = ContextCompat.getColor(requireContext(), R.color.call_theme_onSurface)
+            val ciAppColor = requireContext().resolveThemeColor(R.attr.callThemePrimary)
+            val ciTxtColor = requireContext().resolveThemeColor(R.attr.callThemeOnSurface)
             clickMsgLl1()
             llMsg1.setOnClickListener {
                 clickMsgLl1()
@@ -145,19 +150,31 @@ class MessageFragment : Fragment() {
 
             ivSend1.setOnClickListener {
                 val message = tvMsg1.text.toString()
-                requireContext().openMessage(message)
+                requireContext().openMessage(message) {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finishMyActNRemoveTask()
+                    },100)
+                }
 
             }
 
             ivSend2.setOnClickListener {
                 val message = tvMsg2.text.toString()
-                requireContext().openMessage(message)
+                requireContext().openMessage(message) {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finishMyActNRemoveTask()
+                    },100)
+                }
 
             }
 
             ivSend3.setOnClickListener {
                 val message = tvMsg3.text.toString()
-                requireContext().openMessage(message)
+                requireContext().openMessage(message) {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finishMyActNRemoveTask()
+                    },100)
+                }
             }
 
             ivSend4.setOnClickListener {
@@ -204,7 +221,11 @@ class MessageFragment : Fragment() {
         with(_binding) {
             if (etMsg.value.isNotEmpty()) {
                 val message = etMsg.text.toString()
-                requireContext().openMessage(message)
+                requireContext().openMessage(message) {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finishMyActNRemoveTask()
+                    },100)
+                }
                 etClearFocus(etMsg)
             } else {
                 requireActivity().showCustomToast("Please enter message")
@@ -214,8 +235,8 @@ class MessageFragment : Fragment() {
     }
 
     fun clickMsgLl1() {
-        val ciAppColor = ContextCompat.getColor(requireContext(), R.color.call_theme_primary)
-        val ciTxtColor = ContextCompat.getColor(requireContext(), R.color.call_theme_onSurface)
+        val ciAppColor = requireContext().resolveThemeColor(R.attr.callThemePrimary)
+        val ciTxtColor = requireContext().resolveThemeColor(R.attr.callThemeOnSurface)
 
         with(_binding) {
             tvMsg1.setTextColor(ciAppColor)
@@ -230,5 +251,23 @@ class MessageFragment : Fragment() {
             ivRadio3.setImageResource(R.drawable.ci_radio_unselected)
         }
         etClearFocus()
+    }
+
+    private fun finishMyActNRemoveTask() {
+        Handler(Looper.getMainLooper()).post {
+            if (isAdded) {
+                val comp = requireActivity().intent?.component
+                if (!requireActivity().isFinishing && comp != null) {
+                    try {
+                        requireActivity().finishAndRemoveTask()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        requireActivity().finish()
+                    }
+                } else {
+                    requireActivity().finish()
+                }
+            }
+        }
     }
 }

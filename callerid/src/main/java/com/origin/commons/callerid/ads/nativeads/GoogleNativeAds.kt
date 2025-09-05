@@ -10,9 +10,13 @@ import android.widget.TextView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.origin.commons.callerid.databinding.AdUnifiedNativeXlBinding
 import com.origin.commons.callerid.databinding.AdUnifiedNativeXxlBinding
-import com.origin.commons.callerid.extensions.*
 import com.origin.commons.callerid.databinding.ShimmerNativeXlBinding
 import com.origin.commons.callerid.databinding.ShimmerNativeXxlBinding
+import com.origin.commons.callerid.extensions.beGone
+import com.origin.commons.callerid.extensions.beGoneIf
+import com.origin.commons.callerid.extensions.beVisible
+import com.origin.commons.callerid.extensions.dpToPx
+import com.origin.commons.callerid.extensions.getScreenHeight
 
 class GoogleNativeAds {
     private var skipAllNativeAds: Boolean = false
@@ -69,7 +73,7 @@ class GoogleNativeAds {
             val params: FrameLayout.LayoutParams = spMain.layoutParams as FrameLayout.LayoutParams
             params.height = 135.dpToPx
             params.width = FrameLayout.LayoutParams.MATCH_PARENT
-            spMain.setLayoutParams(params)
+            spMain.layoutParams = params
         }
     }
 
@@ -125,7 +129,7 @@ class GoogleNativeAds {
             params.width = FrameLayout.LayoutParams.MATCH_PARENT
             params.topMargin = 80.dpToPx
             params.bottomMargin = 62.dpToPx
-            spMain.setLayoutParams(params)
+            spMain.layoutParams = params
         }
 
     }

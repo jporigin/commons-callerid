@@ -11,13 +11,13 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginEnd="5dp"
-        android:padding="4dp"
         android:contentDescription="@null"
         android:foreground="@drawable/bg_ripple_round"
+        android:padding="4dp"
         android:src="@drawable/ic_cid_close"
-        android:tint="@color/call_theme_onSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/callThemeOnSurfaceVariant" />
 
 
     <TextView
@@ -28,8 +28,8 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/sinteca_medium"
         android:includeFontPadding="false"
-        android:text="@string/choose_popup"
-        android:textColor="@color/call_theme_onSurface"
+        android:text="@string/ci_choose_popup"
+        android:textColor="?attr/callThemeOnSurface"
         android:textSize="18sp"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,12 +41,12 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        app:cardBackgroundColor="@color/call_theme_surfaceContainerLowest"
+        app:cardBackgroundColor="?attr/callThemeSurfaceContainerLowest"
         app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toStartOf="@+id/standardView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDialogTitle"
-        app:strokeColor="@color/call_theme_onSurfaceVariant"
+        app:strokeColor="?attr/callThemeOnSurfaceVariant"
         app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,7 +64,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:strokeColor="@color/call_theme_onSurfaceVariant"
+                app:strokeColor="?attr/callThemeOnSurfaceVariant"
                 app:strokeWidth="1dp" />
 
             <com.google.android.material.card.MaterialCardView
@@ -80,7 +80,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/classicViewFrame"
                 app:layout_constraintStart_toStartOf="@+id/classicViewFrame"
                 app:layout_constraintTop_toTopOf="@+id/classicViewFrame"
-                app:strokeColor="@color/call_theme_onSurfaceVariant"
+                app:strokeColor="?attr/callThemeOnSurfaceVariant"
                 app:strokeWidth="0.5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -149,14 +149,14 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="20dp"
         android:layout_weight="1"
-        app:cardBackgroundColor="@color/call_theme_surfaceContainerLowest"
+        app:cardBackgroundColor="?attr/callThemeSurfaceContainerLowest"
         app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/classicView"
         app:layout_constraintTop_toBottomOf="@+id/tvDialogTitle"
-        app:strokeColor="@color/call_theme_onSurfaceVariant"
+        app:strokeColor="?attr/callThemeOnSurfaceVariant"
         app:strokeWidth="1dp"
-        tools:strokeColor="@color/call_theme_primary">
+        tools:strokeColor="?attr/callThemePrimary">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -173,7 +173,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:strokeColor="@color/call_theme_onSurfaceVariant"
+                app:strokeColor="?attr/callThemeOnSurfaceVariant"
                 app:strokeWidth="1dp" />
 
             <com.google.android.material.card.MaterialCardView
@@ -189,7 +189,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/standardViewFrame"
                 app:layout_constraintStart_toStartOf="@+id/standardViewFrame"
                 app:layout_constraintTop_toTopOf="@+id/standardViewFrame"
-                app:strokeColor="@color/call_theme_onSurfaceVariant"
+                app:strokeColor="?attr/callThemeOnSurfaceVariant"
                 app:strokeWidth="0.5dp">
 
                 <LinearLayout
@@ -226,13 +226,13 @@
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="2dp"
-                                android:background="@color/call_theme_onSurface" />
+                                android:background="?attr/callThemeOnSurface" />
 
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="2dp"
                                 android:layout_marginTop="1dp"
-                                android:background="@color/call_theme_onSurface" />
+                                android:background="?attr/callThemeOnSurface" />
 
                         </LinearLayout>
 
@@ -257,7 +257,7 @@
                             android:layout_width="8dp"
                             android:layout_height="8dp"
                             android:background="@drawable/bg_standard_pop_setting_2"
-                            android:backgroundTint="@color/call_theme_primary" />
+                            android:backgroundTint="?attr/callThemePrimary" />
 
                     </LinearLayout>
 
@@ -278,7 +278,7 @@
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
-        android:text="@string/classic_popup"
+        android:text="@string/ci_classic_popup"
         app:layout_constraintEnd_toEndOf="@+id/classicView"
         app:layout_constraintStart_toStartOf="@+id/classicView"
         app:layout_constraintTop_toBottomOf="@+id/classicView" />
@@ -292,11 +292,11 @@
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
-        android:text="@string/standard_popup"
+        android:text="@string/ci_standard_popup"
         app:layout_constraintEnd_toEndOf="@+id/standardView"
         app:layout_constraintStart_toStartOf="@+id/standardView"
         app:layout_constraintTop_toBottomOf="@+id/standardView"
-        tools:textColor="@color/call_theme_primary" />
+        tools:textColor="?attr/callThemePrimary" />
 
     <TextView
         android:id="@+id/btnApply"
@@ -305,12 +305,12 @@
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/bg_ripple_surface_container_8"
-        android:backgroundTint="@color/call_theme_primary"
+        android:backgroundTint="?attr/callThemePrimary"
         android:fontFamily="@font/sinteca_medium"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:text="@string/apply"
-        android:textColor="@color/call_theme_onPrimary"
+        android:text="@string/ci_apply"
+        android:textColor="?attr/callThemeOnPrimary"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@+id/tvClassicPopup" />
 

@@ -23,14 +23,14 @@
             android:adjustViewBounds="true"
             android:padding="2.5dp"
             android:src="@drawable/ci_wic_expand"
-            android:tint="@color/call_theme_primary" />
+            app:tint="?attr/callThemePrimary" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardId"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
-            app:cardBackgroundColor="@color/call_theme_primary"
+            app:cardBackgroundColor="?attr/callThemePrimary"
             app:cardCornerRadius="50dp"
             app:cardElevation="0dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,13 +54,14 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tvPrivateNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sinteca_medium"
                 android:includeFontPadding="false"
-                android:text="Private Number"
+                android:text="@string/ci_private_number"
                 android:textAlignment="textStart"
-                android:textColor="@color/call_theme_onSurface"
+                android:textColor="?attr/callThemeOnSurface"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -73,7 +74,7 @@
                 android:includeFontPadding="false"
                 android:visibility="gone"
                 android:textAlignment="textStart"
-                android:textColor="@color/call_theme_onPrimary"
+                android:textColor="?attr/callThemeOnPrimary"
                 android:textSize="12sp"
                 tools:text="Incoming" />
 
@@ -85,7 +86,7 @@
                 android:includeFontPadding="false"
                 android:text=""
                 android:textAlignment="textStart"
-                android:textColor="@color/call_theme_onSurfaceVariant"
+                android:textColor="?attr/callThemeOnSurfaceVariant"
                 android:textSize="11sp" />
 
         </LinearLayout>
@@ -114,7 +115,7 @@
                 android:layout_height="40dp"
                 android:padding="9dp"
                 android:src="@drawable/ci_message"
-                android:tint="@color/call_theme_onSurface" />
+                app:tint="?attr/callThemeOnSurface" />
 
             <ImageView
                 android:id="@+id/ivReminder"
@@ -122,14 +123,14 @@
                 android:layout_height="40dp"
                 android:padding="9dp"
                 android:src="@drawable/ci_notification"
-                android:tint="@color/call_theme_onSurface" />
+                app:tint="?attr/callThemeOnSurface" />
 
             <ImageView
                 android:id="@+id/ivMuteRingtoneMic"
                 android:layout_width="42dp"
                 android:layout_height="40dp"
                 android:padding="9dp"
-                android:tint="@color/call_theme_onSurface" />
+                app:tint="?attr/callThemeOnSurface" />
 
         </LinearLayout>
 

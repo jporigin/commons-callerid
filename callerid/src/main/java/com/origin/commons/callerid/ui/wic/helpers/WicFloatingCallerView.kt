@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
+import android.telephony.PhoneNumberUtils
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -15,13 +16,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.R
+import com.origin.commons.callerid.extensions.getContactNameFromNumber
 import com.origin.commons.callerid.extensions.getDefaultAppIcon
 import com.origin.commons.callerid.extensions.getOpenAppIntent
 import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.helpers.Stopwatch
 import com.origin.commons.callerid.model.PopViewType
-import com.origin.commons.callerid.ui.wic.WICController
 import com.origin.commons.callerid.utils.callType
 
 @SuppressLint("ViewConstructor")
@@ -55,6 +56,18 @@ class WicFloatingCallerView(
     }
 
     private fun setupClickListeners() {
+        findViewById<TextView>(R.id.tvPrivateNumber)?.apply {
+            val phoneNumber = context.prefsHelper.callPhoneNumber.takeIf { it != "Unknown" }
+            text = if (!phoneNumber.isNullOrEmpty()) {
+                val normalizeNumber = PhoneNumberUtils.normalizeNumber(phoneNumber)
+                normalizeNumber?.let { number ->
+                    context.getContactNameFromNumber(number) ?: context.getString(R.string.ci_private_number)
+                } ?: context.getString(R.string.ci_private_number)
+            } else {
+                context.getString(R.string.ci_private_number)
+            }
+        }
+
         findViewById<ImageView>(R.id.ivMuteRingtoneMic)?.apply {
             refreshIvMuteRingtoneMic()
             setOnClickListener {

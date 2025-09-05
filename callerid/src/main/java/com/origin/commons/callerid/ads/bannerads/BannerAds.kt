@@ -3,17 +3,17 @@ package com.origin.commons.callerid.ads.bannerads
 import android.app.Activity
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.databinding.ShimmerAdaptiveBannerLayoutBinding
 import com.origin.commons.callerid.extensions.dpToPx
+import com.origin.commons.callerid.extensions.resolveThemeColor
 
 fun Activity.updateUIMainLayout(rlMainGoogleBanner: RelativeLayout, tvSpaceAds: TextView) {
     rlMainGoogleBanner.apply {
-        this@apply.setBackgroundColor(ContextCompat.getColor(this@updateUIMainLayout, R.color.call_theme_adsBgColor))
+        this@apply.setBackgroundColor(resolveThemeColor(R.attr.callThemeAdsBgColor))
     }
     tvSpaceAds.apply {
-        setTextColor(ContextCompat.getColor(this@updateUIMainLayout, R.color.call_theme_adsTextColorVariant))
+        setTextColor(resolveThemeColor(R.attr.callThemeAdsTextColorVariant))
     }
 }
 
@@ -25,7 +25,7 @@ fun Activity.updateUIShimmerLayout(shimmerBannerLayoutBinding: ShimmerAdaptiveBa
     shimmerBannerLayoutBinding.apply {
         val views = listOf(tv1, iv1)
         views.forEach { view ->
-            view.setBackgroundColor(ContextCompat.getColor(this@updateUIShimmerLayout, R.color.call_theme_adsBgColorHigh))
+            view.setBackgroundColor(resolveThemeColor(R.attr.callThemeAdsBgColorHigh))
         }
     }
 }

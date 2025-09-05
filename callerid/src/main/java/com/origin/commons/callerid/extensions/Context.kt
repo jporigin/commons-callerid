@@ -8,11 +8,20 @@ import android.content.Context.ACTIVITY_SERVICE
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.ServiceConnection
+import android.content.res.Configuration
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.IBinder
+import android.provider.ContactsContract
 import android.text.TextUtils
+import android.util.TypedValue
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
+import androidx.annotation.ColorInt
+import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.helpers.CallerIdSDK
@@ -21,6 +30,64 @@ import com.origin.commons.callerid.helpers.CallerIdUtils.isScreenOverlayEnabled
 import com.origin.commons.callerid.helpers.SharedPreferencesHelper
 import com.origin.commons.callerid.receivers.CIdLegacyForegroundService
 import com.origin.commons.callerid.receivers.OgCallerIdCallReceiver
+
+fun <T> tryOrNull(logOnError: Boolean = true, body: () -> T?): T? {
+    return try {
+        body()
+    } catch (e: Exception) {
+        if (logOnError) {
+            logE("tryOrNull $e")
+        }
+        null
+    }
+}
+
+fun Context.getColorCompat(colorRes: Int): Int {
+    return tryOrNull { ContextCompat.getColor(this, colorRes) } ?: Color.BLACK
+}
+
+fun Context.resolveThemeColor(attributeId: Int, default: Int = 0): Int {
+    val outValue = TypedValue()
+    val wasResolved = theme.resolveAttribute(attributeId, outValue, true)
+    return if (wasResolved) getColorCompat(outValue.resourceId) else default
+}
+
+fun AppCompatActivity.enableThemeEdgeToEdge(
+    @ColorInt statusBarScrim: Int,
+    @ColorInt navigationBarScrim: Int,
+    isForceDark: Boolean = false
+) {
+    if (isForceDark) {
+        systemBarDarkStyle(statusBarScrim, navigationBarScrim)
+    } else {
+        systemBarLightStyle(statusBarScrim, navigationBarScrim)
+    }
+}
+
+private fun AppCompatActivity.systemBarDarkStyle(
+    @ColorInt statusBarScrim: Int,
+    @ColorInt navigationBarScrim: Int
+) {
+    enableEdgeToEdge(
+        statusBarStyle = SystemBarStyle.dark(statusBarScrim),
+        navigationBarStyle = SystemBarStyle.dark(navigationBarScrim)
+    )
+}
+
+private fun AppCompatActivity.systemBarLightStyle(
+    @ColorInt statusBarScrim: Int,
+    @ColorInt navigationBarScrim: Int
+) {
+    enableEdgeToEdge(
+        statusBarStyle = SystemBarStyle.light(statusBarScrim, Color.TRANSPARENT),
+        navigationBarStyle = SystemBarStyle.light(navigationBarScrim, Color.TRANSPARENT)
+    )
+}
+
+fun Context.isDarkMode(): Boolean {
+    val nightModeFlags = this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+    return nightModeFlags == Configuration.UI_MODE_NIGHT_YES
+}
 
 fun Context.getScreenWidthPx(): Int {
     return resources.displayMetrics.widthPixels
@@ -54,7 +121,10 @@ fun Context.getOpenAppIntent(): Intent? {
 fun Context.registerCallReceiver() {
     try {
         if (CallerIdUtils.isPhoneStatePermissionGranted(this)) {
-            this.registerReceiver(OgCallerIdCallReceiver(), IntentFilter("android.intent.action.PHONE_STATE"))
+            this.registerReceiver(
+                OgCallerIdCallReceiver(),
+                IntentFilter("android.intent.action.PHONE_STATE")
+            )
         }
     } catch (e: Exception) {
         e.printStackTrace()
@@ -108,7 +178,11 @@ fun Context.getAppName(): String {
     }
 }
 
-internal val Context.prefsHelper: SharedPreferencesHelper get() = SharedPreferencesHelper.newInstance(this)
+internal val Context.prefsHelper: SharedPreferencesHelper
+    get() = SharedPreferencesHelper.newInstance(
+        this
+    )
+
 fun Context.getCurrentAdsType(): Int {
     this.prefsHelper.let { pref ->
         //
@@ -153,7 +227,9 @@ fun Context.getDefaultAppIcon(): Drawable? {
 }
 
 fun Context.getUID(): Long {
-    val usedIds: MutableList<Int> = this.prefsHelper.savedReminderIds.split(",").filter { it.trim().isNotEmpty() }.map { it.trim().toInt() }.toMutableList()
+    val usedIds: MutableList<Int> =
+        this.prefsHelper.savedReminderIds.split(",").filter { it.trim().isNotEmpty() }
+            .map { it.trim().toInt() }.toMutableList()
     var id: Int
     do {
         id = (1000..9999).random()
@@ -169,6 +245,8 @@ fun Context.openContact() {
             type = "vnd.android.cursor.dir/contact"
         }
         startActivity(intent)
+    } catch (e: ActivityNotFoundException) {
+        e.printStackTrace()
     } catch (e: Exception) {
         e.printStackTrace()
         try {
@@ -178,12 +256,59 @@ fun Context.openContact() {
             startActivity(intent)
         } catch (inner: Exception) {
             inner.printStackTrace()
-            // Optionally show toast or fallback
         }
     }
 }
 
-fun Context.openMessage(message: String = "") {
+fun Context.makePhoneCall(phoneNumber: String?, callback: () -> Unit) {
+    val callerIdSDKApplication = try {
+        applicationContext as? CallerIdSDKApplication
+    } catch (_: Exception) {
+        null
+    }
+
+    try {
+        if (CallerIdSDK.isHostDefaultDialerApp()) {
+            val openClassForDefaultApp = callerIdSDKApplication?.openClassForDefaultApp
+            if (openClassForDefaultApp != null) {
+                Intent(this, openClassForDefaultApp.provide()).apply {
+                    if (!phoneNumber.isNullOrEmpty()) {
+                        putExtra("phone_number", phoneNumber)
+                        putExtra(Intent.EXTRA_TEXT, phoneNumber)
+                    }
+                    putExtra("isFromCallerId", true)
+                    startActivity(this)
+                }
+            } else {
+                launchDialerIntent(phoneNumber)
+            }
+        } else {
+            launchDialerIntent(phoneNumber)
+        }
+    } catch (_: ActivityNotFoundException) {
+        launchDialerIntent(phoneNumber)
+    } catch (_: Exception) {
+        launchDialerIntent(phoneNumber)
+    }
+
+    callback.invoke()
+}
+
+private fun Context.launchDialerIntent(phoneNumber: String?) {
+    try {
+        Intent(Intent.ACTION_DIAL).apply {
+            if (!phoneNumber.isNullOrEmpty()) {
+                putExtra("phone_number", phoneNumber)
+                putExtra(Intent.EXTRA_TEXT, phoneNumber)
+            }
+            startActivity(this)
+        }
+    } catch (e: ActivityNotFoundException) {
+        e.printStackTrace()
+    }
+}
+
+fun Context.openMessage(message: String = "", callback: () -> Unit) {
     val callerIdSDKApplication = try {
         this.applicationContext as? CallerIdSDKApplication
     } catch (_: Exception) {
@@ -195,6 +320,7 @@ fun Context.openMessage(message: String = "") {
             when {
                 openClassForDefaultApp != null -> {
                     Intent(this@openMessage, openClassForDefaultApp.provide()).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                         if (message.isNotEmpty()) {
                             putExtra("sms_body", message)
                             putExtra(Intent.EXTRA_TEXT, message)
@@ -202,52 +328,60 @@ fun Context.openMessage(message: String = "") {
                         putExtra("isFromCallerId", true)
                         startActivity(this)
                     }
+                    callback.invoke()
                 }
+
                 else -> {
                     val intent = Intent(Intent.ACTION_MAIN).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                         addCategory(Intent.CATEGORY_APP_MESSAGING)
                     }
                     if (message.isNotEmpty()) {
                         intent.putExtra("sms_body", message)
                     }
                     startActivity(intent)
+                    callback.invoke()
                 }
             }
         } else {
             val intent = Intent(Intent.ACTION_VIEW).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 type = "vnd.android-dir/mms-sms"
             }
             if (message.isNotEmpty()) {
                 intent.putExtra("sms_body", message)
             }
             startActivity(intent)
+            callback.invoke()
         }
-    } catch (e: ActivityNotFoundException) {
+    } catch (_: ActivityNotFoundException) {
         try {
             val intent = Intent(Intent.ACTION_MAIN).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 addCategory(Intent.CATEGORY_APP_MESSAGING)
             }
             if (message.isNotEmpty()) {
                 intent.putExtra("sms_body", message)
             }
             startActivity(intent)
-        } catch (inner: Exception) {
+            callback.invoke()
+        } catch (inner: ActivityNotFoundException) {
             inner.printStackTrace()
-            // Optionally show toast or fallback
         }
     } catch (e: Exception) {
         e.printStackTrace()
         try {
             val intent = Intent(Intent.ACTION_MAIN).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 addCategory(Intent.CATEGORY_APP_MESSAGING)
             }
             if (message.isNotEmpty()) {
                 intent.putExtra("sms_body", message)
             }
             startActivity(intent)
+            callback.invoke()
         } catch (inner: Exception) {
             inner.printStackTrace()
-            // Optionally show toast or fallback
         }
     }
 }
@@ -304,9 +438,26 @@ fun Context.isCIDPermissionAllowed(): Boolean {
     return CallerIdUtils.isPhoneStatePermissionGranted(this) && isScreenOverlayEnabled(this)
 }
 
-fun Context.isCallerIDEnabled(): Boolean {
-    if (!prefsHelper.isMissedCallFeatureEnable && !prefsHelper.isCompleteCallFeatureEnable && !prefsHelper.isNoAnswerFeatureEnable) {
-        return false
+fun Context.getContactNameFromNumber(phoneNumber: String): String? {
+    if (!CallerIdUtils.isReadContactPermissionGranted(this)) return null
+
+    val uri = Uri.withAppendedPath(
+        ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+        Uri.encode(phoneNumber)
+    )
+
+    contentResolver.query(
+        uri,
+        arrayOf(ContactsContract.PhoneLookup.DISPLAY_NAME),
+        null,
+        null,
+        null
+    )?.use { cursor ->
+        val nameIndex = cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME)
+        if (nameIndex != -1 && cursor.moveToFirst()) {
+            return cursor.getString(nameIndex)
+        }
     }
-    return isCIDPermissionAllowed()
+    return null
 }
+

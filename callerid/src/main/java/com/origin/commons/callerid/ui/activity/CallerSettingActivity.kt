@@ -1,10 +1,7 @@
 package com.origin.commons.callerid.ui.activity
 
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.SystemBarStyle
-import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -27,10 +24,6 @@ class CallerSettingActivity : CallerBaseActivity(), HomeKeyWatcher.OnHomeAndRece
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.enableEdgeToEdge(
-            SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
-            SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
-        )
         if (Build.VERSION.SDK_INT >= 29) {
             window.isNavigationBarContrastEnforced = false
         }
@@ -182,18 +175,18 @@ class CallerSettingActivity : CallerBaseActivity(), HomeKeyWatcher.OnHomeAndRece
                         val msgBuilder =
                             StringBuilder().append("• ").append(
                                 String.format(
-                                    this.getString(R.string.caller_toggle_agree_title_2),
-                                    getString(R.string.missed_call)
+                                    this.getString(R.string.ci_caller_toggle_agree_title_2),
+                                    getString(R.string.ci_missed_call)
                                 )
                             ).append("\n").append("\n")
                                 .append("• ")
-                                .append(this.getString(R.string.caller_toggle_agree_message_1))
+                                .append(this.getString(R.string.ci_caller_toggle_agree_message_1))
                         ConfirmationDialog(
                             activity = this,
-                            titleId = R.string.caller_toggle_agree_title_1,
+                            titleId = R.string.ci_caller_toggle_agree_title_1,
                             message = msgBuilder.toString(),
-                            positive = R.string.keep_it,
-                            negative = R.string.proceed,
+                            positive = R.string.ci_keep_it,
+                            negative = R.string.ci_proceed,
                             cancelOnTouchOutside = false
                         ) { success ->
                             if (!success) {
@@ -222,18 +215,18 @@ class CallerSettingActivity : CallerBaseActivity(), HomeKeyWatcher.OnHomeAndRece
                     if (!isDestroyed && !isFinishing) {
                         val msgBuilder = StringBuilder()
                             .append("• ")
-                            .append(String.format(this.getString(R.string.caller_toggle_agree_title_2), getString(R.string.complete_call)))
+                            .append(String.format(this.getString(R.string.ci_caller_toggle_agree_title_2), getString(R.string.ci_complete_call)))
                             .append("\n")
                             .append("\n")
                             .append("• ")
-                            .append(this.getString(R.string.caller_toggle_agree_message_1))
+                            .append(this.getString(R.string.ci_caller_toggle_agree_message_1))
 
                         ConfirmationDialog(
                             activity = this,
-                            titleId = R.string.caller_toggle_agree_title_1,
+                            titleId = R.string.ci_caller_toggle_agree_title_1,
                             message = msgBuilder.toString(),
-                            positive = R.string.keep_it,
-                            negative = R.string.proceed,
+                            positive = R.string.ci_keep_it,
+                            negative = R.string.ci_proceed,
                             cancelOnTouchOutside = false
                         ) { success ->
                             if (!success) {
@@ -263,18 +256,18 @@ class CallerSettingActivity : CallerBaseActivity(), HomeKeyWatcher.OnHomeAndRece
                         val msgBuilder =
                             StringBuilder().append("• ").append(
                                 String.format(
-                                    this.getString(R.string.caller_toggle_agree_title_2),
-                                    getString(R.string.no_answer)
+                                    this.getString(R.string.ci_caller_toggle_agree_title_2),
+                                    getString(R.string.ci_no_answer)
                                 )
                             ).append("\n").append("\n")
                                 .append("• ")
-                                .append(this.getString(R.string.caller_toggle_agree_message_1))
+                                .append(this.getString(R.string.ci_caller_toggle_agree_message_1))
                         ConfirmationDialog(
                             activity = this,
-                            titleId = R.string.caller_toggle_agree_title_1,
+                            titleId = R.string.ci_caller_toggle_agree_title_1,
                             message = msgBuilder.toString(),
-                            positive = R.string.keep_it,
-                            negative = R.string.proceed,
+                            positive = R.string.ci_keep_it,
+                            negative = R.string.ci_proceed,
                             cancelOnTouchOutside = false
                         ) { success ->
                             if (!success) {

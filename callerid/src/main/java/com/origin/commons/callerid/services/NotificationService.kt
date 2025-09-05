@@ -65,7 +65,7 @@ class NotificationService(private val context: Context) {
             setAutoCancel(true)
             setContentTitle(notificationInfo.title)
             setContentText(notificationInfo.description)
-            setStyle(Notification.BigTextStyle().bigText(notificationInfo.description))
+            style = Notification.BigTextStyle().bigText(notificationInfo.description)
             setSmallIcon(smallIcon)
             pendingIntent?.let { setContentIntent(it) }
         }
@@ -106,7 +106,7 @@ class NotificationService(private val context: Context) {
         if (pendingClass == null) return
 
         val notifyIntent = Intent(context, pendingClass).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
 
         val pendingIntent = PendingIntent.getActivity(

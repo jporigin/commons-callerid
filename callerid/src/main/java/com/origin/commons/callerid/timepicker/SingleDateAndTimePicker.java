@@ -1,5 +1,6 @@
 package com.origin.commons.callerid.timepicker;
 
+import static com.origin.commons.callerid.extensions.ContextKt.resolveThemeColor;
 import static com.origin.commons.callerid.timepicker.widget.SingleDateAndTimeConstants.DAYS_PADDING;
 
 import android.content.Context;
@@ -15,9 +16,9 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.origin.commons.callerid.R;
 import com.origin.commons.callerid.timepicker.widget.DateWithLabel;
 import com.origin.commons.callerid.timepicker.widget.WheelAmPmPicker;
 import com.origin.commons.callerid.timepicker.widget.WheelDayOfMonthPicker;
@@ -27,7 +28,6 @@ import com.origin.commons.callerid.timepicker.widget.WheelMinutePicker;
 import com.origin.commons.callerid.timepicker.widget.WheelMonthPicker;
 import com.origin.commons.callerid.timepicker.widget.WheelPicker;
 import com.origin.commons.callerid.timepicker.widget.WheelYearPicker;
-import com.origin.commons.callerid.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -616,8 +616,8 @@ public class SingleDateAndTimePicker extends LinearLayout {
 
         final Resources resources = getResources();
         setTodayText(new DateWithLabel(a.getString(R.styleable.SingleDateAndTimePicker_picker_todayText), new Date()));
-        setTextColor(a.getColor(R.styleable.SingleDateAndTimePicker_picker_textColor, ContextCompat.getColor(context, R.color.call_theme_onSurfaceVariant)));
-        setSelectorColor(a.getColor(R.styleable.SingleDateAndTimePicker_picker_selectorColor, ContextCompat.getColor(context, R.color.call_theme_surfaceContainerLow)));
+        setTextColor(a.getColor(R.styleable.SingleDateAndTimePicker_picker_textColor, resolveThemeColor(context, R.attr.callThemeOnSurfaceVariant, 0)));;
+        setSelectorColor(a.getColor(R.styleable.SingleDateAndTimePicker_picker_selectorColor, resolveThemeColor(context, R.attr.callThemeSurfaceContainerLow, 0)));;
         setItemSpacing(a.getDimensionPixelSize(R.styleable.SingleDateAndTimePicker_picker_itemSpacing, resources.getDimensionPixelSize(R.dimen.wheelSelectorHeight)));
         setCurvedMaxAngle(a.getInteger(R.styleable.SingleDateAndTimePicker_picker_curvedMaxAngle, WheelPicker.MAX_ANGLE));
         setSelectorHeight(a.getDimensionPixelSize(R.styleable.SingleDateAndTimePicker_picker_selectorHeight, resources.getDimensionPixelSize(R.dimen.wheelSelectorHeight)));

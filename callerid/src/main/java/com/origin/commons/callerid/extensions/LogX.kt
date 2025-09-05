@@ -1,7 +1,3 @@
-/*
- * March 03, 2025  12:01 PM
- */
-
 package com.origin.commons.callerid.extensions
 
 import android.annotation.SuppressLint

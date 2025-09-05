@@ -43,7 +43,7 @@
                 android:includeFontPadding="false"
                 android:maxLines="1"
                 android:paddingHorizontal="10dp"
-                android:text="@string/sorry_i_can_t_talk_right_now"
+                android:text="@string/ci_sorry_i_can_t_talk_right_now"
                 android:textSize="14sp" />
 
             <ImageView
@@ -86,7 +86,7 @@
                 android:includeFontPadding="false"
                 android:maxLines="1"
                 android:paddingHorizontal="10dp"
-                android:text="@string/can_i_call_you_later"
+                android:text="@string/ci_can_i_call_you_later"
                 android:textSize="14sp" />
 
 
@@ -131,7 +131,7 @@
                 android:includeFontPadding="false"
                 android:maxLines="1"
                 android:paddingHorizontal="10dp"
-                android:text="@string/i_m_on_my_way"
+                android:text="@string/ci_i_m_on_my_way"
                 android:textSize="14sp" />
 
 
@@ -175,13 +175,13 @@
                 android:background="@null"
                 android:fontFamily="@font/sinteca_medium"
                 android:gravity="start"
-                android:hint="@string/write_personal_message"
+                android:hint="@string/ci_write_personal_message"
                 android:imeOptions="actionSend"
                 android:includeFontPadding="false"
                 android:maxLines="5"
                 android:minHeight="80dp"
                 android:paddingTop="4dp"
-                android:textColor="@color/call_theme_onSurface"
+                android:textColor="?attr/callThemeOnSurface"
                 android:textSize="14sp" />
 
             <ImageView

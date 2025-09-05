@@ -68,11 +68,11 @@ class HomeFragment : Fragment() {
         val c = Calendar.getInstance()
         val timeOfDay = c.get(Calendar.HOUR_OF_DAY)
         return when (timeOfDay) {
-            in 0..11 -> getString(R.string.good_morning)
-            in 12..15 -> getString(R.string.good_afternoon)
-            in 16..20 -> getString(R.string.good_evening)
-            in 21..23 -> getString(R.string.good_night)
-            else -> getString(R.string.good_morning)
+            in 0..11 -> getString(R.string.ci_good_morning)
+            in 12..15 -> getString(R.string.ci_good_afternoon)
+            in 16..20 -> getString(R.string.ci_good_evening)
+            in 21..23 -> getString(R.string.ci_good_night)
+            else -> getString(R.string.ci_good_morning)
         }
     }
 }

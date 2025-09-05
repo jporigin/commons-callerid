@@ -1,10 +1,13 @@
 package com.origin.commons.callerid.helpers
 
+import android.Manifest
 import android.app.role.RoleManager
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Build
 import android.provider.Telephony
 import android.telecom.TelecomManager
+import androidx.core.content.ContextCompat
 
 object CallerIdSDK {
 
@@ -39,12 +42,21 @@ object CallerIdSDK {
         val context = appContext ?: return false
         val hostPackageName = context.packageName
 
+        val hasAllPermissions =
+            hasPermission(context, Manifest.permission.READ_SMS) &&
+                    hasPermission(context, Manifest.permission.SEND_SMS) &&
+                    hasPermission(context, Manifest.permission.READ_CONTACTS)
+
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val roleManager = context.getSystemService(RoleManager::class.java)
-            roleManager?.isRoleHeld(RoleManager.ROLE_SMS) == true
+            if (roleManager?.isRoleHeld(RoleManager.ROLE_SMS) == true) true else hasAllPermissions
         } else {
-            Telephony.Sms.getDefaultSmsPackage(context) == hostPackageName
+            if (Telephony.Sms.getDefaultSmsPackage(context) == hostPackageName) true else hasAllPermissions
         }
+    }
+
+    private fun hasPermission(context: Context, permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
     }
 
     /**

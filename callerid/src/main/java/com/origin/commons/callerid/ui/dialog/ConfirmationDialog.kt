@@ -7,8 +7,8 @@ import com.origin.commons.callerid.R
 import com.origin.commons.callerid.databinding.DialogItemMessageBinding
 
 class ConfirmationDialog(
-    activity: Activity, titleId: Int = 0, titleText: String = "", message: String = "", messageId: Int = R.string.caller_toggle_agree_title_2, positive: Int = R.string.keep_it,
-    negative: Int = R.string.proceed, val cancelOnTouchOutside: Boolean = true, val callback: (result: Boolean) -> Unit
+    activity: Activity, titleId: Int = 0, titleText: String = "", message: String = "", messageId: Int = R.string.ci_caller_toggle_agree_title_2, positive: Int = R.string.ci_keep_it,
+    negative: Int = R.string.ci_proceed, val cancelOnTouchOutside: Boolean = true, val callback: (result: Boolean) -> Unit
 ) {
     private var dialog: AlertDialog? = null
 

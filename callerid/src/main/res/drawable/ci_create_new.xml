@@ -5,13 +5,13 @@
     android:viewportHeight="78">
     <group>
         <path
-            android:fillColor="@color/call_theme_primary"
+            android:fillColor="?attr/callThemePrimary"
             android:pathData="M39 0a39 39 0 1 0 0 78 39 39 0 1 0 0-78z" />
     </group>
     <path
-        android:fillColor="@color/call_theme_onPrimary"
+        android:fillColor="?attr/callThemeOnPrimary"
         android:pathData="M37 25h4v28h-4z" />
     <path
-        android:fillColor="@color/call_theme_onPrimary"
+        android:fillColor="?attr/callThemeOnPrimary"
         android:pathData="M53 37v4H25v-4z" />
 </vector>

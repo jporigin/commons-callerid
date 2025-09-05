@@ -9,6 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.databinding.DialogChoosePopupBinding
 import com.origin.commons.callerid.extensions.prefsHelper
+import com.origin.commons.callerid.extensions.resolveThemeColor
 import com.origin.commons.callerid.extensions.withAlpha
 import com.origin.commons.callerid.model.PopViewType
 
@@ -44,7 +45,7 @@ class ChoosePopupDialog(private val activity: Activity) {
     private fun setUpPopupView(binding: DialogChoosePopupBinding) {
         when (popViewType) {
             PopViewType.CLASSIC -> {
-                activity.getColor(R.color.call_theme_primary).let { color ->
+                activity.resolveThemeColor(R.attr.callThemePrimary).let { color ->
                     binding.classicView.apply {
                         setCardBackgroundColor(ColorStateList.valueOf(color.withAlpha(0x4D)))
                         strokeColor = color
@@ -53,13 +54,13 @@ class ChoosePopupDialog(private val activity: Activity) {
                 }
                 binding.standardView.apply {
                     setCardBackgroundColor(ColorStateList.valueOf(Color.TRANSPARENT))
-                    strokeColor = activity.getColor(R.color.call_theme_onSurfaceVariant)
+                    strokeColor = activity.resolveThemeColor(R.attr.callThemeOnSurfaceVariant)
                 }
-                binding.tvStandardPopup.setTextColor(activity.getColor(R.color.call_theme_onSurface))
+                binding.tvStandardPopup.setTextColor(activity.resolveThemeColor(R.attr.callThemeOnSurface))
             }
 
             PopViewType.STANDARD -> {
-                activity.getColor(R.color.call_theme_primary).let { color ->
+                activity.resolveThemeColor(R.attr.callThemePrimary).let { color ->
                     binding.standardView.apply {
                         setCardBackgroundColor(ColorStateList.valueOf(color.withAlpha(0x4D)))
                         strokeColor = color
@@ -68,9 +69,9 @@ class ChoosePopupDialog(private val activity: Activity) {
                 }
                 binding.classicView.apply {
                     setCardBackgroundColor(ColorStateList.valueOf(Color.TRANSPARENT))
-                    strokeColor = activity.getColor(R.color.call_theme_onSurfaceVariant)
+                    strokeColor = activity.resolveThemeColor(R.attr.callThemeOnSurfaceVariant)
                 }
-                binding.tvClassicPopup.setTextColor(activity.getColor(R.color.call_theme_onSurface))
+                binding.tvClassicPopup.setTextColor(activity.resolveThemeColor(R.attr.callThemeOnSurface))
             }
         }
     }

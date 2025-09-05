@@ -1,9 +1,12 @@
 package com.origin.commons.callerid.timepicker.widget;
 
+import static com.origin.commons.callerid.timepicker.widget.SingleDateAndTimeConstants.DAYS_PADDING;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,10 +14,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import androidx.annotation.NonNull;
-
-import static com.origin.commons.callerid.timepicker.widget.SingleDateAndTimeConstants.DAYS_PADDING;
 
 
 public class WheelDayPicker extends WheelPicker<DateWithLabel> {

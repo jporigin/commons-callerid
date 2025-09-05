@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/call_theme_surfaceContainerLowest"
+    android:background="?attr/callThemeSurfaceContainerLowest"
     tools:context=".ui.activity.CallerSettingActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +27,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/call_theme_onSurface" />
+            app:tint="?attr/callThemeOnSurface" />
 
         <TextView
             android:id="@+id/tvTitle"
@@ -37,9 +37,9 @@
             android:fontFamily="@font/sinteca_medium"
             android:includeFontPadding="false"
             android:letterSpacing="0.038"
-            android:text="@string/settings"
+            android:text="@string/ci_settings"
             android:textAlignment="textStart"
-            android:textColor="@color/call_theme_onSurface"
+            android:textColor="?attr/callThemeOnSurface"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -73,8 +73,8 @@
                 style="@style/SettingItemTitleTextStyle"
                 android:layout_marginTop="12dp"
                 android:padding="8dp"
-                android:text="@string/appearance"
-                android:textColor="@color/call_theme_primary"
+                android:text="@string/ci_appearance"
+                android:textColor="?attr/callThemePrimary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -92,7 +92,7 @@
                 <TextView
                     android:id="@+id/tvSysMode1"
                     style="@style/SettingItemTitleTextStyle"
-                    android:text="@string/system_mode"
+                    android:text="@string/ci_system_mode"
                     app:layout_constraintEnd_toStartOf="@+id/sSystemMode"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -100,7 +100,7 @@
                 <TextView
                     android:id="@+id/textView"
                     style="@style/SettingItemDesTextStyle"
-                    android:text="@string/system_mode_des"
+                    android:text="@string/ci_system_mode_des"
                     app:layout_constraintEnd_toStartOf="@+id/sSystemMode"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvSysMode1" />
@@ -129,14 +129,14 @@
                 <TextView
                     android:id="@+id/tvfDark1"
                     style="@style/SettingItemTitleTextStyle"
-                    android:text="@string/force_dark"
+                    android:text="@string/ci_force_dark"
                     app:layout_constraintEnd_toStartOf="@+id/sForceDark"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     style="@style/SettingItemDesTextStyle"
-                    android:text="@string/force_dark_des"
+                    android:text="@string/ci_force_dark_des"
                     app:layout_constraintEnd_toStartOf="@+id/sForceDark"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvfDark1" />
@@ -157,8 +157,8 @@
                 style="@style/SettingItemTitleTextStyle"
                 android:layout_marginTop="12dp"
                 android:padding="8dp"
-                android:text="@string/call_settings"
-                android:textColor="@color/call_theme_primary"
+                android:text="@string/ci_call_settings"
+                android:textColor="?attr/callThemePrimary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/clForceDark" />
@@ -176,7 +176,7 @@
                 <TextView
                     android:id="@+id/tvMissCall"
                     style="@style/SettingItemTitleTextStyle"
-                    android:text="@string/missed_call"
+                    android:text="@string/ci_missed_call"
 
                     app:layout_constraintEnd_toStartOf="@+id/switchMissCall"
                     app:layout_constraintStart_toStartOf="parent"
@@ -184,7 +184,7 @@
 
                 <TextView
                     style="@style/SettingItemDesTextStyle"
-                    android:text="@string/missed_call_des"
+                    android:text="@string/ci_missed_call_des"
                     app:layout_constraintEnd_toStartOf="@+id/switchMissCall"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvMissCall" />
@@ -214,14 +214,14 @@
                 <TextView
                     android:id="@+id/tvCompleteCallTitle"
                     style="@style/SettingItemTitleTextStyle"
-                    android:text="@string/complete_call"
+                    android:text="@string/ci_complete_call"
                     app:layout_constraintEnd_toStartOf="@+id/switchCompleteCall"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     style="@style/SettingItemDesTextStyle"
-                    android:text="@string/complete_call_des"
+                    android:text="@string/ci_complete_call_des"
                     app:layout_constraintEnd_toStartOf="@+id/switchCompleteCall"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvCompleteCallTitle" />
@@ -251,14 +251,14 @@
                 <TextView
                     android:id="@+id/tvNoAnsTitle"
                     style="@style/SettingItemTitleTextStyle"
-                    android:text="@string/no_answer"
+                    android:text="@string/ci_no_answer"
                     app:layout_constraintEnd_toStartOf="@+id/switchNoAnswer"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     style="@style/SettingItemDesTextStyle"
-                    android:text="@string/no_answer_des"
+                    android:text="@string/ci_no_answer_des"
                     app:layout_constraintEnd_toStartOf="@+id/switchNoAnswer"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvNoAnsTitle" />
@@ -280,7 +280,7 @@
                 android:layout_marginTop="12dp"
                 android:padding="8dp"
                 android:text="General"
-                android:textColor="@color/call_theme_primary"
+                android:textColor="?attr/callThemePrimary"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/clNoAnswer" />
@@ -298,7 +298,7 @@
                 <TextView
                     android:id="@+id/tvPopupTitle"
                     style="@style/SettingItemTitleTextStyle"
-                    android:text="@string/popup_settings"
+                    android:text="@string/ci_popup_settings"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -325,14 +325,14 @@
                 <TextView
                     android:id="@+id/tvShowStandardView"
                     style="@style/SettingItemTitleTextStyle"
-                    android:text="@string/standard_popup"
+                    android:text="@string/ci_standard_popup"
                     app:layout_constraintEnd_toStartOf="@+id/sStandardView"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     style="@style/SettingItemDesTextStyle"
-                    android:text="@string/standard_view_des"
+                    android:text="@string/ci_standard_view_des"
                     app:layout_constraintEnd_toStartOf="@+id/sStandardView"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvShowStandardView" />

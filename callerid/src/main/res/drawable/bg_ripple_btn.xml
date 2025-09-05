@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/call_theme_outline">
+    android:color="?attr/callThemeOutline">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/call_theme_surfaceContainerLow" />
+            <solid android:color="?attr/colorSurfaceContainerLow" />
             <corners android:radius="8dp" />
         </shape>
     </item>

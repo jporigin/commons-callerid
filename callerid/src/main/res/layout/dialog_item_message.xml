@@ -19,7 +19,7 @@
         android:paddingTop="24dp"
         android:paddingRight="24dp"
         android:paddingBottom="16dp"
-        android:textColor="@color/call_theme_onSurface"
+        android:textColor="?attr/callThemeOnSurface"
         android:textSize="14sp" />
 
 </ScrollView>

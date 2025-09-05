@@ -3,14 +3,13 @@ package com.origin.commons.callerid.timepicker.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 public class WheelAmPmPicker extends WheelPicker<String> {
 

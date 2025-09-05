@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.origin.commons.callerid.db.entity.ReminderEntity
 import com.origin.commons.callerid.databinding.CellReminderItemsBinding
+import com.origin.commons.callerid.db.entity.ReminderEntity
 
 class ReminderAdapter(private val onItemClick: (reminder: ReminderEntity) -> Unit, private val onDeleteClick: (reminder: ReminderEntity) -> Unit) :
     ListAdapter<ReminderEntity, ReminderAdapter.ReminderViewHolder>(COMPARATOR) {

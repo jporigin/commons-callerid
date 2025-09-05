@@ -21,8 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/space_for_ads"
-            android:textColor="@color/call_theme_onSurfaceVariant"
+            android:text="@string/ci_space_for_ads"
+            android:textColor="?attr/callThemeOnSurfaceVariant"
             android:textSize="16sp"
             android:visibility="visible" />
 

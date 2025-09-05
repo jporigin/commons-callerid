@@ -37,7 +37,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/call_theme_onSurface" />
+                    app:tint="?attr/callThemeOnSurface" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -47,7 +47,7 @@
                     android:includeFontPadding="false"
                     android:singleLine="true"
                     android:text="Add Contact"
-                    android:textColor="@color/call_theme_onSurface"
+                    android:textColor="?attr/callThemeOnSurface"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +76,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/call_theme_onSurface" />
+                    app:tint="?attr/callThemeOnSurface" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -85,8 +85,8 @@
                     android:fontFamily="@font/sinteca_medium"
                     android:includeFontPadding="false"
                     android:singleLine="true"
-                    android:text="@string/message"
-                    android:textColor="@color/call_theme_onSurface"
+                    android:text="@string/ci_message"
+                    android:textColor="?attr/callThemeOnSurface"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -115,7 +115,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/call_theme_onSurface" />
+                    app:tint="?attr/callThemeOnSurface" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -123,9 +123,9 @@
                     android:layout_marginStart="15dp"
                     android:includeFontPadding="false"
                     android:singleLine="true"
-                    android:text="@string/send_mail"
+                    android:text="@string/ci_send_mail"
                     android:fontFamily="@font/sinteca_medium"
-                    android:textColor="@color/call_theme_onSurface"
+                    android:textColor="?attr/callThemeOnSurface"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -154,7 +154,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/call_theme_onSurface" />
+                    app:tint="?attr/callThemeOnSurface" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -162,9 +162,9 @@
                     android:layout_marginStart="15dp"
                     android:includeFontPadding="false"
                     android:singleLine="true"
-                    android:text="@string/calendar"
+                    android:text="@string/ci_calendar"
                     android:fontFamily="@font/sinteca_medium"
-                    android:textColor="@color/call_theme_onSurface"
+                    android:textColor="?attr/callThemeOnSurface"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -193,7 +193,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/call_theme_onSurface" />
+                    app:tint="?attr/callThemeOnSurface" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -201,8 +201,8 @@
                     android:layout_marginStart="15dp"
                     android:includeFontPadding="false"
                     android:singleLine="true"
-                    android:text="@string/web"
-                    android:textColor="@color/call_theme_onSurface"
+                    android:text="@string/ci_web"
+                    android:textColor="?attr/callThemeOnSurface"
                     android:textSize="14sp"
                     android:fontFamily="@font/sinteca_medium"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -233,7 +233,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/call_theme_onSurface" />
+                    app:tint="?attr/callThemeOnSurface" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -242,8 +242,8 @@
                     android:includeFontPadding="false"
                     android:singleLine="true"
                     android:fontFamily="@font/sinteca_medium"
-                    android:text="@string/after_call_setting"
-                    android:textColor="@color/call_theme_onSurface"
+                    android:text="@string/ci_after_call_setting"
+                    android:textColor="?attr/callThemeOnSurface"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

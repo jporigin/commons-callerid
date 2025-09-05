@@ -35,7 +35,7 @@
             android:fontFamily="@font/sinteca_medium"
             android:includeFontPadding="false"
             android:maxLines="2"
-            android:textColor="@color/call_theme_onSurface"
+            android:textColor="?attr/callThemeOnSurface"
             android:textSize="14sp" />
 
         <LinearLayout
@@ -58,7 +58,7 @@
                 android:layout_marginStart="3dp"
                 android:fontFamily="@font/sinteca_regular"
                 android:includeFontPadding="false"
-                android:textColor="@color/call_theme_onSurfaceVariant"
+                android:textColor="?attr/callThemeOnSurfaceVariant"
                 android:textSize="12sp" />
 
             <ImageView
@@ -75,7 +75,7 @@
                 android:layout_marginStart="3dp"
                 android:fontFamily="@font/sinteca_regular"
                 android:includeFontPadding="false"
-                android:textColor="@color/call_theme_onSurfaceVariant"
+                android:textColor="?attr/callThemeOnSurfaceVariant"
                 android:textSize="12sp" />
 
         </LinearLayout>

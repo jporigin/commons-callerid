@@ -1,7 +1,7 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="22dp"
     android:height="22dp"
-    android:tint="@color/call_theme_onSurfaceVariant"
+    android:tint="?attr/callThemeOnSurfaceVariant"
     android:viewportWidth="25"
     android:viewportHeight="28">
     <group>

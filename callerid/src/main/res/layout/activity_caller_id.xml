@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/call_theme_surfaceContainerLowest">
+    android:background="?attr/callThemeSurfaceContainerLowest">
 
     <!-- MainView -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +30,7 @@
                 android:id="@+id/cardId"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                app:cardBackgroundColor="@color/call_theme_primary"
+                app:cardBackgroundColor="?attr/callThemePrimary"
                 app:cardCornerRadius="50dp"
                 app:cardElevation="0dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -69,12 +69,11 @@
                         android:fontFamily="@font/sinteca_medium"
                         android:includeFontPadding="false"
                         android:letterSpacing="0.038"
-                        android:text="@string/private_number"
+                        android:text="@string/ci_private_number"
                         android:textAlignment="textStart"
-                        android:textColor="@color/call_theme_onSurface"
+                        android:textColor="?attr/callThemeOnSurface"
                         android:textSize="16sp"
                         android:textStyle="bold"
-
                         app:layout_constraintBottom_toTopOf="@+id/phoneNumber"
                         app:layout_constraintEnd_toStartOf="@+id/cvLogo"
                         app:layout_constraintStart_toStartOf="parent" />
@@ -87,7 +86,7 @@
                         android:fontFamily="@font/sinteca_regular"
                         android:includeFontPadding="false"
                         android:textAlignment="textStart"
-                        android:textColor="@color/call_theme_onSurfaceVariant"
+                        android:textColor="?attr/callThemeOnSurfaceVariant"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="@+id/cvLogo"
                         app:layout_constraintEnd_toStartOf="@+id/cvLogo"
@@ -98,7 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:foreground="@drawable/bg_ripple_round"
-                        app:cardBackgroundColor="@color/call_theme_primary"
+                        app:cardBackgroundColor="?attr/callThemePrimary"
                         app:cardCornerRadius="50dp"
                         app:cardElevation="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -120,7 +119,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/call_theme_surfaceContainerHighest"
+                    android:background="?attr/callThemeSurfaceContainerHighest"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -147,7 +146,7 @@
                             android:fontFamily="@font/sinteca_medium"
                             android:includeFontPadding="false"
                             android:textAlignment="textStart"
-                            android:textColor="@color/call_theme_onSurface"
+                            android:textColor="?attr/callThemeOnSurface"
                             android:textSize="14sp" />
 
                         <TextView
@@ -158,7 +157,7 @@
                             android:fontFamily="@font/sinteca_regular"
                             android:includeFontPadding="false"
                             android:textAlignment="textStart"
-                            android:textColor="@color/call_theme_onSurfaceVariant"
+                            android:textColor="?attr/callThemeOnSurfaceVariant"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -181,7 +180,7 @@
                             android:includeFontPadding="false"
                             android:text="@string/ci_duration"
                             android:textAlignment="textStart"
-                            android:textColor="@color/call_theme_onSurfaceVariant"
+                            android:textColor="?attr/callThemeOnSurfaceVariant"
                             android:textSize="14sp" />
 
                         <TextView
@@ -191,7 +190,7 @@
                             android:includeFontPadding="false"
                             android:text=" : "
                             android:textAlignment="textStart"
-                            android:textColor="@color/call_theme_onSurfaceVariant"
+                            android:textColor="?attr/callThemeOnSurfaceVariant"
                             android:textSize="14sp" />
 
 
@@ -202,7 +201,7 @@
                             android:fontFamily="@font/sinteca_medium"
                             android:includeFontPadding="false"
                             android:textAlignment="textStart"
-                            android:textColor="@color/call_theme_onSurfaceVariant"
+                            android:textColor="?attr/callThemeOnSurfaceVariant"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -246,18 +245,18 @@
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/call_theme_surfaceContainerLow"
+                android:background="?attr/callThemeSurfaceContainerLow"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tabGravity="fill"
                 app:tabIconTint="@color/ci_tab_icon_selector"
-                app:tabIndicatorColor="@color/call_theme_primary"
+                app:tabIndicatorColor="?attr/callThemePrimary"
                 app:tabIndicatorFullWidth="true"
                 app:tabIndicatorHeight="1.56dp"
                 app:tabInlineLabel="true"
                 app:tabMode="fixed"
-                app:tabRippleColor="@color/call_theme_outline" />
+                app:tabRippleColor="?attr/callThemeOutline" />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vpTab"

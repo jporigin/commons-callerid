@@ -57,9 +57,9 @@
                     android:fontFamily="@font/sinteca_medium"
                     android:includeFontPadding="false"
                     android:letterSpacing="0.038"
-                    android:text="@string/private_number"
+                    android:text="@string/ci_private_number"
                     android:textAlignment="textStart"
-                    android:textColor="@color/call_theme_onPrimary"
+                    android:textColor="?attr/callThemeOnPrimary"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +74,7 @@
                     android:fontFamily="@font/sinteca_regular"
                     android:includeFontPadding="false"
                     android:textAlignment="textStart"
-                    android:textColor="@color/call_theme_onPrimary"
+                    android:textColor="?attr/callThemeOnPrimary"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +91,7 @@
                 android:fontFamily="@font/sinteca_medium"
                 android:includeFontPadding="false"
                 android:textAlignment="textStart"
-                android:textColor="@color/call_theme_onPrimary"
+                android:textColor="?attr/callThemeOnPrimary"
                 android:textSize="12sp"
                 tools:text="Duration: 00:15" />
 
@@ -127,10 +127,10 @@
             android:contentDescription="@null"
             android:padding="10dp"
             android:src="@drawable/ci_message"
-            android:tint="@color/call_theme_onSurface"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:tint="?attr/callThemeOnSurface" />
 
         <ImageView
             android:id="@+id/ivReminder"
@@ -139,22 +139,22 @@
             android:contentDescription="@null"
             android:padding="10dp"
             android:src="@drawable/ci_notification"
-            android:tint="@color/call_theme_onSurface"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ivMuteRingtoneMic"
             app:layout_constraintStart_toEndOf="@+id/ivMessage"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:tint="?attr/callThemeOnSurface" />
 
         <ImageView
             android:id="@+id/ivMuteRingtoneMic"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="10dp"
-            android:tint="@color/call_theme_onSurface"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cvLogo"
             app:layout_constraintStart_toEndOf="@+id/ivReminder"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:tint="?attr/callThemeOnSurface" />
 
         <LinearLayout
             android:id="@+id/cvLogo"

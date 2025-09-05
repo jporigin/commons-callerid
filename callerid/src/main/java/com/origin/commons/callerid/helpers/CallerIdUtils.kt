@@ -28,14 +28,14 @@ object CallerIdUtils {
     fun isScreenOverlayEnabled(context: Context): Boolean {
         return try {
             Settings.canDrawOverlays(context)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             false
         }
     }
 
-    fun formatTimeToString(millies: Long): String {
+    fun formatTimeToString(millis: Long): String {
         val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
-        return dateFormat.format(millies)
+        return dateFormat.format(millis)
     }
 
     fun calculateDuration(startTime: Long, endTime: Long): String {
@@ -68,6 +68,10 @@ object CallerIdUtils {
 
     fun isCIDPermissionAllowed(context: Context): Boolean {
         return isPhoneStatePermissionGranted(context) && isScreenOverlayEnabled(context)
+    }
+
+    fun isReadContactPermissionGranted(context: Context): Boolean {
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
     }
 
 }

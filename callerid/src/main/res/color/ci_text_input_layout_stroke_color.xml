@@ -1,6 +1,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/call_theme_primary" android:state_focused="true" />
-    <item android:alpha="0.87" android:color="@color/call_theme_outline" android:state_hovered="true" />
-    <item android:alpha="0.12" android:color="@color/call_theme_outline" android:state_enabled="false" />
-    <item android:alpha="0.38" android:color="@color/call_theme_outline" />
+    <item android:color="?attr/callThemePrimary" android:state_focused="true" />
+    <item android:alpha="0.87" android:color="?attr/callThemeOutline" android:state_hovered="true" />
+    <item android:alpha="0.12" android:color="?attr/callThemeOutline" android:state_enabled="false" />
+    <item android:alpha="0.38" android:color="?attr/callThemeOutline" />
 </selector>

@@ -7,7 +7,10 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.google.android.gms.ads.AdView
 import com.origin.commons.callerid.databinding.ShimmerAdaptiveBannerLayoutBinding
-import com.origin.commons.callerid.extensions.*
+import com.origin.commons.callerid.extensions.beGone
+import com.origin.commons.callerid.extensions.beGoneIf
+import com.origin.commons.callerid.extensions.beVisible
+import com.origin.commons.callerid.extensions.getScreenWidthPx
 import kotlin.math.roundToInt
 
 class GoogleBannerAds {
@@ -51,7 +54,7 @@ class GoogleBannerAds {
                 val params: RelativeLayout.LayoutParams = this.iv1.layoutParams as RelativeLayout.LayoutParams
                 params.height = (activity.getScreenWidthPx() / 1.3f).roundToInt()
                 params.width = RelativeLayout.LayoutParams.MATCH_PARENT
-                this.iv1.setLayoutParams(params)
+                this.iv1.layoutParams = params
 
                 mShimmerBannerLayoutBinding = this
                 activity.updateUIShimmerLayout(this)
@@ -64,7 +67,7 @@ class GoogleBannerAds {
             val params: FrameLayout.LayoutParams = flSpaceLayout.layoutParams as FrameLayout.LayoutParams
             params.height = defaultBannerHeightPx
             params.width = FrameLayout.LayoutParams.MATCH_PARENT
-            flSpaceLayout.setLayoutParams(params)
+            flSpaceLayout.layoutParams = params
         }
     }
 

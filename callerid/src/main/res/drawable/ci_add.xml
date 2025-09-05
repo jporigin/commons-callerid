@@ -4,9 +4,9 @@
     android:viewportWidth="29"
     android:viewportHeight="28">
     <path
-        android:fillColor="@color/call_theme_onPrimary"
+        android:fillColor="?attr/callThemeOnPrimary"
         android:pathData="M12.75 0h3.5v28h-3.5z"/>
     <path
-        android:fillColor="@color/call_theme_onPrimary"
+        android:fillColor="?attr/callThemeOnPrimary"
         android:pathData="M28.5 12.25v3.5h-28v-3.5z"/>
 </vector>

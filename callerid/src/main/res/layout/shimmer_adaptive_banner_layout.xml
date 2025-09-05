@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv1"
             android:layout_margin="3dp"
-            android:contentDescription="@string/ad_content_description"
+            android:contentDescription="@string/ci_ad_content_description"
             android:visibility="visible" />
 
     </RelativeLayout>

@@ -15,7 +15,6 @@ import com.origin.commons.callerid.helpers.CallerIdUtils.isNotificationPermissio
 import com.origin.commons.callerid.helpers.CallerIdUtils.isScreenOverlayEnabled
 import com.origin.commons.callerid.services.NotificationService
 import com.origin.commons.callerid.ui.activity.CallerIdActivity
-import com.origin.commons.callerid.utils.callPhoneNumber
 import java.util.Date
 
 class OgCallerIdCallReceiver : BroadcastReceiver() {
@@ -49,7 +48,7 @@ class OgCallerIdCallReceiver : BroadcastReceiver() {
                             handleCallState(context, extraState)
                         }
                         false -> {
-                            callPhoneNumber = getPhoneNumber(intent)
+                            prefs.callPhoneNumber = getPhoneNumber(intent)
                             logE("OgCallerIdCallReceiver:onReceive: ${getPhoneState(intent)}")
                             context.startLegacyForegroundService()
                         }
@@ -65,8 +64,10 @@ class OgCallerIdCallReceiver : BroadcastReceiver() {
 
     private fun getPhoneNumber(intent: Intent): String {
         @Suppress("DEPRECATION")
-        // Only the default dialer app can access the incoming number
-        return intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER) ?: "Unknown"
+        // Only the default dialer app can access the incoming number and outgoing number.
+        val incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)
+        val outgoingNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER)
+        return incomingNumber ?: outgoingNumber ?: "Unknown"
     }
 
     private fun handleCallState(context: Context, state: String?) {

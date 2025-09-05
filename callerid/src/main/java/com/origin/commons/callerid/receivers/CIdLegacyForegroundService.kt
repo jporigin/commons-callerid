@@ -13,10 +13,10 @@ import android.os.IBinder
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyCallback
 import android.telephony.TelephonyManager
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.R
+import com.origin.commons.callerid.extensions.isDarkMode
 import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.prefsHelper
 import com.origin.commons.callerid.helpers.CallerIdUtils
@@ -26,7 +26,6 @@ import com.origin.commons.callerid.helpers.CallerIdUtils.isScreenOverlayEnabled
 import com.origin.commons.callerid.model.ThemeConfig
 import com.origin.commons.callerid.ui.activity.CallerIdActivity
 import com.origin.commons.callerid.ui.wic.WICController
-import com.origin.commons.callerid.utils.callPhoneNumber
 import com.origin.commons.callerid.utils.callStartTime
 import com.origin.commons.callerid.utils.callType
 import java.util.Date
@@ -62,7 +61,7 @@ class CIdLegacyForegroundService : Service() {
             return
         }
 
-        setTheme(R.style.Caller_Main_Theme)
+        setTheme(this, prefsHelper.themeConfig)
         val telephonyManager = getSystemService(TELEPHONY_SERVICE) as TelephonyManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val executor = ContextCompat.getMainExecutor(this)
@@ -152,10 +151,11 @@ class CIdLegacyForegroundService : Service() {
         if (isScreenOverlayEnabled(this@CIdLegacyForegroundService)) {
             val intent = Intent(this@CIdLegacyForegroundService, CallerIdActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            intent.putExtra("phoneNumber", callPhoneNumber)
+            intent.putExtra("phoneNumber", prefsHelper.callPhoneNumber)
             intent.putExtra("time", formatTimeToString(callStartTime))
             intent.putExtra("duration", calculateDuration(callStartTime, Date().time))
             intent.putExtra("callType", callType)
+            prefsHelper.callPhoneNumber = "Unknown"
             this@CIdLegacyForegroundService.startActivity(intent)
         }
     }
@@ -210,13 +210,22 @@ class CIdLegacyForegroundService : Service() {
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(newBase?.let {
-            when(it.prefsHelper.themeConfig) {
-                ThemeConfig.SYSTEM_THEME -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                ThemeConfig.LIGHT_THEME -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                ThemeConfig.DARK_THEME -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            }
             ContextWrapper(it)
         })
+    }
+
+    private fun setTheme(context: Context, theme: ThemeConfig) {
+        val isDarkMode = when(theme) {
+            ThemeConfig.SYSTEM_THEME -> context.isDarkMode()
+            ThemeConfig.LIGHT_THEME -> false
+            ThemeConfig.DARK_THEME -> true
+        }
+        setTheme(getThemeStyle(isDarkMode))
+    }
+
+    private fun getThemeStyle(isDarkMode: Boolean = false) = when (isDarkMode) {
+        true -> R.style.Caller_Main_Theme_Dark
+        false -> R.style.Caller_Main_Theme_Light
     }
 
 }

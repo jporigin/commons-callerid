@@ -198,7 +198,7 @@ class ReminderFragment : Fragment() {
             showDatePickerIfNeeded()
         }
 
-        val formattedTime = getString(R.string.time_format, hourVal, minuteVal)
+        val formattedTime = getString(R.string.ci_time_format, hourVal, minuteVal)
         _binding.teTime.setText(formattedTime)
         _binding.teTime.setOnClickListener {
             showTimePickerIfNeeded()
@@ -350,7 +350,7 @@ class ReminderFragment : Fragment() {
     }
 
     private val datePicker: MaterialDatePicker<Long> by lazy {
-        MaterialDatePicker.Builder.datePicker().setTitleText(getString(R.string.select_date)).setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build().apply {
+        MaterialDatePicker.Builder.datePicker().setTitleText(getString(R.string.ci_select_date)).setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build().apply {
             addOnPositiveButtonClickListener { selection ->
                 val pickedDate = Calendar.getInstance().apply { timeInMillis = selection }
                 val today = Calendar.getInstance().apply {
@@ -361,7 +361,7 @@ class ReminderFragment : Fragment() {
                 }
 
                 if (pickedDate.before(today)) {
-                    requireContext().showCustomToast(R.string.invalid_past_date)
+                    requireContext().showCustomToast(R.string.ci_invalid_past_date)
                 } else {
                     val formatter = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
                     dateVal = formatter.format(pickedDate.time)
@@ -385,7 +385,7 @@ class ReminderFragment : Fragment() {
         val minutes: Int = rightNow.get(Calendar.MINUTE)
 
         MaterialTimePicker.Builder().setInputMode(MaterialTimePicker.INPUT_MODE_KEYBOARD).setTimeFormat(TimeFormat.CLOCK_24H) // Or TimeFormat.CLOCK_12H
-            .setHour(currentHourIn24Format).setMinute(minutes).setTitleText(getString(R.string.select_time)) // Using a string resource
+            .setHour(currentHourIn24Format).setMinute(minutes).setTitleText(getString(R.string.ci_select_time)) // Using a string resource
             .build().apply {
                 addOnPositiveButtonClickListener {
                     val pickedDateTime = (selectedDate ?: Calendar.getInstance()).apply {
@@ -397,11 +397,11 @@ class ReminderFragment : Fragment() {
 
                     val now = Calendar.getInstance()
                     if (pickedDateTime.before(now)) {
-                        requireContext().showCustomToast(R.string.invalid_past_time)
+                        requireContext().showCustomToast(R.string.ci_invalid_past_time)
                     } else {
                         hourVal = timePicker.hour.toString()
                         minuteVal = timePicker.minute.toString()
-                        val formattedTime = getString(R.string.time_format, hourVal, minuteVal)
+                        val formattedTime = getString(R.string.ci_time_format, hourVal, minuteVal)
                         _binding.teTime.setText(formattedTime)
                     }
                 }

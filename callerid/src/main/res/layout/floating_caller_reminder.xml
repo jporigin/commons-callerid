@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="end"
-    android:background="@color/call_theme_surfaceContainerLow"
+    android:background="?attr/callThemeSurfaceContainerLow"
     android:orientation="vertical">
 
     <ImageView
@@ -15,7 +15,7 @@
         android:layout_height="38dp"
         android:padding="6dp"
         android:src="@drawable/ci_arrow_collapse"
-        android:tint="@color/call_theme_onSurface" />
+        app:tint="?attr/callThemeOnSurface" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -54,8 +54,8 @@
                     android:gravity="center"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="12dp"
-                    android:text="@string/create_a_new_reminder"
-                    android:textColor="@color/call_theme_onPrimary"
+                    android:text="@string/ci_create_a_new_reminder"
+                    android:textColor="?attr/callThemeOnPrimary"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
-                android:indeterminateTint="@color/call_theme_primary"
+                android:indeterminateTint="?attr/callThemePrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -117,12 +117,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/reminder_title"
+                    android:hint="@string/ci_reminder_title"
                     app:boxStrokeColor="@color/ci_text_input_layout_stroke_color"
                     app:counterEnabled="true"
                     app:counterMaxLength="30"
                     app:counterTextAppearance="@style/CounterTextAppearance"
-                    app:counterTextColor="@color/call_theme_onSurfaceVariant"
+                    app:counterTextColor="?attr/callThemeOnSurfaceVariant"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -135,8 +135,8 @@
                         android:fontFamily="@font/sinteca_medium"
                         android:maxLength="30"
                         android:singleLine="true"
-                        android:textColor="@color/call_theme_onSurface"
-                        android:textColorHint="@color/call_theme_onSurfaceVariant"
+                        android:textColor="?attr/callThemeOnSurface"
+                        android:textColorHint="?attr/callThemeOnSurfaceVariant"
                         android:textCursorDrawable="@null"
                         android:textSize="14sp" />
 
@@ -148,12 +148,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/reminder_message"
+                    android:hint="@string/ci_reminder_message"
                     app:boxStrokeColor="@color/ci_text_input_layout_stroke_color"
                     app:counterEnabled="true"
                     app:counterMaxLength="60"
                     app:counterTextAppearance="@style/CounterTextAppearance"
-                    app:counterTextColor="@color/call_theme_onSurfaceVariant"
+                    app:counterTextColor="?attr/callThemeOnSurfaceVariant"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tlTitle"
@@ -167,8 +167,8 @@
                         android:imeOptions="actionDone"
                         android:maxLength="60"
                         android:singleLine="true"
-                        android:textColor="@color/call_theme_onSurface"
-                        android:textColorHint="@color/call_theme_onSurfaceVariant"
+                        android:textColor="?attr/callThemeOnSurface"
+                        android:textColorHint="?attr/callThemeOnSurfaceVariant"
                         android:textCursorDrawable="@null"
                         android:textSize="14sp" />
 
@@ -211,8 +211,8 @@
                             android:fontFamily="@font/sinteca_medium"
                             android:gravity="center"
                             android:includeFontPadding="false"
-                            android:text="@string/cancel"
-                            android:textColor="@color/call_theme_onSurface"
+                            android:text="@string/ci_cancel"
+                            android:textColor="?attr/callThemeOnSurface"
                             android:textSize="16sp" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -231,8 +231,8 @@
                             android:fontFamily="@font/sinteca_medium"
                             android:gravity="center"
                             android:includeFontPadding="false"
-                            android:text="@string/save"
-                            android:textColor="@color/call_theme_onPrimary"
+                            android:text="@string/ci_save"
+                            android:textColor="?attr/callThemeOnPrimary"
                             android:textSize="16sp" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,9 +3,9 @@
     <string name="app_name_tag">#OG_Caller_ID</string>
 
 
-    <string name="cancel">Cancel</string>
-    <string name="keep_it">Keep it</string>
-    <string name="proceed">Proceed</string>
+    <string name="ci_cancel">Cancel</string>
+    <string name="ci_keep_it">Keep it</string>
+    <string name="ci_proceed">Proceed</string>
     <string name="open_setting">Open Setting</string>
     <string name="open_setting_desc">Please provide required permission to use application with hassle free.</string>
     <string name="required_permission">Required Permission</string>

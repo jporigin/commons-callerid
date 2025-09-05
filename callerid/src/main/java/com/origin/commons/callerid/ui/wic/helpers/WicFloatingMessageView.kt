@@ -8,11 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.databinding.FloatingCallerMessageBinding
 import com.origin.commons.callerid.extensions.hideKeyboard
+import com.origin.commons.callerid.extensions.resolveThemeColor
 import com.origin.commons.callerid.extensions.showCustomToast
 import com.origin.commons.callerid.extensions.showKeyboard
 import com.origin.commons.callerid.extensions.value
@@ -36,8 +36,8 @@ class WicFloatingMessageView(
 
     private fun setupClickListeners() {
         with(_binding) {
-            val ciAppColor = ContextCompat.getColor(context, R.color.call_theme_primary)
-            val ciTxtColor = ContextCompat.getColor(context, R.color.call_theme_onSurface)
+            val ciAppColor = context.resolveThemeColor(R.attr.callThemePrimary)
+            val ciTxtColor = context.resolveThemeColor(R.attr.callThemeOnSurface)
             clickMsgLl1()
             _binding.ivCollapse.setOnClickListener {
                 dismiss()
@@ -242,8 +242,8 @@ class WicFloatingMessageView(
     }
 
     fun clickMsgLl1() {
-        val ciAppColor = ContextCompat.getColor(context, R.color.call_theme_primary)
-        val ciTxtColor = ContextCompat.getColor(context, R.color.call_theme_onSurface)
+        val ciAppColor = context.resolveThemeColor(R.attr.callThemePrimary)
+        val ciTxtColor = context.resolveThemeColor(R.attr.callThemeOnSurface)
 
         with(_binding) {
             tvMsg1.setTextColor(ciAppColor)
@@ -282,6 +282,7 @@ class WicFloatingMessageView(
                             context.startActivity(this)
                         }
                     }
+
                     else -> {
                         val intent = Intent(Intent.ACTION_MAIN).apply {
                             addCategory(Intent.CATEGORY_APP_MESSAGING)

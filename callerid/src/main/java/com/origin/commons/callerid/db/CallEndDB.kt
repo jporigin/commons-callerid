@@ -22,7 +22,7 @@ abstract class CallEndDB : RoomDatabase() {
         fun getInstance(context: Context): CallEndDB {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(context.applicationContext, CallEndDB::class.java, DATABASE_NAME)
-                    .addMigrations(MIGRATION_1_2) // 👈 Added migration
+                    .addMigrations(MIGRATION_1_2)
                     .build()
                 INSTANCE = instance
                 instance
