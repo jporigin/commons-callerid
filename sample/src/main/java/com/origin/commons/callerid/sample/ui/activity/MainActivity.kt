@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 logEventE("Main_Act_onBackPress")
-                finish()
+                finishAffinity()
             }
         })
         logEventE("Main_Act_onCreate")

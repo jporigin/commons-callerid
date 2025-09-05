@@ -56,7 +56,7 @@ class MoreFragment : Fragment() {
                 context?.openWebBrowser("http://www.google.com")
             }
             clAppSetting.setOnClickListener {
-                activity?.openCallerIDSetting()
+                activity?.openCallerIDSetting(true)
             }
         }
     }

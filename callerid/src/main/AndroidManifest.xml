@@ -27,14 +27,13 @@
             android:name=".ui.activity.CallerSettingActivity"
             android:allowEmbedded="true"
             android:allowTaskReparenting="true"
-            android:excludeFromRecents="true"
             android:exported="true"
-            android:noHistory="true"
             android:screenOrientation="nosensor" />
         <activity
             android:name=".ui.activity.CallerIdActivity"
             android:allowTaskReparenting="true"
             android:exported="true"
+            android:excludeFromRecents="true"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />

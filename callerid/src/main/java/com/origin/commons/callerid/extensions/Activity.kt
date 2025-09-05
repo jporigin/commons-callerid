@@ -14,7 +14,7 @@ import androidx.core.hardware.display.DisplayManagerCompat
 import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.ui.activity.CallerSettingActivity
 
-fun Activity.openCallerIDSetting() {
+fun Activity.openCallerIDSetting(isFromCallerScreen: Boolean = false) {
     val callerIdSDKApplication = try {
         this.application as? CallerIdSDKApplication
     } catch (_: Exception) {
@@ -23,10 +23,12 @@ fun Activity.openCallerIDSetting() {
     val customCallerSetting = callerIdSDKApplication?.customCallerSetting?.provide()
     if (customCallerSetting != null) {
         val intent = Intent(this, customCallerSetting)
+        intent.putExtra("isFromCallerScreen", isFromCallerScreen)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         this.startActivity(intent)
     } else {
         val intent = Intent(this, CallerSettingActivity::class.java)
+        intent.putExtra("isFromCallerScreen", isFromCallerScreen)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         this.startActivity(intent)
     }

@@ -2,6 +2,8 @@ package com.origin.commons.callerid.ui.activity
 
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -20,6 +22,9 @@ class CallerSettingActivity : CallerBaseActivity(), HomeKeyWatcher.OnHomeAndRece
     private val _binding by lazy {
         ActivityCallerSettingBinding.inflate(layoutInflater)
     }
+
+    private val isFromCallerScreen by lazy { intent.getBooleanExtra("isFromCallerScreen", false) }
+
     var watcher: HomeKeyWatcher? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +41,7 @@ class CallerSettingActivity : CallerBaseActivity(), HomeKeyWatcher.OnHomeAndRece
         _binding.ivBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-        if (watcher == null) {
+        if (watcher == null && isFromCallerScreen) {
             watcher = HomeKeyWatcher(this@CallerSettingActivity).apply {
                 setListener(this@CallerSettingActivity)
                 startWatching()
@@ -62,11 +67,27 @@ class CallerSettingActivity : CallerBaseActivity(), HomeKeyWatcher.OnHomeAndRece
     }
 
     override fun onHomePressed() {
-        onBackPressedDispatcher.onBackPressed()
+        finishMyActNRemoveTask()
     }
 
     override fun onRecentsPressed() {
-        onBackPressedDispatcher.onBackPressed()
+        finishMyActNRemoveTask()
+    }
+
+    private fun finishMyActNRemoveTask() {
+        Handler(Looper.getMainLooper()).post {
+            val comp = intent?.component
+            if (!isFinishing && comp != null) {
+                try {
+                    finishAndRemoveTask()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    finish()
+                }
+            } else {
+                finish()
+            }
+        }
     }
 
     private fun refreshThemeSwitches() = with(_binding) {
