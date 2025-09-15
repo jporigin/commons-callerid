@@ -43,34 +43,34 @@ Simply extend the `CallerIdSDKApplication` class in your main application like t
 import com.ogmediaapps.callerid.CallerIdSDKApplication
 
 class MyApplication : CallerIdSDKApplication() {
-    override fun onCreate() {
-        super.onCreate()
-        initCallerSDK()
-    }
+   override fun onCreate() {
+      super.onCreate()
+      initCallerSDK()
+   }
 
-    // initialize caller id sdk
-    private fun initCallerSDK() {
-        CallerIdSDK.init(this) // Call this if you have some default app to check (e.g message)
-        openClassForDefaultApp = ActivityClassProvider { MainActivity::class.java } // ActivityClassProvider to open when user click on set as default app
-        setUpAdsUIDs()  // set up this to show ad on CallerIdScreen
-        setUp(R.drawable.app_logo_, R.drawable.app_logo_icon) // set up logo
-        notifyOverlayDenied(true) // notify if overlay permission is denied
-        setUpNotificationConfig(NotificationConfig(pendingClass = PermissionActivity::class.java)) // set up notification config for notify overlay permission is denied provide pendingClass which you want to open on click (default takes openClass1 ActivityClassProvider or openClass2High if provided)
-        openClass1 = ActivityClassProvider { MainActivity::class.java } // ActivityClassProvider to open when user click on notification or any click where host app interacts on first priority
-        openClass2High = ActivityClassProvider { SplashActivity::class.java } // ActivityClassProvider to open when user click on notification or any click where host app interacts on second priority
-        customHomeFragment = FragmentClassProvider { CIHomeScreenFragment() } // FragmentClassProvider to set up custom first fragment of caller screen
-        customCallerSetting = ActivityClassProvider { CallerSettingActivity::class.java } // ActivityClassProvider to set up custom caller setting screen
-    }
+   // initialize caller id sdk
+   private fun initCallerSDK() {
+      CallerIdSDK.init(this) // Call this if you have some default app to check (e.g message)
+      openClassForDefaultApp = ActivityClassProvider { MainActivity::class.java } // ActivityClassProvider to open when user click on set as default app
+      setUpAdsUIDs()  // set up this to show ad on CallerIdScreen
+      setUp(R.drawable.app_logo_, R.drawable.app_logo_icon) // set up logo
+      notifyOverlayDenied(true) // notify if overlay permission is denied
+      setUpNotificationConfig(NotificationConfig(pendingClass = PermissionActivity::class.java)) // set up notification config for notify overlay permission is denied provide pendingClass which you want to open on click (default takes openClass1 ActivityClassProvider or openClass2High if provided)
+      openClass1 = ActivityClassProvider { MainActivity::class.java } // ActivityClassProvider to open when user click on notification or any click where host app interacts on first priority
+      openClass2High = ActivityClassProvider { SplashActivity::class.java } // ActivityClassProvider to open when user click on notification or any click where host app interacts on second priority
+      customHomeFragment = FragmentClassProvider { CIHomeScreenFragment() } // FragmentClassProvider to set up custom first fragment of caller screen
+      customCallerSetting = ActivityClassProvider { CallerSettingActivity::class.java } // ActivityClassProvider to set up custom caller setting screen
+   }
 
-    private fun setUpAdsUIDs() {
-       setUpAdsIDs(
-          nativeBigIds = listOf(Utils.nativeBigId1, Utils.nativeBigId2, Utils.nativeBigId3),
-          nativeSmallIds = listOf(Utils.nativeSmallId1, Utils.nativeSmallId2),
-          bannerIds = listOf(Utils.bannerId1, Utils.bannerId2)
-       )
-    }
+   private fun setUpAdsUIDs() {
+      setUpAdsIDs(
+         nativeBigIds = listOf(Utils.nativeBigId1, Utils.nativeBigId2, Utils.nativeBigId3),
+         nativeSmallIds = listOf(Utils.nativeSmallId1, Utils.nativeSmallId2),
+         bannerIds = listOf(Utils.bannerId1, Utils.bannerId2)
+      )
+   }
 
-    override fun onCallerThemeChanged(themeConfig: ThemeConfig) {}
+   override fun onCallerThemeChanged(themeConfig: ThemeConfig) {}
 }
 ```
 `Java`
@@ -79,31 +79,31 @@ import com.ogmediaapps.callerid.CallerIdSDKApplication;
 
 public class MyApplication extends CallerIdSDKApplication {
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        initCallerSDK();
-    }
+   @Override
+   public void onCreate() {
+      super.onCreate();
+      initCallerSDK();
+   }
 
-  	// initialize caller id sdk
-    private void initCallerSDK() {
-        setUpAdsUIDs();
-        setUp(R.drawable.app_logo_, R.drawable.app_logo_icon);
-        setOpenClass1(() -> MainActivity.class);
-        setOpenClass2High(() -> SplashActivity.class);
-        setCustomHomeFragment(CIHomeScreenFragment::new);
-    }
-    
-    private void setUpAdsUIDs() {
-        setUpAdsIDs(
-                Arrays.asList(Utils.INSTANCE.getNativeBigId1(), Utils.INSTANCE.getNativeBigId2(), Utils.INSTANCE.getNativeBigId3()),
-                Arrays.asList(Utils.INSTANCE.getNativeSmallId1(), Utils.INSTANCE.getNativeSmallId2()),
-                Arrays.asList(Utils.INSTANCE.getBannerId1(), Utils.INSTANCE.getBannerId2())
-        );
-    }
+   // initialize caller id sdk
+   private void initCallerSDK() {
+      setUpAdsUIDs();
+      setUp(R.drawable.app_logo_, R.drawable.app_logo_icon);
+      setOpenClass1(() -> MainActivity.class);
+      setOpenClass2High(() -> SplashActivity.class);
+      setCustomHomeFragment(CIHomeScreenFragment::new);
+   }
 
-    @Override
-    public void onCallerThemeChanged(@NotNull ThemeConfig themeConfig) {}
+   private void setUpAdsUIDs() {
+      setUpAdsIDs(
+              Arrays.asList(Utils.INSTANCE.getNativeBigId1(), Utils.INSTANCE.getNativeBigId2(), Utils.INSTANCE.getNativeBigId3()),
+              Arrays.asList(Utils.INSTANCE.getNativeSmallId1(), Utils.INSTANCE.getNativeSmallId2()),
+              Arrays.asList(Utils.INSTANCE.getBannerId1(), Utils.INSTANCE.getBannerId2())
+      );
+   }
+
+   @Override
+   public void onCallerThemeChanged(@NotNull ThemeConfig themeConfig) {}
 }
 ```
 > [!NOTE]
