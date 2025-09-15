@@ -114,7 +114,17 @@ public class MyApplication extends CallerIdSDKApplication {
 >   - If the app is closed, it will launch `openClass2High`.
 >* To use a custom Caller ID home screen, set your fragment to `customHomeFragment`.
 
-### 🔧 Caller Screen Feature Toggles
+### 🔧 Caller ID Setting Screen
+
+#### Appearance
+You can enable/disable appearance view. By default it's enabled.
+
+![Preview](images/set_appearance.png)
+``` 
+// disable theme
+showThemeSettings(false);
+```
+
 
 You can customize the caller screen behavior by enabling or disabling specific features through the following flags:
 
