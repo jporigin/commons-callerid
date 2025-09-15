@@ -17,8 +17,8 @@ dependencyResolutionManagement {
 	maven {
             url = uri("https://jitpack.io")
             credentials {
-                username = "ogmediaapps18"
-                password = "-----Get the password key from your TL/PM-----"
+                username = "-----Get the key from your TL or PM-----"
+                password = "-----Get the key from your TL or PM-----"
             }
     }
  }
