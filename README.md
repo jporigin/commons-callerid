@@ -127,8 +127,7 @@ showThemeSettings(false);
 </a>
 
 #### General
-You can enable/disable General view. By default it's enabled.
-If you want to disable the popup view and display only the caller ID screen after ending a call.
+You can enable/disable General view. By default it's enabled. If you want to disable the popup view and show only the caller ID screen after ending a call.
 ``` 
 // disable popup
 showOnlyCallerIdScreen(true);
