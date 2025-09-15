@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -12,19 +13,16 @@ import com.origin.commons.callerid.CallerIdSDKApplication
 import com.origin.commons.callerid.R
 import com.origin.commons.callerid.databinding.FloatingCallerMessageBinding
 import com.origin.commons.callerid.extensions.hideKeyboard
+import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.resolveThemeColor
 import com.origin.commons.callerid.extensions.showCustomToast
 import com.origin.commons.callerid.extensions.showKeyboard
 import com.origin.commons.callerid.extensions.value
 import com.origin.commons.callerid.helpers.CallerIdSDK
+import java.util.logging.Handler
 
 @SuppressLint("ViewConstructor")
-class WicFloatingMessageView(
-    private val context: Context,
-    private val windowManager: WindowManager,
-    private val layoutParams: WindowManager.LayoutParams,
-    private val onDismiss: () -> Unit
-) : LinearLayout(context) {
+class WicFloatingMessageView(private val context: Context, private val windowManager: WindowManager, private val layoutParams: WindowManager.LayoutParams, private val onDismiss: () -> Unit) : LinearLayout(context) {
 
     private val _binding: FloatingCallerMessageBinding
 
@@ -38,12 +36,12 @@ class WicFloatingMessageView(
         with(_binding) {
             val ciAppColor = context.resolveThemeColor(R.attr.callThemePrimary)
             val ciTxtColor = context.resolveThemeColor(R.attr.callThemeOnSurface)
-            clickMsgLl1()
+            clickMsgLl(false)
             _binding.ivCollapse.setOnClickListener {
                 dismiss()
             }
             llMsg1.setOnClickListener {
-                clickMsgLl1()
+                clickMsgLl(true)
             }
             llMsg2.setOnClickListener {
                 tvMsg1.setTextColor(ciTxtColor)
@@ -56,7 +54,7 @@ class WicFloatingMessageView(
                 ivRadio1.setImageResource(R.drawable.ci_radio_unselected)
                 ivRadio2.setImageResource(R.drawable.ci_radio_selected)
                 ivRadio3.setImageResource(R.drawable.ci_radio_unselected)
-                etClearFocus(etMsg)
+                etClearFocus(etMsg, 96)
             }
             llMsg3.setOnClickListener {
                 tvMsg1.setTextColor(ciTxtColor)
@@ -69,49 +67,16 @@ class WicFloatingMessageView(
                 ivRadio1.setImageResource(R.drawable.ci_radio_unselected)
                 ivRadio2.setImageResource(R.drawable.ci_radio_unselected)
                 ivRadio3.setImageResource(R.drawable.ci_radio_selected)
-                etClearFocus(etMsg)
-            }
-            ivEdit.setOnClickListener {
-                tvMsg1.setTextColor(ciTxtColor)
-                tvMsg2.setTextColor(ciTxtColor)
-                tvMsg3.setTextColor(ciTxtColor)
-                ivSend1.visibility = INVISIBLE
-                ivSend2.visibility = INVISIBLE
-                ivSend3.visibility = INVISIBLE
-                ivSend4.visibility = VISIBLE
-                ivRadio1.setImageResource(R.drawable.ci_radio_unselected)
-                ivRadio2.setImageResource(R.drawable.ci_radio_unselected)
-                ivRadio3.setImageResource(R.drawable.ci_radio_unselected)
-                etClearFocus(etMsg)
-                etRequestFocus(etMsg)
+                etClearFocus(etMsg, 95)
             }
             llMsg4.setOnClickListener {
-                tvMsg1.setTextColor(ciTxtColor)
-                tvMsg2.setTextColor(ciTxtColor)
-                tvMsg3.setTextColor(ciTxtColor)
-                ivSend1.visibility = INVISIBLE
-                ivSend2.visibility = INVISIBLE
-                ivSend3.visibility = INVISIBLE
-                ivSend4.visibility = VISIBLE
-                ivRadio1.setImageResource(R.drawable.ci_radio_unselected)
-                ivRadio2.setImageResource(R.drawable.ci_radio_unselected)
-                ivRadio3.setImageResource(R.drawable.ci_radio_unselected)
-                etClearFocus(etMsg)
-                etRequestFocus(etMsg)
+                requestEditTextFocus()
             }
-
+            tlMsg.setOnClickListener {
+                requestEditTextFocus()
+            }
             etMsg.setOnClickListener {
-                tvMsg1.setTextColor(ciTxtColor)
-                tvMsg2.setTextColor(ciTxtColor)
-                tvMsg3.setTextColor(ciTxtColor)
-                ivSend1.visibility = INVISIBLE
-                ivSend2.visibility = INVISIBLE
-                ivSend3.visibility = INVISIBLE
-                ivSend4.visibility = VISIBLE
-                ivRadio1.setImageResource(R.drawable.ci_radio_unselected)
-                ivRadio2.setImageResource(R.drawable.ci_radio_unselected)
-                ivRadio3.setImageResource(R.drawable.ci_radio_unselected)
-                etRequestFocus(etMsg)
+                requestEditTextFocus()
             }
             etMsg.setOnEditorActionListener { _, actionID: Int, _ ->
                 if (actionID == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
@@ -122,6 +87,29 @@ class WicFloatingMessageView(
             }
 
             etMsg.setOnFocusChangeListener { v, hasFocus ->
+                logE("check::hasFocus: $hasFocus")
+                try {
+                    if (hasFocus) {
+                        logE("check::showKeyboard: ")
+                        // show flag
+                        layoutParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                        windowManager.updateViewLayout(this@WicFloatingMessageView, layoutParams)
+                        //
+                        android.os.Handler(Looper.getMainLooper()).postDelayed({
+                            v.showKeyboard()
+                        }, 400L)
+                    } else {
+                        logE("check::hideKeyboard: ")
+                        // hide flag
+                        layoutParams.flags =
+                            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                        windowManager.updateViewLayout(this@WicFloatingMessageView, layoutParams)
+                        //
+                        v.hideKeyboard()
+                    }
+                } catch (_: Exception) {
+                }
+
                 if (hasFocus) {
                     tvMsg1.setTextColor(ciTxtColor)
                     tvMsg2.setTextColor(ciTxtColor)
@@ -134,25 +122,7 @@ class WicFloatingMessageView(
                     ivRadio2.setImageResource(R.drawable.ci_radio_unselected)
                     ivRadio3.setImageResource(R.drawable.ci_radio_unselected)
                 }
-                try {
-                    if (hasFocus) {
-                        // show flag
-                        layoutParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
-                                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
-                                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                        windowManager.updateViewLayout(this@WicFloatingMessageView, layoutParams)
-                        v.showKeyboard()
-                    } else {
-                        // hide flag
-                        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
-                                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
-                                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                        windowManager.updateViewLayout(this@WicFloatingMessageView, layoutParams)
-                        v.hideKeyboard()
-                    }
-                } catch (_: Exception) {
-                }
+
             }
 
             ivSend1.setOnClickListener {
@@ -188,17 +158,36 @@ class WicFloatingMessageView(
         onDismiss.invoke()
     }
 
-    fun etRequestFocus(mView: View? = null) {
+    fun requestEditTextFocus() {
+        with(_binding) {
+            val ciTxtColor = context.resolveThemeColor(R.attr.callThemeOnSurface)
+            tvMsg1.setTextColor(ciTxtColor)
+            tvMsg2.setTextColor(ciTxtColor)
+            tvMsg3.setTextColor(ciTxtColor)
+            ivSend1.visibility = INVISIBLE
+            ivSend2.visibility = INVISIBLE
+            ivSend3.visibility = INVISIBLE
+            ivSend4.visibility = VISIBLE
+            ivRadio1.setImageResource(R.drawable.ci_radio_unselected)
+            ivRadio2.setImageResource(R.drawable.ci_radio_unselected)
+            ivRadio3.setImageResource(R.drawable.ci_radio_unselected)
+            etRequestFocus(etMsg)
+        }
+    }
+
+    fun etRequestFocus(mView: View? = null, delayMillis: Long = 250) {
         try {
             if (mView != null) {
                 mView.postDelayed({
+                    logE("check:: requestFocus:00")
                     mView.requestFocus()
-                }, 250)
+                }, delayMillis)
             } else {
                 with(_binding) {
                     etMsg.postDelayed({
+                        logE("check:: requestFocus:11")
                         etMsg.requestFocus()
-                    }, 250)
+                    }, delayMillis)
                 }
             }
         } catch (_: Exception) {
@@ -207,19 +196,22 @@ class WicFloatingMessageView(
 
     fun clearAllETFocus() {
         with(_binding) {
-            etClearFocus(etMsg)
+            etClearFocus(etMsg, 99)
         }
     }
 
-    fun etClearFocus(mView: View? = null) {
+    fun etClearFocus(mView: View? = null, delInt: Int) {
         try {
             if (mView != null) {
                 mView.postDelayed({
+                    logE("check:: clearFocus:00: $delInt")
+
                     mView.clearFocus()
                 }, 100)
             } else {
                 with(_binding) {
                     etMsg.postDelayed({
+                        logE("check:: clearFocus:11: $delInt")
                         etMsg.clearFocus()
                     }, 100)
                 }
@@ -233,15 +225,14 @@ class WicFloatingMessageView(
             if (etMsg.value.isNotEmpty()) {
                 val message = etMsg.text.toString()
                 openMessage(context, message)
-                etClearFocus(etMsg)
+                etClearFocus(etMsg, 98)
             } else {
                 context.showCustomToast("Please enter message")
             }
-
         }
     }
 
-    fun clickMsgLl1() {
+    fun clickMsgLl(isClick: Boolean) {
         val ciAppColor = context.resolveThemeColor(R.attr.callThemePrimary)
         val ciTxtColor = context.resolveThemeColor(R.attr.callThemeOnSurface)
 
@@ -256,8 +247,11 @@ class WicFloatingMessageView(
             ivRadio1.setImageResource(R.drawable.ci_radio_selected)
             ivRadio2.setImageResource(R.drawable.ci_radio_unselected)
             ivRadio3.setImageResource(R.drawable.ci_radio_unselected)
+            if (isClick) {
+                etClearFocus(etMsg, 96)
+            }
         }
-        etClearFocus()
+
     }
 
     /*** Replace Above Function With This Function ***/

@@ -11,10 +11,6 @@ import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
-import com.origin.commons.callerid.R
 import com.origin.commons.callerid.databinding.FragmentReminderBinding
 import com.origin.commons.callerid.db.entity.ReminderEntity
 import com.origin.commons.callerid.di.AppProvider
@@ -23,13 +19,16 @@ import com.origin.commons.callerid.extensions.beVisibleIf
 import com.origin.commons.callerid.extensions.etClearFocus
 import com.origin.commons.callerid.extensions.etRequestFocus
 import com.origin.commons.callerid.extensions.formatedTime
+import com.origin.commons.callerid.extensions.formatedTime1
 import com.origin.commons.callerid.extensions.getUID
 import com.origin.commons.callerid.extensions.hideKeyboard
+import com.origin.commons.callerid.extensions.logE
 import com.origin.commons.callerid.extensions.showCustomToast
 import com.origin.commons.callerid.extensions.showKeyboard
 import com.origin.commons.callerid.extensions.value
 import com.origin.commons.callerid.helpers.CallerIdUtils.isNotificationPermissionGranted
 import com.origin.commons.callerid.states.ReminderState
+import com.origin.commons.callerid.timepicker.DateHelper
 import com.origin.commons.callerid.ui.adapter.ReminderAdapter
 import com.origin.commons.callerid.viewmodel.ReminderFragmentViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -61,7 +60,6 @@ class ReminderFragment : Fragment() {
     private var updateReminder = false
     private var updateModel: ReminderEntity? = ReminderEntity()
 
-    private var selectedDate: Calendar? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return _binding.root
@@ -192,16 +190,18 @@ class ReminderFragment : Fragment() {
             _binding.teMessage.etRequestFocus()
         }
 
-
-        _binding.teDate.setText(dateVal)
-        _binding.teDate.setOnClickListener {
-            showDatePickerIfNeeded()
-        }
-
-        val formattedTime = getString(R.string.ci_time_format, hourVal, minuteVal)
-        _binding.teTime.setText(formattedTime)
-        _binding.teTime.setOnClickListener {
-            showTimePickerIfNeeded()
+        _binding.dateTimePicker.setDateHelper(DateHelper())
+        _binding.dateTimePicker.setMustBeOnFuture(true)
+        _binding.dateTimePicker.setCurved(true)
+        _binding.dateTimePicker.setStepSizeMinutes(1)
+        _binding.dateTimePicker.addOnDateChangedListener { displayed, date ->
+            val selectedTime = Calendar.getInstance()
+            selectedTime.setTime(date)
+            hourVal = formatedTime1(selectedTime.get(Calendar.HOUR_OF_DAY))
+            minuteVal = formatedTime1(selectedTime.get(Calendar.MINUTE))
+            val df2 = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
+            dateVal = df2.format(selectedTime.time)
+            logE(" check: ", "addOnDateChangedListener:check:: $displayed -- $date")
         }
 
         _binding.btnSave.setOnClickListener {
@@ -264,14 +264,7 @@ class ReminderFragment : Fragment() {
                 val msg = _binding.teMessage.value.ifEmpty { "" }
 
                 if (updateReminder) {
-                    val reminderEntity = ReminderEntity(
-                        id = updateModel?.id,
-                        title = title,
-                        date = dateVal,
-                        hours = hourVal,
-                        minutes = minuteVal,
-                        message = msg
-                    )
+                    val reminderEntity = ReminderEntity(id = updateModel?.id, title = title, date = dateVal, hours = hourVal, minutes = minuteVal, message = msg)
                     CoroutineScope(Dispatchers.IO).launch {
                         viewModel.updateReminder(reminderEntity)
                     }
@@ -348,72 +341,6 @@ class ReminderFragment : Fragment() {
         } catch (_: Exception) {
         }
     }
-
-    private val datePicker: MaterialDatePicker<Long> by lazy {
-        MaterialDatePicker.Builder.datePicker().setTitleText(getString(R.string.ci_select_date)).setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build().apply {
-            addOnPositiveButtonClickListener { selection ->
-                val pickedDate = Calendar.getInstance().apply { timeInMillis = selection }
-                val today = Calendar.getInstance().apply {
-                    set(Calendar.HOUR_OF_DAY, 0)
-                    set(Calendar.MINUTE, 0)
-                    set(Calendar.SECOND, 0)
-                    set(Calendar.MILLISECOND, 0)
-                }
-
-                if (pickedDate.before(today)) {
-                    requireContext().showCustomToast(R.string.ci_invalid_past_date)
-                } else {
-                    val formatter = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
-                    dateVal = formatter.format(pickedDate.time)
-                    _binding.teDate.setText(dateVal)
-
-                    selectedDate = pickedDate
-                }
-            }
-        }
-    }
-
-    private fun showDatePickerIfNeeded() {
-        if (!datePicker.isAdded && !datePicker.isVisible) {
-            datePicker.show(parentFragmentManager, "DatePickerDialogTag") // Using a constant tag
-        }
-    }
-
-    private val timePicker: MaterialTimePicker by lazy {
-        val rightNow = Calendar.getInstance()
-        val currentHourIn24Format: Int = rightNow.get(Calendar.HOUR_OF_DAY)
-        val minutes: Int = rightNow.get(Calendar.MINUTE)
-
-        MaterialTimePicker.Builder().setInputMode(MaterialTimePicker.INPUT_MODE_KEYBOARD).setTimeFormat(TimeFormat.CLOCK_24H) // Or TimeFormat.CLOCK_12H
-            .setHour(currentHourIn24Format).setMinute(minutes).setTitleText(getString(R.string.ci_select_time)) // Using a string resource
-            .build().apply {
-                addOnPositiveButtonClickListener {
-                    val pickedDateTime = (selectedDate ?: Calendar.getInstance()).apply {
-                        set(Calendar.HOUR_OF_DAY, timePicker.hour)
-                        set(Calendar.MINUTE, timePicker.minute)
-                        set(Calendar.SECOND, 0)
-                        set(Calendar.MILLISECOND, 0)
-                    }
-
-                    val now = Calendar.getInstance()
-                    if (pickedDateTime.before(now)) {
-                        requireContext().showCustomToast(R.string.ci_invalid_past_time)
-                    } else {
-                        hourVal = timePicker.hour.toString()
-                        minuteVal = timePicker.minute.toString()
-                        val formattedTime = getString(R.string.ci_time_format, hourVal, minuteVal)
-                        _binding.teTime.setText(formattedTime)
-                    }
-                }
-            }
-    }
-
-    private fun showTimePickerIfNeeded() {
-        if (!timePicker.isAdded && !timePicker.isVisible) {
-            timePicker.show(parentFragmentManager, "TimePickerDialogTag") // Using a constant tag
-        }
-    }
-
     private fun prepareRecyclerViewFOrReminder() {
         _binding.rvReminder.apply {
             reminderAdapter = ReminderAdapter(onItemClick = {

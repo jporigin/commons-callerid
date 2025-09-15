@@ -20,9 +20,9 @@ import java.util.Date
 class OgCallerIdCallReceiver : BroadcastReceiver() {
 
     /**
-     • 0. IDLE: No call activity.
-     • 1. RINGING: Incoming call is ringing.
-     • 2. OFFHOOK: A call is in progress (dialing, active, or on hold) and no other calls are ringing or waiting.
+    • 0. IDLE: No call activity.
+    • 1. RINGING: Incoming call is ringing.
+    • 2. OFFHOOK: A call is in progress (dialing, active, or on hold) and no other calls are ringing or waiting.
      */
 
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -41,12 +41,13 @@ class OgCallerIdCallReceiver : BroadcastReceiver() {
         if (isMissedCallFeatureEnable || isCompleteCallFeatureEnable || isNoAnswerFeatureEnable) {
             if (intent.action == TelephonyManager.ACTION_PHONE_STATE_CHANGED) {
                 if (isScreenOverlayEnabled(context)) {
-                    when(prefs.showOnlyCallerIdScreen) {
+                    when (prefs.showOnlyCallerIdScreen) {
                         true -> {
                             prefs.callPhoneNumber = getPhoneNumber(intent)
                             val extraState = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
                             handleCallState(context, extraState)
                         }
+
                         false -> {
                             prefs.callPhoneNumber = getPhoneNumber(intent)
                             logE("OgCallerIdCallReceiver:onReceive: ${getPhoneState(intent)}")

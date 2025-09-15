@@ -101,17 +101,12 @@ class WicFloatingReminderView(
             try {
                 if (hasFocus) {
                     // show flag
-                    layoutParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
-                            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
-                            WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                    layoutParams.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                     windowManager.updateViewLayout(this@WicFloatingReminderView, layoutParams)
                     v.showKeyboard()
                 } else {
                     // hide flag
-                    layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
-                            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
-                            WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                    layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                     windowManager.updateViewLayout(this@WicFloatingReminderView, layoutParams)
                     v.hideKeyboard()
                 }
@@ -203,7 +198,7 @@ class WicFloatingReminderView(
 
         _binding.tlTitle.setOnClickListener {
             _binding.teTitle.etClearFocus()
-            _binding.teMessage.etRequestFocus()
+            _binding.teTitle.etRequestFocus()
         }
         _binding.tlMessage.setOnClickListener {
             _binding.teMessage.etClearFocus()

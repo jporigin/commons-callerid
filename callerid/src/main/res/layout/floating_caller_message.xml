@@ -14,7 +14,7 @@
         android:layout_height="38dp"
         android:padding="6dp"
         android:src="@drawable/ci_arrow_collapse"
-        app:tint="?attr/callThemeOnSurface" />
+        app:tint="?callThemeOnSurface" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,10 +26,10 @@
             android:id="@+id/llMsg1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:foreground="@drawable/ripple_0"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingVertical="4dp"
-            android:foreground="@drawable/ripple_0"
             android:paddingStart="8dp"
             android:paddingEnd="16dp">
 
@@ -69,8 +69,8 @@
             android:id="@+id/llMsg2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:foreground="@drawable/ripple_0"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingVertical="4dp"
             android:paddingStart="8dp"
@@ -169,27 +169,44 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="top"
-                android:foreground="@drawable/bg_ripple_round"
+                android:clickable="false"
                 android:padding="6dp"
                 android:src="@drawable/ci_edit_" />
 
-            <EditText
-                android:id="@+id/etMsg"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tlMsg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:autofillHints="all"
-                android:background="@null"
-                android:fontFamily="@font/sinteca_medium"
-                android:gravity="start"
-                android:hint="@string/ci_write_personal_message"
-                android:imeOptions="actionSend"
-                android:includeFontPadding="false"
-                android:maxLines="5"
-                android:minHeight="80dp"
-                android:paddingTop="4dp"
-                android:textColor="?attr/callThemeOnSurface"
-                android:textSize="14sp" />
+                android:hint="@string/ci_reminder_title"
+                app:boxBackgroundMode="none"
+                app:boxStrokeColor="@color/ci_text_input_layout_stroke_color"
+                app:counterMaxLength="30"
+                app:counterTextAppearance="@style/CounterTextAppearance"
+                app:counterTextColor="?attr/callThemeOnSurfaceVariant"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etMsg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:autofillHints="all"
+                    android:background="@null"
+                    android:fontFamily="@font/sinteca_medium"
+                    android:gravity="start"
+                    android:hint="@string/ci_write_personal_message"
+                    android:imeOptions="actionSend"
+                    android:includeFontPadding="false"
+                    android:maxLines="5"
+                    android:minHeight="80dp"
+                    android:paddingTop="4dp"
+                    android:textColor="?attr/callThemeOnSurface"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <ImageView
                 android:id="@+id/ivSend4"

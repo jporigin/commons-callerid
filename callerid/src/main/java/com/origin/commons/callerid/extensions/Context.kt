@@ -276,9 +276,8 @@ fun Context.makePhoneCall(phoneNumber: String?, callback: () -> Unit) {
                         putExtra("phone_number", phoneNumber)
                         putExtra(Intent.EXTRA_TEXT, phoneNumber)
                     }
-                    putExtra("isFromCallerScreen", true)
+                    putExtra("isFromCallerId", true)
                     startActivity(this)
-                    callback.invoke()
                 }
             } else {
                 launchDialerIntent(phoneNumber)
@@ -291,6 +290,8 @@ fun Context.makePhoneCall(phoneNumber: String?, callback: () -> Unit) {
     } catch (_: Exception) {
         launchDialerIntent(phoneNumber)
     }
+
+    callback.invoke()
 }
 
 private fun Context.launchDialerIntent(phoneNumber: String?) {
@@ -339,6 +340,7 @@ fun Context.openMessage(message: String = "", callback: () -> Unit) {
                         intent.putExtra("sms_body", message)
                     }
                     startActivity(intent)
+                    callback.invoke()
                 }
             }
         } else {
@@ -350,6 +352,7 @@ fun Context.openMessage(message: String = "", callback: () -> Unit) {
                 intent.putExtra("sms_body", message)
             }
             startActivity(intent)
+            callback.invoke()
         }
     } catch (_: ActivityNotFoundException) {
         try {
@@ -361,6 +364,7 @@ fun Context.openMessage(message: String = "", callback: () -> Unit) {
                 intent.putExtra("sms_body", message)
             }
             startActivity(intent)
+            callback.invoke()
         } catch (inner: ActivityNotFoundException) {
             inner.printStackTrace()
         }
@@ -375,6 +379,7 @@ fun Context.openMessage(message: String = "", callback: () -> Unit) {
                 intent.putExtra("sms_body", message)
             }
             startActivity(intent)
+            callback.invoke()
         } catch (inner: Exception) {
             inner.printStackTrace()
         }

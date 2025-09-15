@@ -193,15 +193,7 @@ class CallerSettingActivity : CallerBaseActivity(), HomeKeyWatcher.OnHomeAndRece
             } else {
                 runOnUiThread {
                     if (!isDestroyed && !isFinishing) {
-                        val msgBuilder =
-                            StringBuilder().append("• ").append(
-                                String.format(
-                                    this.getString(R.string.ci_caller_toggle_agree_title_2),
-                                    getString(R.string.ci_missed_call)
-                                )
-                            ).append("\n").append("\n")
-                                .append("• ")
-                                .append(this.getString(R.string.ci_caller_toggle_agree_message_1))
+                        val msgBuilder = StringBuilder().append("• ").append(String.format(this.getString(R.string.ci_caller_toggle_agree_title_2), getString(R.string.ci_missed_call))).append("\n").append("\n").append("• ").append(this.getString(R.string.ci_caller_toggle_agree_message_1))
                         ConfirmationDialog(
                             activity = this,
                             titleId = R.string.ci_caller_toggle_agree_title_1,

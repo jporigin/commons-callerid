@@ -50,8 +50,7 @@ object WICOverlayViewManager {
             PopViewType.STANDARD -> getStandardLayoutParams(context)
         }
         currentState = state
-        val view =
-            WicFloatingCallerView(context, state, popViewType, mWindowManager!!, layoutParams)
+        val view = WicFloatingCallerView(context, state, popViewType, mWindowManager!!, layoutParams)
         mFloatingCallerView = view
         try {
             mWindowManager?.addView(view, layoutParams)
@@ -110,64 +109,53 @@ object WICOverlayViewManager {
     }
 
     fun hide(context: Context, callback: () -> Unit) {
-        mFloatingCallerView?.let { overlayView ->
-            if (overlayView.isAttachedToWindow) {
-                overlayView.animate()
-                    .alpha(0f)
-                    .translationX(context.resources.displayMetrics.widthPixels.toFloat())
-                    .setDuration(300)
-                    .setInterpolator(AccelerateInterpolator())
-                    .withEndAction {
-                        try {
-                            mWindowManager?.removeView(mFloatingCallerView)
-                            mFloatingCallerView = null
-                            mWindowManager = null
-                            overlayView.stop()
-                        } catch (_: Exception) {
-                        }
-                    }
-                    .start()
-                callback.invoke()
+        val screenWidth = context.resources.displayMetrics.widthPixels.toFloat()
+        val overlayViews = listOfNotNull(mFloatingCallerView, mFloatingMessageView, mFloatingReminderView)
+        // If no overlays, finish immediately
+        if (overlayViews.isEmpty()) {
+            callback()
+            return
+        }
+        var removedCount = 0
+        val total = overlayViews.size
+
+        fun onRemoved() {
+            removedCount++
+            if (removedCount == total) {
+                mWindowManager = null
+                callback()
             }
         }
-        mFloatingMessageView?.let { overlayView ->
+
+        overlayViews.forEach { overlayView ->
             if (overlayView.isAttachedToWindow) {
-                overlayView.clearAllETFocus()
-                overlayView.animate()
-                    .alpha(0f)
-                    .translationX(context.resources.displayMetrics.widthPixels.toFloat())
-                    .setDuration(300)
-                    .setInterpolator(AccelerateInterpolator())
-                    .withEndAction {
-                        try {
-                            mWindowManager?.removeView(mFloatingMessageView)
-                            mFloatingMessageView = null
-                            mWindowManager = null
-                        } catch (_: Exception) {
+                overlayView.animate().alpha(0f).translationX(screenWidth).setDuration(150).setInterpolator(AccelerateInterpolator()).withEndAction {
+                    try {
+                        mWindowManager?.removeView(overlayView)
+                        when (overlayView) {
+                            mFloatingCallerView -> {
+                                mFloatingCallerView?.stop()
+                                mFloatingCallerView = null
+                            }
+
+                            mFloatingMessageView -> {
+                                mFloatingMessageView?.clearAllETFocus()
+                                mFloatingMessageView = null
+                            }
+
+                            mFloatingReminderView -> {
+                                mFloatingReminderView?.clearAllETFocus()
+                                mFloatingReminderView = null
+                            }
                         }
+                    } catch (_: Exception) {
+                    } finally {
+                        onRemoved()
                     }
-                    .start()
-                callback.invoke()
-            }
-        }
-        mFloatingReminderView?.let { overlayView ->
-            if (overlayView.isAttachedToWindow) {
-                overlayView.clearAllETFocus()
-                overlayView.animate()
-                    .alpha(0f)
-                    .translationX(context.resources.displayMetrics.widthPixels.toFloat())
-                    .setDuration(300)
-                    .setInterpolator(AccelerateInterpolator())
-                    .withEndAction {
-                        try {
-                            mWindowManager?.removeView(mFloatingReminderView)
-                            mFloatingReminderView = null
-                            mWindowManager = null
-                        } catch (_: Exception) {
-                        }
-                    }
-                    .start()
-                callback.invoke()
+                }.start()
+            } else {
+                // Not attached, treat as removed
+                onRemoved()
             }
         }
     }
@@ -213,7 +201,7 @@ object WICOverlayViewManager {
             mFloatingMessageView = messageView
             try {
                 mWindowManager?.addView(messageView, layoutParams)
-            }  catch (e: WindowManager.BadTokenException) {
+            } catch (e: WindowManager.BadTokenException) {
                 logE("Unable to add overlay message view $e")
             }
         }
@@ -235,7 +223,7 @@ object WICOverlayViewManager {
             mFloatingReminderView = reminderView
             try {
                 mWindowManager?.addView(reminderView, layoutParams)
-            }  catch (e: WindowManager.BadTokenException) {
+            } catch (e: WindowManager.BadTokenException) {
                 logE("Unable to add overlay reminder view $e")
             }
 

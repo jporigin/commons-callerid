@@ -81,7 +81,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nsvAddReminderView"
         android:layout_width="match_parent"
@@ -147,9 +146,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sinteca_medium"
+                    android:imeOptions="actionDone"
                     android:maxLength="60"
                     android:singleLine="true"
-                    android:imeOptions="actionDone"
                     android:textColor="?attr/callThemeOnSurface"
                     android:textColorHint="?attr/callThemeOnSurfaceVariant"
                     android:textCursorDrawable="@null"
@@ -157,57 +156,17 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tlDate"
+            <com.origin.commons.callerid.timepicker.SingleDateAndTimePicker
+                android:id="@+id/dateTimePicker"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="10dp"
-                android:hint="@string/ci_select_date"
-                app:boxStrokeColor="@color/ci_text_input_layout_stroke_color"
+                android:layout_height="150dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tlMessage"
-                app:startIconDrawable="@drawable/ci_date">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/teDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:fontFamily="@font/sinteca_medium"
-                    android:inputType="none"
-                    android:textColor="?attr/callThemeOnSurface"
-                    android:textColorHint="?attr/callThemeOnSurfaceVariant"
-                    android:textCursorDrawable="@null"
-                    android:textSize="14sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tlTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="10dp"
-                android:hint="@string/ci_select_time"
-                app:boxStrokeColor="@color/ci_text_input_layout_stroke_color"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tlDate"
-                app:startIconDrawable="@drawable/ci_time">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/teTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:fontFamily="@font/sinteca_medium"
-                    android:inputType="none"
-                    android:textColor="?attr/callThemeOnSurface"
-                    android:textColorHint="?attr/callThemeOnSurfaceVariant"
-                    android:textCursorDrawable="@null"
-                    android:textSize="14sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+                app:picker_textSize="18sp"
+                android:layout_marginVertical="10dp"
+                app:picker_visibleItemCount="4"
+                app:startIconDrawable="@drawable/ci_date" />
 
             <LinearLayout
                 android:id="@+id/llButtons"
@@ -220,7 +179,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tlTime">
+                app:layout_constraintTop_toBottomOf="@+id/dateTimePicker">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/btnCancel"

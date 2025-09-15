@@ -30,7 +30,7 @@ fun View.showKeyboard() {
         val imm = ContextCompat.getSystemService(context, InputMethodManager::class.java)
         imm?.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
     } catch (e: Exception) {
-        Log.e("ViewExtensions", "Error showing keyboard", e)
+        Log.e("ViewExtensions", "check::Error showing keyboard", e)
     }
 }
 
