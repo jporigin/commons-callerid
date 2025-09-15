@@ -3,8 +3,8 @@ package com.origin.commons.callerid.sample.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.origin.commons.callerid.helpers.CallerIdUtils.isPhoneStatePermissionGranted
-import com.origin.commons.callerid.helpers.CallerIdUtils.isScreenOverlayEnabled
+import com.ogmediaapps.callerid.helpers.CallerIdUtils.isPhoneStatePermissionGranted
+import com.ogmediaapps.callerid.helpers.CallerIdUtils.isScreenOverlayEnabled
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

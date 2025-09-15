@@ -8,8 +8,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.origin.commons.callerid.helpers.CallerIdUtils.isPhoneStatePermissionGranted
-import com.origin.commons.callerid.helpers.CallerIdUtils.isScreenOverlayEnabled
+import com.ogmediaapps.callerid.helpers.CallerIdUtils.isPhoneStatePermissionGranted
+import com.ogmediaapps.callerid.helpers.CallerIdUtils.isScreenOverlayEnabled
 import com.origin.commons.callerid.sample.R
 import com.origin.commons.callerid.sample.databinding.ActivitySplashBinding
 

@@ -2,7 +2,7 @@ package com.origin.commons.callerid.sample.extensions
 
 import android.content.Context
 import android.content.Intent
-import com.origin.commons.callerid.helpers.SharedPreferencesHelper
+import com.ogmediaapps.callerid.helpers.SharedPreferencesHelper
 import kotlin.apply
 
 

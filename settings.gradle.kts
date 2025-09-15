@@ -19,10 +19,15 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral() // add
-        maven { url = uri("https://jitpack.io") } // add
+        maven { // add
+            url = uri("https://jitpack.io")
+            credentials {
+                username = "ogmediaapps18"
+                password = "Get the password key from your TL/PM."
+            }
+        }
     }
 }
 
 rootProject.name = "Caller_ID"
 include(":sample")
-include(":callerid")

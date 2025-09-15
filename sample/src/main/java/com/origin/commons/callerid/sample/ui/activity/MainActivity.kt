@@ -10,14 +10,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.origin.commons.callerid.extensions.logEventE
-import com.origin.commons.callerid.extensions.openCallerIDSetting
-import com.origin.commons.callerid.extensions.refreshCurrentAdsType
-import com.origin.commons.callerid.helpers.CallerIdUtils.calculateDuration
-import com.origin.commons.callerid.helpers.CallerIdUtils.formatTimeToString
+import com.ogmediaapps.callerid.extensions.logEventE
+import com.ogmediaapps.callerid.extensions.openCallerIDSetting
+import com.ogmediaapps.callerid.extensions.refreshCurrentAdsType
+import com.ogmediaapps.callerid.helpers.CallerIdUtils.calculateDuration
+import com.ogmediaapps.callerid.helpers.CallerIdUtils.formatTimeToString
+import com.ogmediaapps.callerid.ui.activity.CallerIdActivity
 import com.origin.commons.callerid.sample.R
 import com.origin.commons.callerid.sample.databinding.ActivityMainBinding
-import com.origin.commons.callerid.ui.activity.CallerIdActivity
 import java.util.Date
 
 class MainActivity : AppCompatActivity() {
@@ -42,9 +42,6 @@ class MainActivity : AppCompatActivity() {
         _binding.ivSetting.setOnClickListener {
             this@MainActivity.openCallerIDSetting()
         }
-//        if (XiaomiPermissionHelper.isXiaomiDevice()) {
-//            XiaomiPermissionHelper.guideUserForXiaomiOptimizations(this)
-//        }
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 logEventE("Main_Act_onBackPress")

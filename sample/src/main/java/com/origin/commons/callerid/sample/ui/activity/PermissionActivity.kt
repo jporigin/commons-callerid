@@ -30,10 +30,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.loukwn.stagestepbar.StageStepBar
-import com.origin.commons.callerid.extensions.logEventE
-import com.origin.commons.callerid.helpers.CallerIdUtils.isNotificationPermissionGranted
-import com.origin.commons.callerid.helpers.CallerIdUtils.isPhoneStatePermissionGranted
-import com.origin.commons.callerid.helpers.CallerIdUtils.isScreenOverlayEnabled
+import com.ogmediaapps.callerid.extensions.logEventE
+import com.ogmediaapps.callerid.helpers.CallerIdUtils.isNotificationPermissionGranted
+import com.ogmediaapps.callerid.helpers.CallerIdUtils.isPhoneStatePermissionGranted
+import com.ogmediaapps.callerid.helpers.CallerIdUtils.isScreenOverlayEnabled
 import com.origin.commons.callerid.sample.R
 import com.origin.commons.callerid.sample.databinding.ActivityPermissionBinding
 import com.origin.commons.callerid.sample.extensions.isNotiPermissionReqAsked

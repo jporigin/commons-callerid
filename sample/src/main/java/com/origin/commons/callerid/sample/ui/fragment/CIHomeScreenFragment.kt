@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.origin.commons.callerid.extensions.getOpenAppIntent
+import com.ogmediaapps.callerid.extensions.getOpenAppIntent
 import com.origin.commons.callerid.sample.databinding.FragmentCiHomeScreenBinding
 
 class CIHomeScreenFragment : Fragment() {

@@ -1,9 +1,9 @@
 package com.origin.commons.callerid.sample
 
-import com.origin.commons.callerid.CallerIdSDKApplication
-import com.origin.commons.callerid.helpers.CallerIdSDK
-import com.origin.commons.callerid.helpers.NotificationConfig
-import com.origin.commons.callerid.model.ThemeConfig
+import com.ogmediaapps.callerid.CallerIdSDKApplication
+import com.ogmediaapps.callerid.helpers.CallerIdSDK
+import com.ogmediaapps.callerid.helpers.NotificationConfig
+import com.ogmediaapps.callerid.model.ThemeConfig
 import com.origin.commons.callerid.sample.helpers.Utils
 import com.origin.commons.callerid.sample.ui.activity.MainActivity
 import com.origin.commons.callerid.sample.ui.activity.PermissionActivity

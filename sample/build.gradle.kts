@@ -61,6 +61,5 @@ dependencies {
     implementation(libs.firebase.messaging)
 
     // CallerID
-    implementation(project(":callerid"))
-
+    implementation("com.github.ogmediaapps18:callerid:1.0.1")
 }
