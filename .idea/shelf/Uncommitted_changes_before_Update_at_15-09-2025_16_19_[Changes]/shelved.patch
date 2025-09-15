@@ -1,0 +1,93 @@
+Index: sample/src/main/java/com/origin/commons/callerid/sample/MyApplication.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.origin.commons.callerid.sample\r\n\r\nimport com.ogmediaapps.callerid.CallerIdSDKApplication\r\nimport com.ogmediaapps.callerid.helpers.CallerIdSDK\r\nimport com.ogmediaapps.callerid.helpers.NotificationConfig\r\nimport com.ogmediaapps.callerid.model.ThemeConfig\r\nimport com.origin.commons.callerid.sample.helpers.Utils\r\nimport com.origin.commons.callerid.sample.ui.activity.MainActivity\r\nimport com.origin.commons.callerid.sample.ui.activity.PermissionActivity\r\nimport com.origin.commons.callerid.sample.ui.activity.SplashActivity\r\nimport com.origin.commons.callerid.sample.ui.fragment.CIHomeScreenFragment\r\n\r\nclass MyApplication : CallerIdSDKApplication() {\r\n\r\n    override fun onCreate() {\r\n        super.onCreate()\r\n        initCallerSDK()\r\n    }\r\n\r\n    // initialize caller id sdk\r\n    private fun initCallerSDK() {\r\n        CallerIdSDK.init(this)\r\n        setUpAdsUIDs()\r\n        setUp(R.drawable.app_logo_, R.drawable.app_logo_icon)\r\n        notifyOverlayDenied(true)\r\n        setUpNotificationConfig(NotificationConfig(pendingClass = PermissionActivity::class.java))\r\n        openClass1 = ActivityClassProvider { MainActivity::class.java }\r\n        openClass2High = ActivityClassProvider { SplashActivity::class.java }\r\n        customHomeFragment = FragmentClassProvider { CIHomeScreenFragment() }\r\n    }\r\n\r\n    override fun onCallerThemeChanged(themeConfig: ThemeConfig) {}\r\n\r\n    private fun setUpAdsUIDs() {\r\n        setUpAdsIDs(\r\n            nativeBigIds = listOf(Utils.nativeBigId1, Utils.nativeBigId2, Utils.nativeBigId3),\r\n            nativeSmallIds = listOf(Utils.nativeSmallId1, Utils.nativeSmallId2),\r\n            bannerIds = listOf(Utils.bannerId1, Utils.bannerId2)\r\n        )\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/sample/src/main/java/com/origin/commons/callerid/sample/MyApplication.kt b/sample/src/main/java/com/origin/commons/callerid/sample/MyApplication.kt
+--- a/sample/src/main/java/com/origin/commons/callerid/sample/MyApplication.kt	(revision 73cc3121d3cd1fa1b334db6019b20b2485635c42)
++++ b/sample/src/main/java/com/origin/commons/callerid/sample/MyApplication.kt	(date 1757933117208)
+@@ -27,6 +27,7 @@
+         openClass1 = ActivityClassProvider { MainActivity::class.java }
+         openClass2High = ActivityClassProvider { SplashActivity::class.java }
+         customHomeFragment = FragmentClassProvider { CIHomeScreenFragment() }
++
+     }
+ 
+     override fun onCallerThemeChanged(themeConfig: ThemeConfig) {}
+Index: sample/build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    alias(libs.plugins.android.application)\r\n    alias(libs.plugins.kotlin.android)\r\n    alias(libs.plugins.google.service)\r\n    alias(libs.plugins.firebase.crashlytics)\r\n    alias(libs.plugins.ksp)\r\n}\r\nandroid {\r\n    namespace = \"com.origin.commons.callerid.sample\"\r\n    compileSdk = 35\r\n\r\n    defaultConfig {\r\n        applicationId = \"com.origin.commons.callerid.sample\"\r\n        minSdk = 24\r\n        targetSdk = 35\r\n        versionCode = 14\r\n        versionName = \"1.1.4\"\r\n        testInstrumentationRunner = \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            isMinifyEnabled = true\r\n            isShrinkResources = true\r\n            proguardFiles(getDefaultProguardFile(\"proguard-android-optimize.txt\"), \"proguard-rules.pro\")\r\n        }\r\n    }\r\n    java {\r\n        toolchain {\r\n            languageVersion.set(JavaLanguageVersion.of(17))\r\n        }\r\n    }\r\n    kotlin {\r\n        jvmToolchain(17)\r\n    }\r\n    buildFeatures {\r\n        viewBinding = true\r\n    }\r\n    lint {\r\n        checkReleaseBuilds = false\r\n    }\r\n}\r\ndependencies {\r\n    implementation(libs.androidx.core.ktx)\r\n    implementation(libs.androidx.appcompat)\r\n    implementation(libs.material)\r\n    implementation(libs.androidx.activity)\r\n    implementation(libs.androidx.constraintlayout)\r\n    testImplementation(libs.junit)\r\n    androidTestImplementation(libs.androidx.junit)\r\n    androidTestImplementation(libs.androidx.espresso.core)\r\n\r\n    // optional\r\n    implementation(libs.stagestepbar)\r\n\r\n    // Firebase\r\n    implementation(platform(libs.firebase.bom))\r\n    implementation(libs.firebase.analytics)\r\n    implementation(libs.firebase.crashlytics)\r\n    implementation(libs.firebase.config)\r\n    implementation(libs.firebase.messaging)\r\n\r\n    // CallerID\r\n    implementation(\"com.github.ogmediaapps18:callerid:1.0.1\")\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/sample/build.gradle.kts b/sample/build.gradle.kts
+--- a/sample/build.gradle.kts	(revision 73cc3121d3cd1fa1b334db6019b20b2485635c42)
++++ b/sample/build.gradle.kts	(date 1757932108255)
+@@ -62,4 +62,5 @@
+ 
+     // CallerID
+     implementation("com.github.ogmediaapps18:callerid:1.0.1")
++
+ }
+\ No newline at end of file
+Index: README.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n# Caller-ID\r\n![JitPack Version](https://img.shields.io/badge/JitPack-1.0.1-green)  |  [Release notes](https://sites.google.com/view/og-caller-id-release-notes)\r\n\r\nCaller-ID SDK seamlessly integrates with your app to deliver rich call-related experiences. By showing detailed call information and context-aware features during, after, or even for missed calls, your app becomes more useful and engaging to users.\r\nThis smart enhancement delivers real value, resulting in happier users, higher retention, and more frequent engagement. Increased user interaction leads to more impressions, which directly translates into stronger and more sustainable revenue growth.\r\n\r\n## Download\r\n\r\n```gradle\r\n\r\ndependencyResolutionManagement {\r\n repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)\r\n repositories {\r\n\t// CallerID\t\r\n \tmavenCentral()\r\n\tmaven {\r\n            url = uri(\"https://jitpack.io\")\r\n            credentials {\r\n                username = \"-----Get the key from your TL or PM-----\"\r\n                password = \"-----Get the key from your TL or PM-----\"\r\n            }\r\n    }\r\n }\r\n}\r\n\r\ndependencies {\r\n   ...\r\n   // CallerID\r\n   implementation 'com.github.ogmediaapps18:callerid:Tag'\r\n}\r\n\r\n```\r\n\r\n## How do I use OG-Caller-ID?\r\n\r\nCheck out the latest release version from our [Release notes](https://sites.google.com/view/og-caller-id-release-notes)\r\n\r\nSimply extend the `CallerIdSDKApplication` class in your main application like this:\r\n\r\n`Kotlin`\r\n```kotlin\r\nimport com.ogmediaapps.callerid.CallerIdSDKApplication\r\n\r\nclass MyApplication : CallerIdSDKApplication() {\r\n    override fun onCreate() {\r\n        super.onCreate()\r\n        initCallerSDK()\r\n    }\r\n\r\n    // initialize caller id sdk\r\n    private fun initCallerSDK() {\r\n        CallerIdSDK.init(this) // Call this if you have some default app to check (e.g message)\r\n        openClassForDefaultApp = ActivityClassProvider { MainActivity::class.java } // ActivityClassProvider to open when user click on set as default app\r\n        setUpAdsUIDs()  // set up this to show ad on CallerIdScreen\r\n        setUp(R.drawable.app_logo_, R.drawable.app_logo_icon) // set up logo\r\n        notifyOverlayDenied(true) // notify if overlay permission is denied\r\n        setUpNotificationConfig(NotificationConfig(pendingClass = PermissionActivity::class.java)) // set up notification config for notify overlay permission is denied provide pendingClass which you want to open on click (default takes openClass1 ActivityClassProvider or openClass2High if provided)\r\n        openClass1 = ActivityClassProvider { MainActivity::class.java } // ActivityClassProvider to open when user click on notification or any click where host app interacts on first priority\r\n        openClass2High = ActivityClassProvider { SplashActivity::class.java } // ActivityClassProvider to open when user click on notification or any click where host app interacts on second priority\r\n        customHomeFragment = FragmentClassProvider { CIHomeScreenFragment() } // FragmentClassProvider to set up custom first fragment of caller screen\r\n        customCallerSetting = ActivityClassProvider { CallerSettingActivity::class.java } // ActivityClassProvider to set up custom caller setting screen\r\n    }\r\n\r\n    private fun setUpAdsUIDs() {\r\n       setUpAdsIDs(\r\n          nativeBigIds = listOf(Utils.nativeBigId1, Utils.nativeBigId2, Utils.nativeBigId3),\r\n          nativeSmallIds = listOf(Utils.nativeSmallId1, Utils.nativeSmallId2),\r\n          bannerIds = listOf(Utils.bannerId1, Utils.bannerId2)\r\n       )\r\n    }\r\n\r\n    override fun onCallerThemeChanged(themeConfig: ThemeConfig) {}\r\n}\r\n```\r\n`Java`\r\n```Java\r\nimport com.ogmediaapps.callerid.CallerIdSDKApplication;\r\n\r\npublic class MyApplication extends CallerIdSDKApplication {\r\n\r\n    @Override\r\n    public void onCreate() {\r\n        super.onCreate();\r\n        initCallerSDK();\r\n    }\r\n\r\n  \t// initialize caller id sdk\r\n    private void initCallerSDK() {\r\n        setUpAdsUIDs();\r\n        setUp(R.drawable.app_logo_, R.drawable.app_logo_icon);\r\n        setOpenClass1(() -> MainActivity.class);\r\n        setOpenClass2High(() -> SplashActivity.class);\r\n        setCustomHomeFragment(CIHomeScreenFragment::new);\r\n    }\r\n    \r\n    private void setUpAdsUIDs() {\r\n        setUpAdsIDs(\r\n                Arrays.asList(Utils.INSTANCE.getNativeBigId1(), Utils.INSTANCE.getNativeBigId2(), Utils.INSTANCE.getNativeBigId3()),\r\n                Arrays.asList(Utils.INSTANCE.getNativeSmallId1(), Utils.INSTANCE.getNativeSmallId2()),\r\n                Arrays.asList(Utils.INSTANCE.getBannerId1(), Utils.INSTANCE.getBannerId2())\r\n        );\r\n    }\r\n\r\n    @Override\r\n    public void onCallerThemeChanged(@NotNull ThemeConfig themeConfig) {}\r\n}\r\n```\r\n> [!NOTE]\r\n>* please provide appropriate ads IDs `nativeBigIds`, `nativeSmallIds`, `bannerIds`.\r\n>* If you want to open the Caller ID settings activity directly, set `openSettingClass`.\r\n>* To open the app from the Caller ID screen, define `openClass1` and `openClass2High`:\r\n   >   - If the app is already open, it will launch `openClass1`.\r\n>   - If the app is closed, it will launch `openClass2High`.\r\n>* To use a custom Caller ID home screen, set your fragment to `customHomeFragment`.\r\n\r\n### \uD83D\uDD27 Caller Screen Feature Toggles\r\n\r\nYou can customize the caller screen behavior by enabling or disabling specific features through the following flags:\r\n\r\n```kotlin\r\nisMissedCallFeatureEnable = true  // Show caller screen on missed calls\r\nisCompleteCallFeatureEnable = true  // Show caller screen when a call ends\r\nisNoAnswerFeatureEnable = true  // Show caller screen if the call is not answered\r\n```\r\n| Flag                          | Description                                     | Behavior When `true`                   | Behavior When `false`                         |\r\n| ----------------------------- | ----------------------------------------------- | -------------------------------------- | --------------------------------------------- |\r\n| `isMissedCallFeatureEnable`   | Control screen display on missed calls          | Shows caller screen on missed calls    | Caller screen will not appear on missed calls |\r\n| `isCompleteCallFeatureEnable` | Control screen display when a call is completed | Shows caller screen when a call ends   | No screen shown after call ends               |\r\n| `isNoAnswerFeatureEnable`     | Control screen display on unanswered calls      | Shows caller screen on no-answer calls | No screen shown if the call isn’t answered    |\r\n```kotlin\r\n(application as? CallerIdSDKApplication)?.let { callerIdSDKApplication ->\r\n\r\n    _binding.switchMissCall.isChecked = callerIdSDKApplication.getMissedCallFeatureEnable() == true\r\n\r\n    _binding.switchMissCall.setOnCheckedChangeListener { _, isChecked ->\r\n        callerIdSDKApplication.setMissedCallFeatureEnable(isChecked)\r\n    }\r\n}\r\n```\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/README.md b/README.md
+--- a/README.md	(revision 73cc3121d3cd1fa1b334db6019b20b2485635c42)
++++ b/README.md	(date 1757932956444)
+@@ -34,6 +34,7 @@
+ 
+ ## How do I use OG-Caller-ID?
+ 
++
+ Check out the latest release version from our [Release notes](https://sites.google.com/view/og-caller-id-release-notes)
+ 
+ Simply extend the `CallerIdSDKApplication` class in your main application like this:
+@@ -114,7 +115,7 @@
+ >   - If the app is closed, it will launch `openClass2High`.
+ >* To use a custom Caller ID home screen, set your fragment to `customHomeFragment`.
+ 
+-### 🔧 Caller Screen Feature Toggles
++### 🔧 Caller ID Setting Screen
+ 
+ You can customize the caller screen behavior by enabling or disabling specific features through the following flags:
+ 
+Index: sample/proguard-rules.pro
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#\r\n-keep class androidx.appcompat.widget.** { *; }\r\n-keep class com.google.android.** { *; }\r\n-ignorewarnings\r\n\r\n#-assumenosideeffects class android.util.Log {\r\n#    public static boolean isLoggable(java.lang.String, int);\r\n#    public static *** d(...);\r\n#    public static *** w(...);\r\n#    public static *** v(...);\r\n#    public static *** i(...);\r\n#    public static *** e(...);\r\n#}\r\n#-keepattributes LineNumberTable\r\n-keep public class com.google.android.gms.ads.**{\r\n   public *;\r\n}\r\n\r\n\r\n# My Customize\r\n-keep class com.origin.commons.callerid.helpers.** { *; }\r\n-keep class com.origin.commons.callerid.model.** { *; }\r\n-keep class com.origin.commons.callerid.ads.** { *; }\r\n-keep class com.origin.commons.callerid.db.** { *; }\r\n-keep class com.origin.commons.callerid.db.entity.** { *; }\r\n-keep class com.origin.commons.callerid.timepicker.** { *; }\r\n\r\n-obfuscationdictionary \"D:\\Android\\Sdk\\class_encode_dictionary.txt\"\r\n-classobfuscationdictionary \"D:\\Android\\Sdk\\class_encode_dictionary.txt\"\r\n-packageobfuscationdictionary \"D:\\Android\\Sdk\\class_encode_dictionary.txt\"\r\n\r\n-mergeinterfacesaggressively\r\n-repackageclasses \"com.origin.commons.callerid.sample\"
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/sample/proguard-rules.pro b/sample/proguard-rules.pro
+--- a/sample/proguard-rules.pro	(revision 73cc3121d3cd1fa1b334db6019b20b2485635c42)
++++ b/sample/proguard-rules.pro	(date 1757929188930)
+@@ -18,12 +18,14 @@
+ 
+ 
+ # My Customize
+--keep class com.origin.commons.callerid.helpers.** { *; }
+--keep class com.origin.commons.callerid.model.** { *; }
+--keep class com.origin.commons.callerid.ads.** { *; }
+--keep class com.origin.commons.callerid.db.** { *; }
+--keep class com.origin.commons.callerid.db.entity.** { *; }
+--keep class com.origin.commons.callerid.timepicker.** { *; }
++-keep class com.ogmediaapps.callerid.helpers.** { *; }
++-keep class com.ogmediaapps.callerid.model.** { *; }
++-keep class com.ogmediaapps.callerid.ads.** { *; }
++-keep class com.ogmediaapps.callerid.db.** { *; }
++-keep class com.ogmediaapps.callerid.db.entity.** { *; }
++-keep class com.ogmediaapps.callerid.receivers.** { *; }
++-keep class com.ogmediaapps.callerid.timepicker.** { *; }
++-keep class com.ogmediaapps.callerid.ui.wic.** { *; }
+ 
+ -obfuscationdictionary "D:\Android\Sdk\class_encode_dictionary.txt"
+ -classobfuscationdictionary "D:\Android\Sdk\class_encode_dictionary.txt"
