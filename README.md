@@ -118,33 +118,22 @@ public class MyApplication extends CallerIdSDKApplication {
 
 #### Appearance
 You can enable/disable appearance view. By default it's enabled.
-
-![Preview](images/set_appearance.png)
 ``` 
 // disable theme
 showThemeSettings(false);
 ```
+<a href="images/set_appearance.png">
+  <img src="images/set_appearance.png" alt="Preview" width="460"/>
+</a>
 
-
-You can customize the caller screen behavior by enabling or disabling specific features through the following flags:
-
-```kotlin
-isMissedCallFeatureEnable = true  // Show caller screen on missed calls
-isCompleteCallFeatureEnable = true  // Show caller screen when a call ends
-isNoAnswerFeatureEnable = true  // Show caller screen if the call is not answered
+#### General
+You can enable/disable General view. By default it's enabled.
+If you want to disable the popup view and display only the caller ID screen after ending a call.
+``` 
+// disable popup
+showOnlyCallerIdScreen(true);
 ```
-| Flag                          | Description                                     | Behavior When `true`                   | Behavior When `false`                         |
-| ----------------------------- | ----------------------------------------------- | -------------------------------------- | --------------------------------------------- |
-| `isMissedCallFeatureEnable`   | Control screen display on missed calls          | Shows caller screen on missed calls    | Caller screen will not appear on missed calls |
-| `isCompleteCallFeatureEnable` | Control screen display when a call is completed | Shows caller screen when a call ends   | No screen shown after call ends               |
-| `isNoAnswerFeatureEnable`     | Control screen display on unanswered calls      | Shows caller screen on no-answer calls | No screen shown if the call isn’t answered    |
-```kotlin
-(application as? CallerIdSDKApplication)?.let { callerIdSDKApplication ->
+<a href="images/set_general.png">
+  <img src="images/set_general.png" alt="Preview" width="460"/>
+</a>
 
-    _binding.switchMissCall.isChecked = callerIdSDKApplication.getMissedCallFeatureEnable() == true
-
-    _binding.switchMissCall.setOnCheckedChangeListener { _, isChecked ->
-        callerIdSDKApplication.setMissedCallFeatureEnable(isChecked)
-    }
-}
-```
