@@ -18,12 +18,14 @@
 
 
 # My Customize
--keep class com.origin.commons.callerid.helpers.** { *; }
--keep class com.origin.commons.callerid.model.** { *; }
--keep class com.origin.commons.callerid.ads.** { *; }
--keep class com.origin.commons.callerid.db.** { *; }
--keep class com.origin.commons.callerid.db.entity.** { *; }
--keep class com.origin.commons.callerid.timepicker.** { *; }
+-keep class com.ogmediaapps.callerid.helpers.** { *; }
+-keep class com.ogmediaapps.callerid.model.** { *; }
+-keep class com.ogmediaapps.callerid.ads.** { *; }
+-keep class com.ogmediaapps.callerid.db.** { *; }
+-keep class com.ogmediaapps.callerid.db.entity.** { *; }
+-keep class com.ogmediaapps.callerid.receivers.** { *; }
+-keep class com.ogmediaapps.callerid.timepicker.** { *; }
+-keep class com.ogmediaapps.callerid.ui.wic.** { *; }
 
 -obfuscationdictionary "D:\Android\Sdk\class_encode_dictionary.txt"
 -classobfuscationdictionary "D:\Android\Sdk\class_encode_dictionary.txt"

@@ -27,6 +27,7 @@ class MyApplication : CallerIdSDKApplication() {
         openClass1 = ActivityClassProvider { MainActivity::class.java }
         openClass2High = ActivityClassProvider { SplashActivity::class.java }
         customHomeFragment = FragmentClassProvider { CIHomeScreenFragment() }
+
     }
 
     override fun onCallerThemeChanged(themeConfig: ThemeConfig) {}
