@@ -1,7 +1,6 @@
 <resources>
-    <string name="app_name">OG Caller ID</string>
+    <string name="app_name">OG Caller ID(Sample)</string>
     <string name="app_name_tag">#OG_Caller_ID</string>
-
 
     <string name="ci_cancel">Cancel</string>
     <string name="ci_keep_it">Keep it</string>
@@ -11,6 +10,5 @@
     <string name="required_permission">Required Permission</string>
     <string name="required_permission_desc">Permission is required please allow all permission.</string>
     <string name="allow_permission">Allow Permission</string>
-
 
 </resources>

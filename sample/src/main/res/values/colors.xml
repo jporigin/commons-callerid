@@ -4,7 +4,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Primary Colors -->
-    <color name="call_theme_primary">#0D9379</color>
+    <color name="call_theme_primary">#1877F2</color>
     <color name="call_theme_onPrimary">#FFFFFF</color>
 
     <!-- Surface -->
@@ -19,50 +19,50 @@
     <!--************************** Used For Caller SDK *****************************-->
     <!--************************** Light Theme *****************************-->
     <!-- Primary Colors -->
-    <color name="call_theme_primary_light">#0D9379</color>
+    <color name="call_theme_primary_light">#1877F2</color>
     <color name="call_theme_onPrimary_light">#FFFFFF</color>
 
-    <!-- Surface -->
+    <!-- Surface (light bluish neutrals) -->
     <color name="call_theme_surfaceContainerLowest_light">#FFFFFF</color>
-    <color name="call_theme_surfaceContainerLow_light">#F0F7F5</color>
-    <color name="call_theme_surfaceContainerHighest_light">#CCE6E1</color>
-    <color name="call_theme_onSurface_light">#1A201E</color>
-    <color name="call_theme_onSurfaceVariant_light">#414B48</color>
+    <color name="call_theme_surfaceContainerLow_light">#F3F6FB</color>
+    <color name="call_theme_surfaceContainerHighest_light">#D9E6FB</color>
+    <color name="call_theme_onSurface_light">#1A1D29</color>
+    <color name="call_theme_onSurfaceVariant_light">#444B5A</color>
 
     <!-- Outline -->
-    <color name="call_theme_outline_light">#717B78</color>
-    <color name="call_theme_outlineVariant_light">#C1CCC8</color>
+    <color name="call_theme_outline_light">#737A89</color>
+    <color name="call_theme_outlineVariant_light">#C5CCDA</color>
 
-    <!--  Ads  -->
-    <color name="call_theme_adsBgColor_light">#F0F7F5</color>
-    <color name="call_theme_adsBgColorHigh_light">#CCE6E1</color>
-    <color name="call_theme_adsTextColor_light">#1A201E</color>
-    <color name="call_theme_adsTextColorVariant_light">#414B48</color>
-    <color name="call_theme_adsPrimary_light">#0D9379</color>
+    <!-- Ads -->
+    <color name="call_theme_adsBgColor_light">#F3F6FB</color>
+    <color name="call_theme_adsBgColorHigh_light">#D9E6FB</color>
+    <color name="call_theme_adsTextColor_light">#1A1D29</color>
+    <color name="call_theme_adsTextColorVariant_light">#444B5A</color>
+    <color name="call_theme_adsPrimary_light">#1877F2</color>
     <color name="call_theme_adsOnPrimary_light">#FFFFFF</color>
 
 
     <!--************************** Dark Theme *****************************-->
     <!-- Primary Colors -->
-    <color name="call_theme_primary_dark">#0D9379</color>
+    <color name="call_theme_primary_dark">#1877F2</color>
     <color name="call_theme_onPrimary_dark">#FFFFFF</color>
 
-    <!-- Surface -->
+    <!-- Surface (dark bluish neutrals) -->
     <color name="call_theme_surfaceContainerLowest_dark">#000000</color>
-    <color name="call_theme_surfaceContainerLow_dark">#10201C</color>
-    <color name="call_theme_surfaceContainerHighest_dark">#31413C</color>
-    <color name="call_theme_onSurface_dark">#DCE6E2</color>
-    <color name="call_theme_onSurfaceVariant_dark">#B0C2BE</color>
+    <color name="call_theme_surfaceContainerLow_dark">#101826</color>
+    <color name="call_theme_surfaceContainerHighest_dark">#2B3850</color>
+    <color name="call_theme_onSurface_dark">#DEE6F5</color>
+    <color name="call_theme_onSurfaceVariant_dark">#ADB7CC</color>
 
     <!-- Outline -->
-    <color name="call_theme_outline_dark">#8B9894</color>
-    <color name="call_theme_outlineVariant_dark">#3C4945</color>
+    <color name="call_theme_outline_dark">#8690A6</color>
+    <color name="call_theme_outlineVariant_dark">#3B455C</color>
 
-    <!--  Ads  -->
-    <color name="call_theme_adsBgColor_dark">#10201C</color>
-    <color name="call_theme_adsBgColorHigh_dark">#31413C</color>
-    <color name="call_theme_adsTextColor_dark">#DCE6E2</color>
-    <color name="call_theme_adsTextColorVariant_dark">#B0C2BE</color>
-    <color name="call_theme_adsPrimary_dark">#0D9379</color>
+    <!-- Ads -->
+    <color name="call_theme_adsBgColor_dark">#101826</color>
+    <color name="call_theme_adsBgColorHigh_dark">#2B3850</color>
+    <color name="call_theme_adsTextColor_dark">#DEE6F5</color>
+    <color name="call_theme_adsTextColorVariant_dark">#ADB7CC</color>
+    <color name="call_theme_adsPrimary_dark">#1877F2</color>
     <color name="call_theme_adsOnPrimary_dark">#FFFFFF</color>
 </resources>
