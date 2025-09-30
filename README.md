@@ -117,6 +117,19 @@ public class MyApplication extends CallerIdSDKApplication {
 
 ### 🔧 Caller ID Setting Screen
 
+#### Show Caller ID Setting Screen
+You can directly show the Caller ID setting screen by calling the following method.
+`Kotlin`
+```kotlin
+this.openCallerIDSetting()
+```
+`Java`
+```Java
+openCallerSettingScreen() {
+    com.ogmediaapps.callerid.extensions.ActivityKt.openCallerIDSetting(this);
+}
+```
+
 #### Appearance
 You can enable/disable appearance view. By default it's enabled.
 ``` 
