@@ -1,7 +1,7 @@
 
 # Caller-ID
 
-![JitPack Version](https://img.shields.io/badge/JitPack-1.0.2--alpha--10-green)  |  [Release notes](https://sites.google.com/view/og-caller-id-release-notes)
+![JitPack Version](https://img.shields.io/badge/JitPack-1.0.2--alpha--16-green)  |  [Release notes](https://sites.google.com/view/og-caller-id-release-notes)
 
 
 Caller-ID SDK seamlessly integrates with your app to deliver rich call-related experiences. By showing detailed call information and context-aware features during, after, or even for missed calls, your app becomes more useful and engaging to users.
