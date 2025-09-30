@@ -119,13 +119,14 @@ public class MyApplication extends CallerIdSDKApplication {
 
 #### Show Caller ID Setting Screen
 You can directly show the Caller ID setting screen by calling the following method.
+
 `Kotlin`
 ```kotlin
 this.openCallerIDSetting()
 ```
 `Java`
 ```Java
-openCallerSettingScreen() {
+showCallerSettingScreen() {
     com.ogmediaapps.callerid.extensions.ActivityKt.openCallerIDSetting(this);
 }
 ```
