@@ -82,7 +82,6 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("callType", callType)
         context.applicationContext.startActivity(intent)
     }
-
 }
 
 
