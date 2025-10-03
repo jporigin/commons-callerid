@@ -13,8 +13,8 @@ android {
         applicationId = "com.origin.commons.callerid.sample"
         minSdk = 24
         targetSdk = 35
-        versionCode = 14
-        versionName = "1.1.4"
+        versionCode = 1
+        versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -61,5 +61,5 @@ dependencies {
     implementation(libs.firebase.messaging)
 
     // CallerID
-    implementation("com.github.ogmediaapps18:callerid:1.0.2-alpha-18")
+    implementation("com.github.ogmediaapps18:callerid:1.0.2-alpha-22")
 }
